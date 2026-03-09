@@ -2,7 +2,7 @@
   environment.etc."nextcloud-admin-pass".text = "112358";
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
     hostName = "Hcloud";
     home = "/mnt/public_data/service/nextcloud32";
     config.dbtype = "sqlite";

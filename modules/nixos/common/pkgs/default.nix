@@ -15,10 +15,10 @@
     # minimal screen capture tool, used by i3 blur lock to take a screenshot
     # print screen key is also bound to this tool in i3 config
     scrot
-    neofetch
+    fastfetch
     zip
     xfce.thunar # xfce4's file manager
-    telegram-desktop
+    # telegram-desktop
     devbox
     webp-pixbuf-loader
     nixfmt-rfc-style
