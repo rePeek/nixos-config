@@ -4,7 +4,7 @@
   ];
 
   programs.git.settings.user = {
-    name = "asen";
+    name = "rePeek";
     email = "senxlin@gmail.com";
   };
 }

@@ -19,6 +19,8 @@
     zip
     xfce.thunar # xfce4's file manager
     # telegram-desktop
+    #
+    git-filter-repo
     devbox
     webp-pixbuf-loader
     nixfmt-rfc-style
