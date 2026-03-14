@@ -1,7 +1,8 @@
 {
   lib,
   ...
-}:{
+}:
+{
   home.shellAliases = {
     zs = "zellij -s";
     za = "zellij a";
@@ -20,21 +21,30 @@
       # misc
       default_shell = "fish";
       # keybind
-      keybinds = with builtins; let
-        binder = bind: let
-          keys = elemAt bind 0;
-          action = elemAt bind 1;
-          argKeys = map (k: "\"${k}\"") (lib.lists.flatten [keys]);
-        in {
-          name = "bind ${concatStringsSep " " argKeys}";
-          value = action;
+      keybinds =
+        with builtins;
+        let
+          binder =
+            bind:
+            let
+              keys = elemAt bind 0;
+              action = elemAt bind 1;
+              argKeys = map (k: "\"${k}\"") (lib.lists.flatten [ keys ]);
+            in
+            {
+              name = "bind ${concatStringsSep " " argKeys}";
+              value = action;
+            };
+          layer = binds: (listToAttrs (map binder binds));
+        in
+        {
+          locked = layer [
+            [
+              [ "Alt f" ]
+              { LaunchPlugin = "filepicker"; }
+            ]
+          ];
         };
-        layer = binds: (listToAttrs (map binder binds));
-      in {
-      locked = layer [
-          [["Alt f"] {LaunchPlugin = "filepicker";}]
-        ];
-      };
     };
   };
 }

@@ -154,7 +154,7 @@
         # resource wathcer
         "CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 11] resources'"
         "$mainMod, equal, exec, woomer"
-      
+
         # show keybinds list
         "$mainMod, F1, exec, show-keybinds"
 

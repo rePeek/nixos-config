@@ -1,9 +1,12 @@
 { lib, pkgs, ... }:
 {
   nix.settings = {
-    auto-optimise-store = true; 
+    auto-optimise-store = true;
     # enable flakes globally
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     substituters = [
       # cache mirror located in China

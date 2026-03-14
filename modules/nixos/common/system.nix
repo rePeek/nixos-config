@@ -1,4 +1,5 @@
-{ pkgs, ...}: {
+{ pkgs, ... }:
+{
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
@@ -52,10 +53,21 @@
     # the reason there's Noto Color Emoji everywhere is to override DejaVu's
     # B&W emojis that would sometimes show instead of some Color emojis
     fontconfig.defaultFonts = {
-      serif = ["Maple Mono NF CN" "Noto Serif" "Noto Color Emoji"];
-      sansSerif = ["Maple Mono NF CN" "Noto Sans" "Noto Color Emoji"];
-      monospace = ["Maple Mono NF CN" "Noto Color Emoji"];
-      emoji = ["Noto Color Emoji"];
+      serif = [
+        "Maple Mono NF CN"
+        "Noto Serif"
+        "Noto Color Emoji"
+      ];
+      sansSerif = [
+        "Maple Mono NF CN"
+        "Noto Sans"
+        "Noto Color Emoji"
+      ];
+      monospace = [
+        "Maple Mono NF CN"
+        "Noto Color Emoji"
+      ];
+      emoji = [ "Noto Color Emoji" ];
     };
   };
 

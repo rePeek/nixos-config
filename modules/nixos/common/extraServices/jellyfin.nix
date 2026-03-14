@@ -1,4 +1,5 @@
-{ pkgs, ... }:{
+{ pkgs, ... }:
+{
   services.jellyfin = {
     enable = true;
     user = "asen";
@@ -7,7 +8,6 @@
     dataDir = "/mnt/public_data/service/jellyfin/dataDir";
     configDir = "/mnt/public_data/service/jellyfin/configDir";
   };
-
 
   environment.systemPackages = with pkgs; [
     jellyfin

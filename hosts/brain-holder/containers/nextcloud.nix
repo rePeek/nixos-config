@@ -1,13 +1,14 @@
-{ ... }: {
+{ ... }:
+{
   virtualisation.oci-containers.containers."nextcloud" = {
     image = "nextcloud:latest";
-    ports = ["9000:80"];
+    ports = [ "9000:80" ];
     environment = {
-      PUID="20001";
-      PGID="100";
-      TZ="Asia/Shanghai";
+      PUID = "20001";
+      PGID = "100";
+      TZ = "Asia/Shanghai";
     };
-    extraOptions = ["--privileged=true"];
+    extraOptions = [ "--privileged=true" ];
     # volumes = [
     #   "/public_data/nextcloud/config:/var/www/html/config"
     #   "/public_data/nextcloud/data:/var/www/html/data"

@@ -1,4 +1,5 @@
-{ ... } : {
+{ ... }:
+{
   imports = [
     ./container.nix
     ./nextcloud.nix
@@ -7,5 +8,5 @@
     ./jellyfin.nix
     ./greeted.nix
     # ./openlist.nix
-  ];  
+  ];
 }

@@ -1,6 +1,6 @@
-{ pkgs, config, ...}:
+{ pkgs, config, ... }:
 {
-services.greetd = {
+  services.greetd = {
     enable = true;
     settings = {
       default_session = {
