@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs = {
     nushell = {
       enable = true;
@@ -8,12 +9,12 @@
         '';
       };
     };
-    
+
     fish = {
       enable = true;
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
-      '';      
+      '';
 
       plugins = [
         {
@@ -79,7 +80,7 @@
         jobs = {
           style = "bright-green bold";
         };
-        
+
         character = {
           success_symbol = "[❯](bold green)";
           error_symbol = "[✗](bold red)";

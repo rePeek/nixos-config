@@ -15,7 +15,7 @@
     ./discard.nix
     ./koodoReader.nix
   ];
-  home = {   
+  home = {
     packages = with pkgs; [
       imv
       mpv
@@ -25,4 +25,3 @@
     ];
   };
 }
-

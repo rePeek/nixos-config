@@ -5,18 +5,16 @@
 { ... }:
 
 {
-  imports =
-    [
-      ../../modules/nixos/common/default.nix
-      ./user.nix     
-      ./bootloader.nix
-      ./gpu.nix
-      ./network.nix
-      ./hardware-configuration.nix
-      ./disko-config.nix
-      ./containers
-    ];
+  imports = [
+    ../../modules/nixos/common/default.nix
+    ./user.nix
+    ./bootloader.nix
+    ./gpu.nix
+    ./network.nix
+    ./hardware-configuration.nix
+    ./disko-config.nix
+    ./containers
+  ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-

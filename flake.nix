@@ -1,14 +1,14 @@
 {
   description = "Asen's NixOS flake";
 
-  inputs = {    
+  inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     hyprland = {
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
@@ -26,26 +26,33 @@
     };
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
-    
+
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
-      mkNixosConfig = hostName: usernames:
+      mkNixosConfig =
+        hostName: usernames:
         let
           specialArgs = { inherit inputs; };
         in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           system = "x86_64-linux";
-          modules = [  
+          modules = [
             (./hosts + "/${hostName}")
             inputs.disko.nixosModules.disko
             inputs.daeuniverse.nixosModules.daed
-            
+
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/common/home-manager.nix {
               inherit inputs;
@@ -53,20 +60,21 @@
             })
           ];
         };
-    in {
-    nixosConfigurations = {
-      brain-holder = mkNixosConfig "brain-holder" [ "asen" ];
-    };
-    
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+    in
+    {
+      nixosConfigurations = {
+        brain-holder = mkNixosConfig "brain-holder" [ "asen" ];
+      };
 
-    # None nixos systerm
-    homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [
-        ./users/nixos-in-docker/home.nix
-      ];
-      extraSpecialArgs.inputs = inputs;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
+      # None nixos systerm
+      homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          ./users/nixos-in-docker/home.nix
+        ];
+        extraSpecialArgs.inputs = inputs;
+      };
     };
-  };
 }

@@ -19,6 +19,9 @@ debug:
 up:
   nix flake update
 
+fmt:
+  treefmt .
+
 # Update specific input
 # usage: make upp i=home-manager
 upp:

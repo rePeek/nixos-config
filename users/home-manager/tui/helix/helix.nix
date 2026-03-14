@@ -1,5 +1,4 @@
-{pkgs, ... }:
-
+{ pkgs, ... }:
 
 let
   yazi-picker = "~/.config/scripts/yazi-picker.sh";
@@ -12,31 +11,33 @@ in
 
     languages = {
       language = [
-      {
-        name= "cpp";
-        auto-format = true;
-        language-servers = ["clangd"];
-      }
-      {
-        name= "cmake";
-        auto-format = true;
-        language-servers = ["neocmakelsp"];
-      }
+        {
+          name = "cpp";
+          auto-format = true;
+          language-servers = [ "clangd" ];
+        }
+        {
+          name = "cmake";
+          auto-format = true;
+          language-servers = [ "neocmakelsp" ];
+        }
       ];
-      
+
       language-server.clangd = {
         command = "clangd";
-        config = {fallbackFlags=["-std=c++17"];};
+        config = {
+          fallbackFlags = [ "-std=c++17" ];
+        };
       };
       language-server.neocmakelsp = {
         command = "neocmakelsp";
-        args = ["--stdio"];
+        args = [ "--stdio" ];
       };
     };
 
     settings = {
       theme = "ashen";
-      
+
       editor = {
         auto-save.after-delay.enable = true;
         soft-wrap.enable = true;
@@ -45,16 +46,26 @@ in
         cursor-shape.insert = "bar";
         color-modes = true;
         statusline = {
-          left = ["mode" "spinner"];
-          center = ["file-name"];
-          right = ["diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type"];
+          left = [
+            "mode"
+            "spinner"
+          ];
+          center = [ "file-name" ];
+          right = [
+            "diagnostics"
+            "selections"
+            "position"
+            "file-encoding"
+            "file-line-ending"
+            "file-type"
+          ];
           separator = "│";
           mode.normal = "NORMAL";
           mode.insert = "INSERT";
           mode.select = "SELECT";
         };
       };
-      
+
       keys.normal = {
         space.e = "file_picker_in_current_buffer_directory";
         space.w = ":w";
@@ -72,7 +83,10 @@ in
           ":write-all"
           ":sh zellij run -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- lazygit"
         ];
-        esc = [ "collapse_selection" "keep_primary_selection" ];
+        esc = [
+          "collapse_selection"
+          "keep_primary_selection"
+        ];
       };
     };
 
