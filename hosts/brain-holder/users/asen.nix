@@ -9,6 +9,7 @@
     ../../../modules/home-manager/ghostty.nix
     ../../../modules/home-manager/openlist.nix
     ../../../modules/home-manager/rclone.nix
+    ../../../modules/home-manager/llm-agents-package.nix
   ];
 
   programs.git.settings.user = {
