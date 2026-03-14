@@ -1,10 +1,8 @@
-{
+{pkgs, ...}:{
   programs = {
     diff-so-fancy.enable = true;
     git = {
       enable = true;
-      userName = "rePeek";
-      userEmail = "wangsenyin@huawei.com";
       settings = {
         core.editor = "hx";
         pull.rebase = true;
@@ -49,4 +47,13 @@
     gfu = "git fetch upstream";
     gfo = "git fetch origin";
   };
+
+  home = {
+    packages = with pkgs; [
+    git-filter-repo
+
+        git-repo
+      git-lfs
+];
+};
 }

@@ -7,7 +7,6 @@
     ./helix
     ./btop.nix
     ./git.nix
-    ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
     # Rust implementations of linux commands
@@ -21,19 +20,14 @@
     ripgrep
     just
     file
-
-    git
     wget
     xclip
-
-    # Blue  dev, should comment in other machine
-    # git-repo
-    git-lfs
-    rustc
-    cargo
+    wl-clipboard
     repomix
-
     nixfmt
     nixfmt-tree
+    _7zz
+    unzip
+    unrar
   ];
 }
