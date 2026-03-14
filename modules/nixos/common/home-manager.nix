@@ -1,4 +1,4 @@
-{ usernames, inputs, ... }:
+{ hostName, usernames, inputs, ... }:
 {
   home-manager = {
     useGlobalPkgs = true;
@@ -8,7 +8,7 @@
     users = builtins.listToAttrs (
       map (username: {
         name = username;
-        value = import ../../../users/${username}/home.nix {
+        value = import ../../../hosts/${hostName}/users/${username}.nix {
           inherit inputs;
         };
       }) usernames
