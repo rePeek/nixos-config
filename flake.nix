@@ -28,6 +28,8 @@
     daeuniverse.url = "github:daeuniverse/flake.nix";
     
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
+
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: 
@@ -55,6 +57,16 @@
     nixosConfigurations = {
       brain-holder = mkNixosConfig "brain-holder" [ "asen" ];
     };
+    
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
+    # None nixos systerm
+    homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [
+        ./users/nixos-in-docker/home.nix
+      ];
+      extraSpecialArgs.inputs = inputs;
+    };
   };
 }
