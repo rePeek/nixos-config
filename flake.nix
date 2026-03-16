@@ -73,7 +73,7 @@
       homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
-          ./users/nixos-in-docker/home.nix
+          ./hosts/nixos-in-docker/root.nix
         ];
         extraSpecialArgs.inputs = inputs;
       };

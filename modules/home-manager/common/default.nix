@@ -28,6 +28,5 @@
     nixfmt-tree
     _7zz
     unzip
-    unrar
   ];
 }
