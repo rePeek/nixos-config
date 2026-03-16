@@ -8,5 +8,5 @@
   mkd = "mkdir -pv";
   f = "fg";
   cat = "bat -p";
-  n = "nnn -e";
+  ps = "procs";
 }
