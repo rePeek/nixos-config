@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./home.nix
     ./zellij.nix
     ./shell
     ./helix
@@ -28,5 +29,8 @@
     nixfmt-tree
     _7zz
     unzip
+    devenv
+    difftastic
+    lsof
   ];
 }

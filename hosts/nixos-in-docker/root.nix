@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ../../modules/home-manager/home.nix
     ../../modules/home-manager/common
     ../../modules/home-manager/llm-agents-package.nix
   ];
