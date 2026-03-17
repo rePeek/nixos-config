@@ -2,7 +2,6 @@
 {
   imports = [
     ./steam.nix
-    # ./nix-ai.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
