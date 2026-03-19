@@ -2,3 +2,13 @@
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+# agenix secrets management
+# 忽略未加密的秘密文件（不要提交明文秘密！）
+secrets/*.txt
+secrets/*.json
+secrets/*.yml
+secrets/*.yaml
+secrets/*.env
+secrets/*.secret
+# 保留 .age 文件（这些是加密的，应该提交）

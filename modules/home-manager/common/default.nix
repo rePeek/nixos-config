@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
+let
+  agenix = inputs.agenix.packages.${pkgs.system}.default;
+in
 {
   imports = [
     ./home.nix
@@ -9,6 +12,7 @@
     ./btop.nix
     ./git.nix
   ];
+
   home.packages = with pkgs; [
     # Rust implementations of linux commands
     bat # cat
@@ -32,5 +36,7 @@
     devenv
     difftastic
     lsof
+    agenix
+    age
   ];
 }

@@ -1,0 +1,15 @@
+let
+  nixosindocker-root = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8xxMOxMAUKz4QZ3h2VqjNeTjd2btVKXB6qN3aMWSyAbCvkOwrCB/1HCUvWDM+3ocsxlTQWfldX38PdypBllEU9ITi5aeh5pR/oicbIhN0ELg2+Q6yJ59+4clbXrZhjFHLak1OT7laBlvlynBCnbe2uSyAawgVdy6T3d7b1iRw1e1gwlQJB8ju0suPQeWgMxFNLzXRAgHUZ/q2Rfj6niTBd/4bkDkNdSNJ6WG0UHlHwzFkflLDGuJ3DIvY9Cr7CmijoX4Ntq+V4lc5Igpr+FxQYEPT9a6i+dmebrPcp88rYO55ZhbOzvr7XJIazfQudHheWMOQ6HnzV1ZBygAUi6n1RfwQRr2GJZLlNHnO3X1nMrBjJd2gJgK2zyl+7uS2tsRU0kLZfmfr4h4D+3bUspq4eR8v/3hnBg2LeRf/WnSgF7qE9I1Wms0Pvk3KsNc7YvUamyhF48J+xkCbv9JVi9sYiREPlMrZbGh7+X8T5kf1cGnyZFP8Z1pS7DMGxJ9D/Pk=";
+  brainholder-asen = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXncD/61ecfc3asOXO9wRIpBaxR2UVZAi1aLqm165aYbOP/sxUdGMXkN0XwcI3suFOhKr5UCYUjsuMEimsS+zs2hNjN1NN6jIRY2Elyo7fOtxFOayw93BQkNHOADS0k8OAmG5lCM4iawVym1NFHkfRRA7mcoDH+eenn77yRCS0bEeO89Jtcwx0G9p3UKsNZIBCLJss+yQ6kSnJQIUMCOaalwj4JL2PZQPJaVEac9HB4ng3AM2WojHyUDILOJDeGv5N1fgUXAaXLHuWIcqONLiyVf1Hzj0ekeDDyKzuQORmI0ffrbeXgndkf26QF/zrc+DTW0rh8pXnXEYl4cNvbAaWCP0fo+1UkVNHsFQPMdIoyCi/m0jokQOBMPoqEW7O0LPT+4znOY9VMOCBgZ+QUyMnwQu8K26P+cjV1S9xmWRaufG2k26yGMHlcV0pvJ5SENQEfVj3BvYSCaDeaCZiOiqTZ+VaH1kG7TEiTOTE71kG99qoJ3/lXRQQr1sSSKrVvt0=";
+in
+{
+  "DEEPSEEK_API_KEY.age".publicKeys = [
+    nixosindocker-root
+    brainholder-asen
+  ];
+
+  "OPENROUTER_API_KEY.age".publicKeys = [
+    nixosindocker-root
+    brainholder-asen
+  ];
+}

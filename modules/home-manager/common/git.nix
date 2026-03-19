@@ -1,4 +1,5 @@
-{pkgs, ...}:{
+{ pkgs, ... }:
+{
   programs = {
     diff-so-fancy.enable = true;
     git = {
@@ -50,10 +51,10 @@
 
   home = {
     packages = with pkgs; [
-    git-filter-repo
+      git-filter-repo
 
-        git-repo
+      git-repo
       git-lfs
-];
-};
+    ];
+  };
 }

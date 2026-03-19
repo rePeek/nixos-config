@@ -30,6 +30,11 @@
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -56,7 +61,7 @@
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/common/home-manager.nix {
               inherit inputs;
-              hostName =  hostName;
+              hostName = hostName;
               usernames = usernames;
             })
           ];
@@ -74,6 +79,7 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
           ./hosts/nixos-in-docker/root.nix
+          inputs.agenix.homeManagerModules.default
         ];
         extraSpecialArgs.inputs = inputs;
       };
