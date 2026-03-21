@@ -67,8 +67,6 @@
         brain-holder = mkNixosConfig "brain-holder" [ "asen" ];
       };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
-
       # None nixos systerm
       homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;

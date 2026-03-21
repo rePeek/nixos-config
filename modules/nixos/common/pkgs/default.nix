@@ -22,7 +22,6 @@
     #
     devbox
     webp-pixbuf-loader
-    nixfmt-rfc-style
     # openlist
   ];
 }
