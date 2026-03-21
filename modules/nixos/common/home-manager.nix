@@ -1,4 +1,9 @@
-{ hostName, usernames, inputs, ... }:
+{
+  hostName,
+  usernames,
+  inputs,
+  ...
+}:
 {
   home-manager = {
     useGlobalPkgs = true;

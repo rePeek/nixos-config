@@ -56,7 +56,7 @@
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/common/home-manager.nix {
               inherit inputs;
-              hostName =  hostName;
+              hostName = hostName;
               usernames = usernames;
             })
           ];

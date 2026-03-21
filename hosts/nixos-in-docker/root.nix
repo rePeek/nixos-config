@@ -7,7 +7,7 @@
 
   home.username = "root";
   home.homeDirectory = "/root";
-  
+
   programs.git.settings.user = {
     name = "rePeek";
     email = "wangsenyin@gmail.com";
