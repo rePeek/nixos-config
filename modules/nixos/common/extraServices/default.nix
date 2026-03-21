@@ -7,6 +7,7 @@
     ./virtualization.nix
     ./jellyfin.nix
     ./greeted.nix
+    ./tailscale.nix
     # ./openlist.nix
   ];
 }

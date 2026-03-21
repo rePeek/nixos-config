@@ -10,7 +10,6 @@
       "114.114.114.114"
     ];
     firewall = {
-      enable = false;
       # allowedTCPPorts = [
       #   22
       #   80
