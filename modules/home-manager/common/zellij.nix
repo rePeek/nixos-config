@@ -19,7 +19,7 @@
       simplified_ui = true;
       default_layout = "compact";
       # misc
-      default_shell = "fish";
+      default_shell = "nu";
       # keybind
       keybinds =
         with builtins;

@@ -5,7 +5,7 @@
   c = "cd";
   rm = "rm -iv";
   cp = "cp -iv";
-  mkd = "mkdir -pv";
+  mkd = "mkdir -v";
   f = "fg";
   cat = "bat -p";
   ps = "procs";

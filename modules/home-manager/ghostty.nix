@@ -3,7 +3,7 @@
   home.packages = (with pkgs; [ ghostty ]);
 
   xdg.configFile."ghostty/config".text = ''
-    command = fish --login
+    command = nu --login
     # Font
     font-family = "Maple Mono NF CN"
     font-size = "14"

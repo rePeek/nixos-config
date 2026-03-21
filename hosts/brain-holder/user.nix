@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   users.users.asen = {
     isNormalUser = true;
@@ -9,6 +10,7 @@
       "libvirtd"
       "podman"
     ];
+    shell = pkgs.nushell;
     # 需要加 openssh
   };
 

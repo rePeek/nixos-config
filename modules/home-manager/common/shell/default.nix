@@ -1,7 +1,7 @@
 {
   imports = [
     ./eza.nix
-    ./fish.nix
+    ./nushell.nix
     ./fzf.nix
     ./yazi.nix
     ./zoxide.nix
