@@ -8,7 +8,7 @@
     ./program.nix
     ./security.nix
     ./services.nix
-    ./system.nix
+    ./ssh.nix
     ./wayland.nix
     ./xserver.nix
     ./fonts.nix
