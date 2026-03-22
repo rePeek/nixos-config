@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     daeuniverse.url = "github:daeuniverse/flake.nix";
 
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
