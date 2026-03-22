@@ -11,5 +11,6 @@
     ./system.nix
     ./wayland.nix
     ./xserver.nix
+    ./fonts.nix
   ];
 }

@@ -28,49 +28,6 @@
     };
   };
 
-  fonts = {
-    packages = with pkgs; [
-      # icon fonts
-      material-design-icons
-
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-color-emoji
-
-      nerd-fonts.fira-code
-      # Maple Mono (Ligature TTF unhinted)
-      maple-mono.truetype
-      # Maple Mono NF (Ligature unhinted)
-      maple-mono.NF-unhinted
-      # Maple Mono NF CN (Ligature unhinted)
-      maple-mono.NF-CN-unhinted
-    ];
-
-    # use fonts specified by user rather than default ones
-    enableDefaultPackages = false;
-
-    # user defined fonts
-    # the reason there's Noto Color Emoji everywhere is to override DejaVu's
-    # B&W emojis that would sometimes show instead of some Color emojis
-    fontconfig.defaultFonts = {
-      serif = [
-        "Maple Mono NF CN"
-        "Noto Serif"
-        "Noto Color Emoji"
-      ];
-      sansSerif = [
-        "Maple Mono NF CN"
-        "Noto Sans"
-        "Noto Color Emoji"
-      ];
-      monospace = [
-        "Maple Mono NF CN"
-        "Noto Color Emoji"
-      ];
-      emoji = [ "Noto Color Emoji" ];
-    };
-  };
-
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
