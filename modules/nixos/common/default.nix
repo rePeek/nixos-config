@@ -1,4 +1,3 @@
-{ ... }:
 {
   imports = [
     ./pkgs
@@ -11,7 +10,6 @@
     ./ssh.nix
     ./wayland.nix
     ./xserver.nix
-    ./fonts.nix
     ./i18n.nix
   ];
 }

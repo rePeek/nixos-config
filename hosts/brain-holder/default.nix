@@ -6,7 +6,7 @@
 
 {
   imports = [
-    ../../modules/nixos/common/default.nix
+    ../../modules/nixos/wrokstation
     ./user.nix
     ./bootloader.nix
     ./gpu.nix
