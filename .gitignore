@@ -2,3 +2,14 @@
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
