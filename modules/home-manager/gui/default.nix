@@ -14,6 +14,7 @@
     ./nemo.nix
     ./discard.nix
     ./koodoReader.nix
+    ./fcitx5
   ];
   home = {
     packages = with pkgs; [
