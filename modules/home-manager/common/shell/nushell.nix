@@ -53,74 +53,33 @@
       enableNushellIntegration = true;
 
       settings = {
-        format = "$jobs$time$all";
-        time = {
-          disabled = false;
-          time_format = "%R";
-          style = "bright-grey bold";
-          format = "[  $time ]($style)";
-        };
-
-        hostname = {
-          ssh_symbol = "HUAWEI";
-          format = "[$ssh_symbol](#d65d0e) on [$hostname ]($style)";
-          style = "bright-green bold";
-          ssh_only = true;
-        };
-
-        git_branch = {
-          only_attached = true;
-          format = "[ $branch](bright-yellow bold)";
-        };
-
-        git_commit = {
-          only_detached = true;
-          format = "[ $hash](bright-yellow bold)";
-        };
-
-        git_state = {
-          style = "bright-purple bold";
-        };
-
-        git_status = {
-          style = "bright-green bold";
-        };
-
-        directory = {
-          read_only = " ";
-          truncation_length = 3;
-          truncation_symbol = "...";
-        };
-
-        cmd_duration = {
-          format = " [$duration]($style) ";
-          style = "bright-blue";
-        };
-
-        jobs = {
-          style = "bright-green bold";
-        };
-
+        add_newline = false;
+        format = ''
+          [╭{OwO} ](bold green)$username$directory$battery$all$line_break$character
+        '';
+        right_format = ''
+          $git_branch$git_state$git_status$time$cmd_duration
+        '';
         character = {
-          success_symbol = "[❯](bold green)";
-          error_symbol = "[✗](bold red)";
+          success_symbol = "[╰─>](bold green)";
+          error_symbol = "[x─>](bold red)";
         };
-
-        python = {
-          format = "[$symbol $pyenv_prefix($version )(\\($virtualenv\\))]($style) ";
-          symbol = "";
-          version_format = "$raw";
-          style = "bold yellow";
+        git_branch = {
+          format = "[ $symbol$branch]($style) ";
+          style = "cyan";
         };
-
-        nix_shell = {
-          symbol = "❄️ ";
-          format = "via [$symbol$name]($style) ";
+        directory = {
+          format = "[](fg:#a3ca5c bg:none)[$path]($style)[ ](fg:#a3ca5c bg:none)";
+          style = "fg:#000000 bg:#a3ca5c";
+          truncate_to_repo = false;
         };
-
-        container = {
-          disabled = true;
+        username.show_always = true;
+        time.disabled = false;
+        cmd_duration = {
+          min_time = 0;
+          disabled = false;
         };
+        battery.disabled = false;
       };
     };
   };
