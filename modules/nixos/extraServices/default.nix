@@ -6,6 +6,6 @@
     ./virtualization.nix
     ./jellyfin.nix
     ./tailscale.nix
-    # ./openlist.nix
+    ./gaming.nix
   ];
 }

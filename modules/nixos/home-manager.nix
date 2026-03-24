@@ -13,7 +13,7 @@
     users = builtins.listToAttrs (
       map (username: {
         name = username;
-        value = import ../../../hosts/${hostName}/users/${username}.nix {
+        value = import ../../hosts/${hostName}/users/${username}.nix {
           inherit inputs;
         };
       }) usernames

@@ -57,7 +57,7 @@
             inputs.daeuniverse.nixosModules.daed
 
             home-manager.nixosModules.home-manager
-            (import ./modules/nixos/common/home-manager.nix {
+            (import ./modules/nixos/home-manager.nix {
               inherit inputs;
               hostName = hostName;
               usernames = usernames;

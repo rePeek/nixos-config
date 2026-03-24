@@ -3,7 +3,7 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
   imports = [
-    ../../modules/nixos/wrokstation
+    ../../modules/nixos
     ./user.nix
     ./bootloader.nix
     ./gpu.nix
