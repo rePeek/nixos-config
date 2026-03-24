@@ -11,5 +11,6 @@
     ./wayland.nix
     ./xserver.nix
     ./i18n.nix
+    ./greeted.nix
   ];
 }
