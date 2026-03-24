@@ -1,6 +1,6 @@
 {
   imports = [
-    ./pkgs
+    ./pkgs.nix
     ./extraServices
     ./nix.nix
     ./pipewire.nix
