@@ -54,7 +54,6 @@
           modules = [
             (./hosts + "/${hostName}")
             inputs.disko.nixosModules.disko
-            inputs.daeuniverse.nixosModules.daed
 
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {

@@ -14,6 +14,7 @@
   ];
 
   modules.desktop.gaming.enable = true;
+  modules.network.daed.enable = true;
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
