@@ -32,8 +32,6 @@
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
 
-    nix-ai-tools.url = "github:numtide/nix-ai-tools";
-
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
