@@ -10,7 +10,6 @@
     ./network.nix
     ./hardware-configuration.nix
     ./disko-config.nix
-    ./containers
   ];
 
   modules.desktop.gaming.enable = true;
