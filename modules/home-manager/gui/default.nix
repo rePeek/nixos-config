@@ -25,6 +25,9 @@
       qbittorrent-enhanced
       # telegram-desktop is unused now，and i dont know why.
       # telegram-desktop
+      scrot
+      xfce.thunar
+      webp-pixbuf-loader
     ];
   };
 }
