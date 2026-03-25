@@ -3,7 +3,7 @@
     ../../modules/nixos
     ./hardware
     ./user.nix
-    ./bootloader.nix
+    ./misc.nix
     ./network.nix
   ];
 

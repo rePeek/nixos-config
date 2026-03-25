@@ -6,5 +6,6 @@
     ./ssh.nix
     ./i18n.nix
     ./misc.nix
+    ./boot.nix
   ];
 }
