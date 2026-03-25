@@ -1,4 +1,13 @@
 {
+  fileSystems."/home/asen/share" = {
+    device = "/dev/disk/by-uuid/9498187F98186252";
+    fsType = "ntfs-3g";
+    options = [
+      "rw"
+      "uid=1000"
+    ];
+  };
+
   disko.devices = {
     disk = {
       data_public = {

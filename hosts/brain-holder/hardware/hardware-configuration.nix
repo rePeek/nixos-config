@@ -2,9 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -44,20 +42,6 @@
     { device = "/dev/disk/by-uuid/bacf7eb9-a9dc-4f93-a499-d582a42c8939"; }
   ];
 
-  fileSystems."/home/asen/share" = {
-    device = "/dev/disk/by-uuid/9498187F98186252";
-    fsType = "ntfs-3g";
-    options = [
-      "rw"
-      "uid=1000"
-    ];
-  };
-
-  # fileSystems."/var/lib/nextcloud/data" = {
-  #     device = "/public_data/data/nextcloud";
-  #     options = [ "bind" ];
-  #   };
-
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -67,5 +51,4 @@
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

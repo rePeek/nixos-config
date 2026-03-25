@@ -1,7 +1,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./disko-config.nix
+    ./disk.nix
     ./gpu.nix
+    ./cpu.nix
+    ./filesystem.nix
   ];
 }
