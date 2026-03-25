@@ -4,7 +4,6 @@
     ./extraServices
     ./nix.nix
     ./pipewire.nix
-    ./program.nix
     ./security.nix
     ./services.nix
     ./ssh.nix
@@ -12,5 +11,6 @@
     ./xserver.nix
     ./i18n.nix
     ./greeted.nix
+    ./misc.nix
   ];
 }
