@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs; [
     # provides `pactl`, which is required by some apps(e.g. sonic-pi)
     pulseaudio
+    pavucontrol
   ];
 
   # PipeWire is a new low-level multimedia framework.
