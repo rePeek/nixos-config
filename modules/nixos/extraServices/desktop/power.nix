@@ -6,7 +6,10 @@ in
 {
   options.modules.powerManagement = {
     type = lib.mkOption {
-      type = lib.types.enum [ "workstation" "laptop" ];
+      type = lib.types.enum [
+        "workstation"
+        "laptop"
+      ];
       default = "workstation";
       description = "Power management profile.";
     };
@@ -22,9 +25,9 @@ in
         tuned = {
           enable = true;
           settings.dynamic_tuning = true; # 根据负载动态调整
-          ppdSupport = true;# 允许 GNOME/KDE 等桌面切换电源配置
+          ppdSupport = true; # 允许 GNOME/KDE 等桌面切换电源配置
         };
-        upower.enable = true;# 提供电池状态，供 tuned-ppd 使用
+        upower.enable = true; # 提供电池状态，供 tuned-ppd 使用
         power-profiles-daemon.enable = false;
         tlp.enable = false;
       })

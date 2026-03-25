@@ -5,6 +5,8 @@
     ./greeted.nix
     ./bluetooth.nix
     ./misc.nix
+    ./security.nix
+    ./wayland.nix
     # disable now，后续需要想一下有无更好的方式。
     # ./power.nix
   ];

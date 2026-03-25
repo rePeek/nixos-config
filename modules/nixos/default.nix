@@ -1,12 +1,9 @@
 {
   imports = [
-    ./pkgs.nix
     ./extraServices
+    ./pkgs.nix
     ./nix.nix
-    ./security.nix
     ./ssh.nix
-    ./wayland.nix
-    ./xserver.nix
     ./i18n.nix
     ./misc.nix
   ];
