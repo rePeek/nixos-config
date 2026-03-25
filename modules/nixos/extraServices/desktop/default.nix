@@ -5,6 +5,8 @@
     ./greeted.nix
     ./bluetooth.nix
     ./misc.nix
+    # disable now，后续需要想一下有无更好的方式。
+    # ./power.nix
   ];
 
   # 作用：启用 dconf 配置数据库。
