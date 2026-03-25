@@ -68,6 +68,7 @@ in
         };
         # misc
         auto-save.after-delay.enable = true;
+        clipboard-provider = "termcode";
       };
 
       keys.normal = {
