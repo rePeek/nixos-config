@@ -13,10 +13,6 @@
     fastfetch
     zip
     xfce.thunar # xfce4's file manager
-    # telegram-desktop
-    #
-    devbox
     webp-pixbuf-loader
-    # openlist
   ];
 }
