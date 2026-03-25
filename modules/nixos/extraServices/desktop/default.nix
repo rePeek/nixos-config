@@ -3,6 +3,7 @@
     ./fonts.nix
     ./pipewire.nix
     ./greeted.nix
+    ./bluetooth.nix
   ];
 
   # 作用：启用 dconf 配置数据库。
