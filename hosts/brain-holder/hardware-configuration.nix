@@ -13,7 +13,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-
+  hardware.enableRedistributableFirmware = true;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ahci"

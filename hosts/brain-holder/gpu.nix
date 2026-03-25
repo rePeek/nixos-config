@@ -1,42 +1,34 @@
 { config, lib, ... }:
 {
-  # 或许不应该放在 core 目录下，应该和 host 放在一起
-  hardware = {
-    # TODO:会在24.11 改为 opengl
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
-  hardware.enableRedistributableFirmware = true;
+  boot.kernelParams = [
+    # Since NVIDIA does not load kernel mode setting by default,
+    # enabling it is required to make Wayland compositors function properly.
+    "nvidia-drm.fbdev=1"
+  ];
+  services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
+
   hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of
-    # supported GPUs is at:
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-    # Only available from driver 515.43.04+
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
+    # Open-source kernel modules are preferred over and planned to steadily replace proprietary modules
+    open = true;
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
+    # package = config.boot.kernelPackages.nvidiaPackages.production;
+
+    # https://github.com/NixOS/nixpkgs/issues/489947
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+    # required by most wayland compositors!
+    modesetting.enable = true;
+    powerManagement.enable = true;
+
+    dynamicBoost.enable = lib.mkForce true;
+  };
+  hardware.nvidia-container-toolkit.enable = true;
+  hardware.graphics = {
+    enable = true;
+    # needed by nvidia-docker
+    enable32Bit = true;
   };
 }
