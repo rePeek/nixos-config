@@ -1,9 +1,10 @@
 { pkgs, ... }:
 {
+  # maybe have better config
   services = {
     printing.enable = true; # Enable CUPS to print documents.
     geoclue2.enable = true; # Enable geolocation services.
-
+    gvfs.enable = true;
     udev.packages = with pkgs; [
       gnome-settings-daemon
       # platformio # udev rules for platformio
