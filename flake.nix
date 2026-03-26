@@ -42,31 +42,22 @@
       home-manager,
       ...
     }@inputs:
-    let
-      mkNixosConfig =
-        hostName: usernames:
-        let
-          specialArgs = { inherit inputs; };
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
+    {
+      nixosConfigurations = {
+        brain-holder = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
-            (./hosts + "/${hostName}")
+            ./hosts/brain-holder
             inputs.disko.nixosModules.disko
-
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
               inherit inputs;
-              hostName = hostName;
-              usernames = usernames;
+              hostName = "brain-holder";
+              usernames = [ "asen" ];
             })
           ];
         };
-    in
-    {
-      nixosConfigurations = {
-        brain-holder = mkNixosConfig "brain-holder" [ "asen" ];
       };
 
       # None nixos systerm
