@@ -1,7 +1,6 @@
 {
   imports = [
     ./desktop
-    ./container.nix
     ./nextcloud.nix
     ./dae.nix
     ./virtualization.nix

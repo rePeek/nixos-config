@@ -8,7 +8,7 @@
       "networkmanager"
       "wheel"
       "libvirtd"
-      "podman"
+      "docker"
     ];
     shell = pkgs.nushell;
     # 需要加 openssh
