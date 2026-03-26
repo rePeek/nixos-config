@@ -10,6 +10,6 @@
 
   programs.git.settings.user = {
     name = "rePeek";
-    email = "wangsenyin@gmail.com";
+    email = "senxlin@gmail.com";
   };
 }
