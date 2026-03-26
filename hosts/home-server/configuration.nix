@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware
 
     ./user.nix
     ./network.nix

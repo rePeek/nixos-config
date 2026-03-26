@@ -1,11 +1,13 @@
 {
   imports = [
-    ../../modules/nixos
-    ../../modules/nixos/extraServices
     ./hardware
+
     ./user.nix
     ./misc.nix
     ./network.nix
+
+    ../../modules/nixos
+    ../../modules/nixos/extraServices
   ];
 
   modules.desktop.gaming.enable = true;
