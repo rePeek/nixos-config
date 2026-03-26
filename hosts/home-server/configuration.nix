@@ -12,7 +12,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # ./tailscale.nix
     ../../modules/nixos
     ../../modules/nixos/extraServices/tailscale.nix
     ../../modules/nixos/extraServices/virtualization.nix
