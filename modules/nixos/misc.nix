@@ -6,5 +6,6 @@
   services.libinput.enable = true;
   # To prevent getting stuck at shutdown
   systemd.settings.Manager.DefaultTimeoutStopSec = "10s";
-
+  # 允许分发的闭源专有固件
+  hardware.enableRedistributableFirmware = true;
 }
