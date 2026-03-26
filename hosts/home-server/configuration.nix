@@ -12,8 +12,15 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./tailscale.nix
+    # ./tailscale.nix
+    ../../modules/nixos
+    ../../modules/nixos/extraServices/tailscale.nix
+    ../../modules/nixos/extraServices/virtualization.nix
+    ../../modules/nixos/extraServices/dae.nix
   ];
+
+  modules.network.daed.enable = true;
+  modules.virtualization.custom.docker = true;
 
   nix.settings.experimental-features = [
     "nix-command"

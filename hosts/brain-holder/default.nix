@@ -1,6 +1,7 @@
 {
   imports = [
     ../../modules/nixos
+    ../../modules/nixos/extraServices
     ./hardware
     ./user.nix
     ./misc.nix
