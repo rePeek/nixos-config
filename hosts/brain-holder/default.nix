@@ -12,6 +12,4 @@
   modules.network.daed.enable = true;
   modules.virtualization.custom.docker = true;
   # modules.powerManagement.type = "workstation";
-
-  system.stateVersion = "25.11"; # Did you read the comment?
 }
