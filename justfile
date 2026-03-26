@@ -9,8 +9,11 @@
 deploy-brain:
   nixos-rebuild switch --flake .#brain-holder --sudo
 
+deploy-server:
+  nixos-rebuild switch --flake .#home-server --sudo
+
 deploy-docker:
-  home-manager switch --flake .#root --show-trace
+  home-manager switch --flake .#root
   
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose

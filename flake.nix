@@ -44,6 +44,7 @@
     }@inputs:
     {
       nixosConfigurations = {
+        # daily use
         brain-holder = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
@@ -55,6 +56,21 @@
               inherit inputs;
               hostName = "brain-holder";
               usernames = [ "asen" ];
+            })
+          ];
+        };
+
+        # home server
+        home-server = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/home-server/configuration.nix
+            home-manager.nixosModules.home-manager
+            (import ./modules/nixos/home-manager.nix {
+              inherit inputs;
+              hostName = "home-server";
+              usernames = [ "wanglei" ];
             })
           ];
         };
