@@ -66,6 +66,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/home-server/configuration.nix
+            inputs.disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
               inherit inputs;
