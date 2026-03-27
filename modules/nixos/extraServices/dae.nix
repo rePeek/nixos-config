@@ -28,7 +28,7 @@ in
         };
 
         configDir = "/etc/dae-wing";
-        listen = "127.0.0.1:2023";
+        listen = "0.0.0.0:2023";
       };
     };
   };
