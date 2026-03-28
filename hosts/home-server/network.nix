@@ -13,6 +13,11 @@
       allowedTCPPorts = [
         22
         2023
+        # ragflow
+        49385
+        # openclaw
+        18789
+        18790
       ];
     };
 
