@@ -6,7 +6,9 @@
 }:
 {
   home-manager = {
+    # 用系统的 pkgs（保证 overlay 生效）
     useGlobalPkgs = true;
+    # 包安装到用户环境（PATH 正常）
     useUserPackages = true;
     backupFileExtension = "bkp";
     extraSpecialArgs = { inherit inputs; };
