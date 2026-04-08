@@ -18,16 +18,11 @@ deploy-docker:
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 
-up:
-  nix flake update
+up package="":
+  nix flake update {{package}}
 
 fmt:
   treefmt .
-
-# Update specific input
-# usage: make upp i=home-manager
-upp:
-  nix flake update $(i)
 
 history:
   nix profile history --profile /nix/var/nix/profiles/system
