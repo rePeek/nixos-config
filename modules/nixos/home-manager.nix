@@ -1,7 +1,10 @@
+{ hostName, usernames }:
 {
-  hostName,
-  usernames,
+  config,
+  pkgs,
+  lib,
   inputs,
+  pkgsUnstable,
   ...
 }:
 {
@@ -11,13 +14,14 @@
     # 包安装到用户环境（PATH 正常）
     useUserPackages = true;
     backupFileExtension = "bkp";
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+      inherit pkgsUnstable;
+    };
     users = builtins.listToAttrs (
       map (username: {
         name = username;
-        value = import ../../hosts/${hostName}/users/${username}.nix {
-          inherit inputs;
-        };
+        value = import ../../hosts/${hostName}/users/${username}.nix;
       }) usernames
     );
   };

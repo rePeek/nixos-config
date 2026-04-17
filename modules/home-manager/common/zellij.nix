@@ -1,5 +1,6 @@
 {
   lib,
+  pkgsUnstable,
   ...
 }:
 {
@@ -12,6 +13,7 @@
 
   programs.zellij = {
     enable = true;
+    package = pkgsUnstable.zellij;
     settings = {
       # ui
       theme = "catppuccin-mocha";

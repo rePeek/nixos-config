@@ -26,6 +26,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -63,20 +64,35 @@
       self,
       nixpkgs,
       home-manager,
+      nixpkgs-unstable,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+
+      mkPkgsUnstable =
+        system:
+        import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+      pkgsUnstable = mkPkgsUnstable system;
+    in
     {
       nixosConfigurations = {
         # daily use
         brain-holder = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgsUnstable;
+          };
           modules = [
             ./hosts/brain-holder
             inputs.disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
-              inherit inputs;
               hostName = "brain-holder";
               usernames = [ "asen" ];
             })
@@ -85,14 +101,16 @@
 
         # home server
         home-server = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgsUnstable;
+          };
           modules = [
             ./hosts/home-server/configuration.nix
             inputs.disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
-              inherit inputs;
               hostName = "home-server";
               usernames = [ "wanglei" ];
             })
@@ -102,11 +120,14 @@
 
       # None nixos systerm
       homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ./hosts/nixos-in-docker/root.nix
         ];
-        extraSpecialArgs.inputs = inputs;
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit pkgsUnstable;
+        };
       };
     };
 }
