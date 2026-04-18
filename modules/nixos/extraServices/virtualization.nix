@@ -31,13 +31,6 @@ in
             "--filter=label!=important"
           ];
         };
-        daemon.settings = {
-          proxies = {
-            http-proxy = "http://127.0.0.1:7897";
-            https-proxy = "http://127.0.0.1:7897";
-            no-proxy = "localhost,127.0.0.1";
-          };
-        };
         # 存储驱动，默认 overlay2 已足够
         storageDriver = "overlay2";
       };

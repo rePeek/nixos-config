@@ -6,11 +6,13 @@
   ...
 }:
 {
+  networking.hostName = "home-server";
+
   imports = [
     ./hardware
+    ./network
 
     ./user.nix
-    ./network.nix
 
     ../../modules/nixos
     ../../modules/nixos/extraServices/tailscale.nix
@@ -18,6 +20,6 @@
     ../../modules/nixos/extraServices/dae.nix
   ];
 
-  modules.network.daed.enable = true;
+  modules.network.daed.enable = false;
   modules.virtualization.custom.docker = true;
 }
