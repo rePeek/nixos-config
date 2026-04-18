@@ -54,8 +54,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    daeuniverse.url = "github:daeuniverse/flake.nix";
-
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     agenix.url = "github:ryantm/agenix";

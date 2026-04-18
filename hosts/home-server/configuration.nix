@@ -17,9 +17,9 @@
     ../../modules/nixos
     ../../modules/nixos/extraServices/tailscale.nix
     ../../modules/nixos/extraServices/virtualization.nix
-    ../../modules/nixos/extraServices/dae.nix
+    ../../modules/nixos/extraServices/mihomo.nix
   ];
 
-  modules.network.daed.enable = false;
+  modules.network.clash.enable = true;
   modules.virtualization.custom.docker = true;
 }

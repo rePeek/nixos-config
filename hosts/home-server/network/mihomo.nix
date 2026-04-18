@@ -36,7 +36,7 @@ in
       log-level: info
 
       external-controller: 0.0.0.0:9090
-      secret: "change-me"
+      secret: "112358"
 
       profile:
         store-selected: true
@@ -46,6 +46,12 @@ in
         enable: true
         ipv6: false
         enhanced-mode: fake-ip
+        fake-ip-filter:
+          - "github.com"
+          - "*.github.com"
+          - "githubusercontent.com"
+          - "*.githubusercontent.com"
+          - "ssh.github.com"
         nameserver:
           - 1.1.1.1
           - 8.8.8.8

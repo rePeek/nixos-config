@@ -37,16 +37,11 @@ in
 
       allowedTCPPorts = [
         22
-        # dae
-        2023
         # ragflow
         49385
         # openclaw
         18789
         18790
-        # mihomo
-        7890
-        9090
 
         53
         7890

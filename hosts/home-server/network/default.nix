@@ -5,6 +5,6 @@
   imports = [
     ./network.nix
     ./dnsmasq.nix
-    ./mihomo.nix
+    # ./mihomo.nix
   ];
 }
