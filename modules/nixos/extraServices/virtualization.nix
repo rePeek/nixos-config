@@ -44,28 +44,46 @@ in
     })
 
     (lib.mkIf cfg.libvirtd {
+      # 宿主机侧：启用 libvirt 图形管理工具
+      programs.virt-manager.enable = true;
+
       environment.systemPackages = with pkgs; [
-        virt-manager
+        # 图形控制台查看工具
         virt-viewer
+
+        # SPICE 相关：
+        # 用于图形控制台、剪贴板、动态分辨率、USB 重定向等
         spice
         spice-gtk
         spice-protocol
-        virtio-win
-        win-spice
+
+        # 某些环境里 virt-manager 显示会用到图标主题
         adwaita-icon-theme
+
+        # libvirt 默认 NAT 网络常会依赖 dnsmasq
+        dnsmasq
       ];
+
       virtualisation = {
         libvirtd = {
           enable = true;
+
           qemu = {
+            # 需要 TPM 的 Linux guest 可直接使用
             swtpm.enable = true;
-            ovmf.enable = true;
-            ovmf.packages = [ pkgs.OVMFFull.fd ];
+
+            # 25.11 不再写 ovmf.enable / ovmf.packages
+            # 现在由 libvirt + qemu 的机制自动处理 UEFI 固件
           };
         };
+
+        # 宿主机侧 USB 重定向支持
         spiceUSBRedirection.enable = true;
       };
-      services.spice-vdagentd.enable = true;
+
+      # libvirt 默认 NAT 网桥一般是 virbr0
+      # 某些情况下不放行会影响 guest 网络
+      networking.firewall.trustedInterfaces = [ "virbr0" ];
     })
   ];
 }

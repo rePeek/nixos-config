@@ -14,5 +14,6 @@
   modules.desktop.gaming.enable = true;
   # modules.network.daed.enable = true;
   modules.virtualization.custom.docker = true;
+  modules.virtualization.custom.libvirtd = true;
   # modules.powerManagement.type = "workstation";
 }
