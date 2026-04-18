@@ -38,3 +38,9 @@ gc:
   # garbage collect all unused nix store entries
   sudo nix store gc --debug
   sudo nix-collect-garbage --delete-old
+
+secret-edit name:
+    cd secrets && agenix -e "{{name}}.age"
+
+secret-rekey:
+    cd secrets && agenix --rekey

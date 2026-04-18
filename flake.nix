@@ -57,6 +57,8 @@
     daeuniverse.url = "github:daeuniverse/flake.nix";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
@@ -109,6 +111,7 @@
           modules = [
             ./hosts/home-server/configuration.nix
             inputs.disko.nixosModules.disko
+            inputs.agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
               hostName = "home-server";
