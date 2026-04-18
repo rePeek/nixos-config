@@ -93,6 +93,7 @@
           modules = [
             ./hosts/brain-holder
             inputs.disko.nixosModules.disko
+            inputs.agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             (import ./modules/nixos/home-manager.nix {
               hostName = "brain-holder";
