@@ -25,6 +25,10 @@
          }
         }
       '';
+      environmentVariables = {
+        EDITOR = "hx";
+        VISUAL = "hx";
+      };
     };
 
     fish = {
