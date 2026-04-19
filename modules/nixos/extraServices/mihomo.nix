@@ -60,6 +60,14 @@ in
             - 'controlplane.tailscale.com'
             - 'log.tailscale.com'
             - 'login.tailscale.com'
+            # github
+            - 'github.com'
+            - '*.github.com'
+            - '*.githubusercontent.com'
+            - '*.githubassets.com'
+            - 'raw.githubusercontent.com'
+            - 'objects.githubusercontent.com'
+            - 'release-assets.githubusercontent.com'
           nameserver:
             - 1.1.1.1
             - 8.8.8.8
@@ -192,6 +200,13 @@ in
             path: ./ruleset/bard.yaml
             interval: 86400
 
+          github:
+            type: http
+            behavior: domain
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.list"
+            path: ./ruleset/github.yaml
+            interval: 86400
+
         rules:
           - DOMAIN,controlplane.tailscale.com,DIRECT
           - DOMAIN,log.tailscale.com,DIRECT
@@ -200,6 +215,7 @@ in
           - DOMAIN-SUFFIX,ts.net,DIRECT
           - DOMAIN-KEYWORD,tailscale,DIRECT
           - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+          - RULE-SET,github,PROXY
           - RULE-SET,private,DIRECT
           - RULE-SET,telegram-domain,TG-HK
           - RULE-SET,telegram-ip,TG-HK
