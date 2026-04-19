@@ -54,6 +54,12 @@ in
           enable: true
           ipv6: false
           enhanced-mode: fake-ip
+          fake-ip-filter:
+            - '*.tailscale.com'
+            - '*.ts.net'
+            - 'controlplane.tailscale.com'
+            - 'log.tailscale.com'
+            - 'login.tailscale.com'
           nameserver:
             - 1.1.1.1
             - 8.8.8.8
@@ -67,6 +73,10 @@ in
           auto-route: true
           auto-redirect: true
           auto-detect-interface: true
+          exclude-interface:
+            - tailscale0
+          route-exclude-address:
+            - 100.64.0.0/10
 
         proxy-providers:
           mysub:
@@ -183,6 +193,13 @@ in
             interval: 86400
 
         rules:
+          - DOMAIN,controlplane.tailscale.com,DIRECT
+          - DOMAIN,log.tailscale.com,DIRECT
+          - DOMAIN,login.tailscale.com,DIRECT
+          - DOMAIN-SUFFIX,tailscale.com,DIRECT
+          - DOMAIN-SUFFIX,ts.net,DIRECT
+          - DOMAIN-KEYWORD,tailscale,DIRECT
+          - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
           - RULE-SET,private,DIRECT
           - RULE-SET,telegram-domain,TG-HK
           - RULE-SET,telegram-ip,TG-HK
