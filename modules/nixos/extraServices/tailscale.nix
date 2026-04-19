@@ -1,8 +1,11 @@
-{ config, ... }:
+{ config, pkgsUnstable, ... }:
 
 {
   # 1. Enable the service and the firewall
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = pkgsUnstable.tailscale;
+  };
   networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
