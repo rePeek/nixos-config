@@ -5,7 +5,6 @@
     ./user.nix
     ./misc.nix
     ./network.nix
-    ./clash-verge.nix
 
     ../../modules/nixos
     ../../modules/nixos/extraServices
