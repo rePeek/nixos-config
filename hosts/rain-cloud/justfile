@@ -1,0 +1,5 @@
+default:
+    @just --list
+
+deploy-remote:
+    export NIX_SSHOPTS="-p 23508"; nixos-rebuild switch --flake .#rainyun --target-host root@103.205.254.65

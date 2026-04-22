@@ -15,6 +15,9 @@ deploy-server:
 deploy-docker:
   home-manager switch --flake .#root
   
+deploy-remote:
+    export NIX_SSHOPTS="-p 23508"; nixos-rebuild switch --flake .#rainyun --target-host root@103.205.254.65
+
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 

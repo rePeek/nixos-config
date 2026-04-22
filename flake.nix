@@ -100,7 +100,6 @@
           ];
         };
 
-        # home server
         home-server = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -116,6 +115,14 @@
               hostName = "home-server";
               usernames = [ "wanglei" ];
             })
+          ];
+        };
+
+        rainyun = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/rain-cloud/configuration.nix
           ];
         };
       };
