@@ -258,6 +258,9 @@ in
     systemd.services.mihomo = {
       after = [ "mihomo-config.service" ];
       wants = [ "mihomo-config.service" ];
+      restartTriggers = [
+        config.systemd.services.mihomo-config.script # 用当前配置生成服务作为触发器
+      ];
     };
 
     networking.firewall.allowedTCPPorts = [
