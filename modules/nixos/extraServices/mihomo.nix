@@ -74,7 +74,7 @@ in
 
         tun:
           enable: true
-          stack: mixed
+          stack: system
           dns-hijack:
             - "any:53"
             - "tcp://any:53"
@@ -172,6 +172,14 @@ in
             path: ./ruleset/telegram-ip.yaml
             interval: 86400
 
+          microsoft:
+            type: http
+            behavior: domain
+            format: yaml
+            path: ./ruleset/microsoft.yaml
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.yaml"
+            interval: 86400
+
           openai:
             type: http
             behavior: classical
@@ -208,6 +216,9 @@ in
             interval: 86400
 
         rules:
+          - RULE-SET,cn-domain,DIRECT
+          - RULE-SET,cn-ip,DIRECT
+
           - DOMAIN,controlplane.tailscale.com,DIRECT
           - DOMAIN,log.tailscale.com,DIRECT
           - DOMAIN,login.tailscale.com,DIRECT
@@ -215,16 +226,20 @@ in
           - DOMAIN-SUFFIX,ts.net,DIRECT
           - DOMAIN-KEYWORD,tailscale,DIRECT
           - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+          
           - RULE-SET,github,PROXY
           - RULE-SET,private,DIRECT
+          
           - RULE-SET,telegram-domain,TG-HK
           - RULE-SET,telegram-ip,TG-HK
+
           - RULE-SET,openai,AI-US
           - RULE-SET,claude,AI-US
           - RULE-SET,copilot,AI-US
           - RULE-SET,bard,AI-US
-          - RULE-SET,cn-domain,DIRECT
-          - RULE-SET,cn-ip,DIRECT
+          
+          - RULE-SET,microsoft,DIRECT
+
           - MATCH,PROXY
         EOF
 
