@@ -211,8 +211,9 @@ in
           github:
             type: http
             behavior: domain
+            format: text
             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.list"
-            path: ./ruleset/github.yaml
+            path: ./ruleset/github.list
             interval: 86400
 
         rules:
