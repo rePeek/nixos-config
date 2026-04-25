@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
@@ -31,7 +31,7 @@
     # 开发与代码工具
     bat
     just # should config in devenv
-    devenv
+    pkgsUnstable.devenv
     difftastic
     repomix
     # should config in devenv
