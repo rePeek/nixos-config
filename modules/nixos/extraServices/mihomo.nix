@@ -183,6 +183,14 @@ in
             path: ./ruleset/cn-ip.yaml
             interval: 86400
 
+          steam:
+            type: http
+            behavior: classical
+            format: yaml
+            path: ./ruleset/steam.yaml
+            url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Steam/Steam.yaml
+            interval: 86400
+
           telegram-domain:
             type: http
             behavior: domain
@@ -254,7 +262,18 @@ in
           - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
           
           - RULE-SET,github,PROXY
+
           - RULE-SET,private,DIRECT
+
+          - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+          - DOMAIN-SUFFIX,steamstatic.com,DIRECT
+          - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
+          - DOMAIN-SUFFIX,steamcommunity.com,HK-AUTO
+          - DOMAIN-SUFFIX,steampowered.com,HK-AUTO
+          - DOMAIN-SUFFIX,steamgames.com,HK-AUTO
+          - DOMAIN-SUFFIX,steamusercontent.com,HK-AUTO
+          - DOMAIN-SUFFIX,steamserver.net,HK-AUTO
+          - RULE-SET,steam,HK-AUTO
           
           - RULE-SET,telegram-domain,TG-HK
           - RULE-SET,telegram-ip,TG-HK
