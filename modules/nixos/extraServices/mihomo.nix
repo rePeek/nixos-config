@@ -23,6 +23,18 @@ in
       group = "root";
       mode = "0400";
     };
+    age.secrets.dream-subscription = {
+      file = inputs.self + /secrets/dream-subscription.age;
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+    age.secrets.jms-subscription = {
+      file = inputs.self + /secrets/jms-subscription.age;
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
 
     systemd.services.mihomo-config = {
       description = "Generate Mihomo runtime config";
@@ -35,6 +47,8 @@ in
       script = ''
               install -d -m 0755 /run/mihomo
               SUB_URL="$(cat ${config.age.secrets.flybit-subscription.path})"
+              DREAM_URL="$(cat ${config.age.secrets.dream-subscription.path})"
+              JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
 
               cat > ${runtimeConfig} <<EOF
         mixed-port: 7890
@@ -96,34 +110,35 @@ in
               url: "https://www.gstatic.com/generate_204"
               interval: 300
 
+          dream_sub:
+            type: http
+            url: "$DREAM_URL"
+            interval: 86400
+            health-check:
+              enable: true
+              url: "https://www.gstatic.com/generate_204"
+              interval: 300
+              
+          jms_sub:
+            type: http
+            url: "$JMS_URL"
+            interval: 86400
+            health-check:
+              enable: true
+              url: "https://www.gstatic.com/generate_204"
+              interval: 300
+
         proxy-groups:
           - name: PROXY
             type: select
             use:
-              - mysub
-            proxies:
-              - HK-AUTO
-              - US-AUTO
-              - DIRECT
-
-          - name: AI-US
-            type: select
-            proxies:
-              - US-AUTO
-              - PROXY
-              - DIRECT
-
-          - name: TG-HK
-            type: select
-            proxies:
-              - HK-AUTO
-              - PROXY
-              - DIRECT
+              - jms_sub
 
           - name: HK-AUTO
             type: url-test
             use:
               - mysub
+              - dream_sub
             filter: "(?i)香港|Hong Kong|HK"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
@@ -131,10 +146,20 @@ in
           - name: US-AUTO
             type: url-test
             use:
-              - mysub
-            filter: "(?i)美国|United States|USA|US"
+              - jms_sub
+            filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
+
+          - name: AI-US
+            type: select
+            proxies:
+              - US-AUTO
+
+          - name: TG-HK
+            type: select
+            proxies:
+              - HK-AUTO
 
         rule-providers:
           private:

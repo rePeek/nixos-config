@@ -11,4 +11,12 @@ in
     home-server
     brain-holder
   ];
+  "dream-subscription.age".publicKeys = [
+    home-server
+    brain-holder
+  ];
+  "jms-subscription.age".publicKeys = [
+    home-server
+    brain-holder
+  ];
 }
