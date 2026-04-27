@@ -83,6 +83,7 @@ in
             - 'objects.githubusercontent.com'
             - 'release-assets.githubusercontent.com'
           nameserver:
+            - 223.5.5.5
             - 1.1.1.1
             - 8.8.8.8
 
@@ -130,11 +131,11 @@ in
 
         proxy-groups:
           - name: PROXY
-            type: select
+            type: url-test
             use:
               - jms_sub
 
-          - name: HK-AUTO
+          - name: HK
             type: url-test
             use:
               - mysub
@@ -143,7 +144,7 @@ in
             url: "https://www.gstatic.com/generate_204"
             interval: 300
 
-          - name: US-AUTO
+          - name: US
             type: url-test
             use:
               - jms_sub
@@ -151,21 +152,32 @@ in
             url: "https://www.gstatic.com/generate_204"
             interval: 300
 
-          - name: AI-US
-            type: select
-            proxies:
-              - US-AUTO
-
-          - name: TG-HK
-            type: select
-            proxies:
-              - HK-AUTO
-
         rule-providers:
+          reject:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+            path: ./ruleset/reject.yaml
+            interval: 86400
+
+          proxy:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+            path: ./ruleset/proxy.yaml
+            interval: 86400
+
+          direct:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+            path: ./ruleset/direct.yaml
+            interval: 86400
+
           private:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.yaml"
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
             path: ./ruleset/private.yaml
             interval: 86400
 
@@ -181,6 +193,20 @@ in
             behavior: ipcidr
             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.yaml"
             path: ./ruleset/cn-ip.yaml
+            interval: 86400
+
+          tld-not-cn:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
+            path: ./ruleset/tld-not-cn.yaml
+            interval: 86400
+ 
+          gfw:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
+            path: ./ruleset/gfw.yaml
             interval: 86400
 
           steam:
@@ -249,7 +275,19 @@ in
             path: ./ruleset/github.list
             interval: 86400
 
+          lancidr:
+            type: http
+            behavior: ipcidr
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt"
+            path: ./ruleset/lancidr.yaml
+            interval: 86400
+
         rules:
+          - RULE-SET,reject,REJECT
+
+          - RULE-SET,private,DIRECT
+          - RULE-SET,direct,DIRECT
+          - RULE-SET,lancidr,DIRECT
           - RULE-SET,cn-domain,DIRECT
           - RULE-SET,cn-ip,DIRECT
 
@@ -261,29 +299,31 @@ in
           - DOMAIN-KEYWORD,tailscale,DIRECT
           - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
           
-          - RULE-SET,github,PROXY
-
-          - RULE-SET,private,DIRECT
-
           - DOMAIN-SUFFIX,steamcontent.com,DIRECT
           - DOMAIN-SUFFIX,steamstatic.com,DIRECT
           - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
-          - DOMAIN-SUFFIX,steamcommunity.com,HK-AUTO
-          - DOMAIN-SUFFIX,steampowered.com,HK-AUTO
-          - DOMAIN-SUFFIX,steamgames.com,HK-AUTO
-          - DOMAIN-SUFFIX,steamusercontent.com,HK-AUTO
-          - DOMAIN-SUFFIX,steamserver.net,HK-AUTO
-          - RULE-SET,steam,HK-AUTO
+          - DOMAIN-SUFFIX,steamcommunity.com,HK
+          - DOMAIN-SUFFIX,steampowered.com,HK
+          - DOMAIN-SUFFIX,steamgames.com,HK
+          - DOMAIN-SUFFIX,steamusercontent.com,HK
+          - DOMAIN-SUFFIX,steamserver.net,HK
+          - RULE-SET,steam,HK
           
-          - RULE-SET,telegram-domain,TG-HK
-          - RULE-SET,telegram-ip,TG-HK
+          - RULE-SET,github,PROXY
 
-          - RULE-SET,openai,AI-US
-          - RULE-SET,claude,AI-US
-          - RULE-SET,copilot,AI-US
-          - RULE-SET,bard,AI-US
+          - RULE-SET,telegram-domain,HK
+          - RULE-SET,telegram-ip,HK
+
+          - RULE-SET,openai,US
+          - RULE-SET,claude,US
+          - RULE-SET,copilot,US
+          - RULE-SET,bard,US
           
           - RULE-SET,microsoft,DIRECT
+
+          - RULE-SET,proxy,PROXY
+          - RULE-SET,tld-not-cn,PROXY
+          - RULE-SET,gfw,PROXY
 
           - MATCH,PROXY
         EOF
