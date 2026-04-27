@@ -8,6 +8,7 @@
     ./misc.nix
     ./boot.nix
     ./agenix.nix
+    ./fhs.nix
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
