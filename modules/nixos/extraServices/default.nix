@@ -7,5 +7,6 @@
     ./tailscale.nix
     ./gaming.nix
     ./mihomo.nix
+    ./agenix.nix
   ];
 }

@@ -17,6 +17,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = config.myModule.agenix.enable;
+        message = "modules.network.clash.enable requires myModule.agenix.enable = true;";
+      }
+    ];
+
     age.secrets.flybit-subscription = {
       file = inputs.self + /secrets/flybit-subscription.age;
       owner = "root";
@@ -201,7 +208,7 @@ in
             url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
             path: ./ruleset/tld-not-cn.yaml
             interval: 86400
- 
+
           gfw:
             type: http
             behavior: domain

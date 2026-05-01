@@ -7,7 +7,6 @@
     ./i18n.nix
     ./misc.nix
     ./boot.nix
-    ./agenix.nix
     ./fhs.nix
   ];
 
