@@ -141,6 +141,10 @@ in
             type: url-test
             use:
               - jms_sub
+            interval: 300
+            timeout: 3000
+            tolerance: 50
+            lazy: false
 
           - name: HK
             type: url-test
@@ -150,6 +154,8 @@ in
             filter: "(?i)香港|Hong Kong|HK"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
+            timeout: 3000
+            tolerance: 50
 
           - name: US
             type: url-test
@@ -158,6 +164,9 @@ in
             filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
+            timeout: 3000
+            tolerance: 50
+            lazy: false
 
         rule-providers:
           reject:
