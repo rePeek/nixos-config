@@ -7,14 +7,6 @@
 }:
 
 {
-  # Use mainland mirrors first for binary cache access on this host.
-  nix.settings = {
-    substituters = lib.mkForce [
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-      "https://mirrors.ustc.edu.cn/nix-channels/store"
-    ];
-  };
-
   networking.hostName = "Blue-10700";
 
   imports = [
@@ -25,6 +17,11 @@
     ../../modules/nixos
     ../../modules/nixos/extraServices/tailscale.nix
     ../../modules/nixos/extraServices/virtualization.nix
-
-  ];  
+    ../../modules/nixos/extraServices/mihomo.nix
+    ../../modules/nixos/extraServices/agenix.nix
+  ];
+    
+  myModule.agenix.enable = true;
+  modules.network.clash.enable = true;
+  modules.virtualization.custom.docker = true;
 }
