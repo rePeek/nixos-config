@@ -123,6 +123,18 @@
             ./hosts/rain-cloud/configuration.nix
           ];
         };
+
+        blue-10700 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgsUnstable;
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/blue-10700/configuration.nix
+          ];
+        };
       };
 
       # None nixos systerm
