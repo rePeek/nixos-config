@@ -133,6 +133,11 @@
           modules = [
             inputs.disko.nixosModules.disko
             ./hosts/blue-10700/configuration.nix
+            home-manager.nixosModules.home-manager
+            (import ./modules/nixos/home-manager.nix {
+              hostName = "blue-10700";
+              usernames = [ "asen" ];
+            })
           ];
         };
       };
