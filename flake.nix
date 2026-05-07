@@ -78,67 +78,58 @@
         };
 
       pkgsUnstable = mkPkgsUnstable system;
+
+      mkHost =
+        {
+          hostPath,
+          hostName ? null,
+          usernames ? [ ],
+          enableHomeManager ? true,
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgsUnstable;
+          };
+          modules = [
+            hostPath
+            inputs.disko.nixosModules.disko
+          ]
+          ++ nixpkgs.lib.optionals enableHomeManager [
+            home-manager.nixosModules.home-manager
+            (import ./modules/nixos/home-manager.nix {
+              inherit hostName usernames;
+            })
+          ]
+          ++ extraModules;
+        };
     in
     {
       nixosConfigurations = {
         # daily use
-        brain-holder = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit pkgsUnstable;
-          };
-          modules = [
-            ./hosts/brain-holder
-            inputs.disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            (import ./modules/nixos/home-manager.nix {
-              hostName = "brain-holder";
-              usernames = [ "asen" ];
-            })
-          ];
+        brain-holder = mkHost {
+          hostPath = ./hosts/brain-holder;
+          hostName = "brain-holder";
+          usernames = [ "asen" ];
         };
 
-        home-server = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit pkgsUnstable;
-          };
-          modules = [
-            ./hosts/home-server/configuration.nix
-            inputs.disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            (import ./modules/nixos/home-manager.nix {
-              hostName = "home-server";
-              usernames = [ "wanglei" ];
-            })
-          ];
+        home-server = mkHost {
+          hostPath = ./hosts/home-server/configuration.nix;
+          hostName = "home-server";
+          usernames = [ "wanglei" ];
         };
 
-        rainyun = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            inputs.disko.nixosModules.disko
-            ./hosts/rain-cloud/configuration.nix
-          ];
+        rainyun = mkHost {
+          hostPath = ./hosts/rain-cloud/configuration.nix;
+          enableHomeManager = false;
         };
 
-        blue-10700 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit pkgsUnstable;
-          };
-          modules = [
-            inputs.disko.nixosModules.disko
-            ./hosts/blue-10700/configuration.nix
-            home-manager.nixosModules.home-manager
-            (import ./modules/nixos/home-manager.nix {
-              hostName = "blue-10700";
-              usernames = [ "asen" ];
-            })
-          ];
+        blue-10700 = mkHost {
+          hostPath = ./hosts/blue-10700/configuration.nix;
+          hostName = "blue-10700";
+          usernames = [ "asen" ];
         };
       };
 
