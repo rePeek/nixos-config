@@ -70,63 +70,35 @@
     let
       system = "x86_64-linux";
 
-      mkPkgsUnstable =
-        system:
-        import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-
-      pkgsUnstable = mkPkgsUnstable system;
-
-      mkHost =
-        {
-          hostPath,
-          hostName ? null,
-          usernames ? [ ],
-          enableHomeManager ? true,
-          extraModules ? [ ],
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit pkgsUnstable;
-          };
-          modules = [
-            hostPath
-            inputs.disko.nixosModules.disko
-          ]
-          ++ nixpkgs.lib.optionals enableHomeManager [
-            home-manager.nixosModules.home-manager
-            (import ./modules/nixos/home-manager.nix {
-              inherit hostName usernames;
-            })
-          ]
-          ++ extraModules;
-        };
+      myLib = import ./lib.nix {
+        inherit nixpkgs;
+        inherit nixpkgs-unstable;
+        inherit home-manager;
+        inherit inputs;
+        inherit system;
+      };
     in
     {
       nixosConfigurations = {
         # daily use
-        brain-holder = mkHost {
+        brain-holder = myLib.mkHost {
           hostPath = ./hosts/brain-holder;
           hostName = "brain-holder";
           usernames = [ "asen" ];
         };
 
-        home-server = mkHost {
+        home-server = myLib.mkHost {
           hostPath = ./hosts/home-server/configuration.nix;
           hostName = "home-server";
           usernames = [ "wanglei" ];
         };
 
-        rainyun = mkHost {
+        rainyun = myLib.mkHost {
           hostPath = ./hosts/rain-cloud/configuration.nix;
           enableHomeManager = false;
         };
 
-        blue-10700 = mkHost {
+        blue-10700 = myLib.mkHost {
           hostPath = ./hosts/blue-10700/configuration.nix;
           hostName = "blue-10700";
           usernames = [ "asen" ];
@@ -141,7 +113,7 @@
         ];
         extraSpecialArgs = {
           inherit inputs;
-          inherit pkgsUnstable;
+          inherit (myLib) pkgsUnstable;
         };
       };
     };
