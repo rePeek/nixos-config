@@ -88,18 +88,18 @@
         };
 
         home-server = myLib.mkHost {
-          hostPath = ./hosts/home-server/configuration.nix;
+          hostPath = ./hosts/home-server;
           hostName = "home-server";
           usernames = [ "wanglei" ];
         };
 
         rainyun = myLib.mkHost {
-          hostPath = ./hosts/rain-cloud/configuration.nix;
+          hostPath = ./hosts/rain-cloud;
           enableHomeManager = false;
         };
 
         blue-10700 = myLib.mkHost {
-          hostPath = ./hosts/blue-10700/configuration.nix;
+          hostPath = ./hosts/blue-10700;
           hostName = "blue-10700";
           usernames = [ "asen" ];
         };
