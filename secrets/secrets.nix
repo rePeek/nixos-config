@@ -16,7 +16,7 @@ let
   mkSecret = publicKeys: {
     inherit publicKeys;
   };
-  
+
 in
 {
   "flybit-subscription.age" = mkSecret groups.all;

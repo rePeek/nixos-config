@@ -13,7 +13,7 @@ in
   imports = [
     inputs.agenix.nixosModules.default
   ];
-  
+
   options.myModule.agenix = {
     enable = lib.mkEnableOption "agenix support";
   };

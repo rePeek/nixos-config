@@ -20,7 +20,7 @@
     ../../modules/nixos/extraServices/mihomo.nix
     ../../modules/nixos/extraServices/agenix.nix
   ];
-    
+
   myModule.agenix.enable = true;
   modules.network.clash.enable = true;
   modules.virtualization.custom.docker = true;
