@@ -27,9 +27,6 @@ debug:
 up package="":
   nix flake update {{package}}
 
-fmt:
-  treefmt .
-
 history:
   nix profile history --profile /nix/var/nix/profiles/system
 

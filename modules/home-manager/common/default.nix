@@ -34,9 +34,6 @@
     pkgsUnstable.devenv
     difftastic
     repomix
-    # should config in devenv
-    nixfmt
-    nixfmt-tree
 
     # misc
     xclip
