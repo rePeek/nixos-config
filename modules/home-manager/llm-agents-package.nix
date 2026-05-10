@@ -5,8 +5,8 @@
     hermes-agent
     claude-code
     codex
-    beads
-    beads-viewer
     cli-proxy-api
+    vibe-kanban
+    code-review-graph
   ];
 }
