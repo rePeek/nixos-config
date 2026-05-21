@@ -19,10 +19,10 @@
 
     substituters = [
       # cache mirror located in China
-      # status: https://mirror.sjtu.edu.cn/
-      # "https://mirror.sjtu.edu.cn/nix-channels/store"
       # status: https://mirrors.ustc.edu.cn/status/
-      # "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      # status: https://mirror.sjtu.edu.cn/
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
 
       "https://nix-community.cachix.org"
       "https://cache.nixos.org"
@@ -34,6 +34,7 @@
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
+    fallback = true;
     builders-use-substitutes = true;
   };
 
