@@ -24,8 +24,8 @@ in
       }
     ];
 
-    age.secrets.flybit-subscription = {
-      file = inputs.self + /secrets/flybit-subscription.age;
+    age.secrets.ydy-subscription = {
+      file = inputs.self + /secrets/ydy-subscription.age;
       owner = "root";
       group = "root";
       mode = "0400";
@@ -53,7 +53,7 @@ in
       };
       script = ''
               install -d -m 0755 /run/mihomo
-              SUB_URL="$(cat ${config.age.secrets.flybit-subscription.path})"
+              YDY_URL="$(cat ${config.age.secrets.ydy-subscription.path})"
               DREAM_URL="$(cat ${config.age.secrets.dream-subscription.path})"
               JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
 
@@ -109,9 +109,9 @@ in
             - 100.64.0.0/10
 
         proxy-providers:
-          mysub:
+          ydy_sub:
             type: http
-            url: "$SUB_URL"
+            url: "$YDY_URL"
             interval: 86400
             health-check:
               enable: true
@@ -149,7 +149,7 @@ in
           - name: HK
             type: url-test
             use:
-              - mysub
+              - ydy_sub
               - dream_sub
             filter: "(?i)香港|Hong Kong|HK"
             url: "https://www.gstatic.com/generate_204"

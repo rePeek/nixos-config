@@ -19,7 +19,7 @@ let
 
 in
 {
-  "flybit-subscription.age" = mkSecret groups.all;
   "dream-subscription.age" = mkSecret groups.all;
   "jms-subscription.age" = mkSecret groups.all;
+  "ydy-subscription.age" = mkSecret groups.all;
 }
