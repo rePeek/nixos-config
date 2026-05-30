@@ -1,8 +1,16 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
+  nixpkgs.overlays = [
+    inputs.nix-cachyos-kernel.overlays.pinned
+  ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
   boot.loader.systemd-boot = {
     # we use Git for version control, so we don't need to keep too many generations.
     configurationLimit = lib.mkDefault 10;

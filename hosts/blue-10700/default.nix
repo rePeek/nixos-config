@@ -7,6 +7,7 @@
 }:
 
 {
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
   networking.hostName = "Blue-10700";
 
   imports = [
