@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf (config.custom.service.desktop.enable && config.custom.service.audio.enable) {
+  config = lib.mkIf (config.custom.service.desktop.enable && config.custom.hardware.audio.enable) {
     environment.systemPackages = with pkgs; [
       pavucontrol
     ];

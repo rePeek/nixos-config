@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.custom.service.audio;
+  cfg = config.custom.hardware.audio;
 in
 {
-  options.custom.service.audio.enable = lib.mkEnableOption "audio stack (PipeWire + WirePlumber)";
+  options.custom.hardware.audio.enable = lib.mkEnableOption "audio stack (PipeWire + WirePlumber)";
 
   config = lib.mkIf cfg.enable {
     services.pipewire = {

@@ -4,6 +4,7 @@
   imports = [
     ./bluetooth.nix
     ./firmware.nix
+    ./audio.nix
     ./cpu/intel.nix
     ./gpu/nvidia.nix
     ./kernel/cachyos.nix

@@ -12,7 +12,6 @@
   ];
 
   custom.service.desktop.enable = true;
-  custom.service.audio.enable = true;
   custom.desktop.bluetooth.enable = true;
   custom.desktop.network.enable = true;
   custom.service.fhs.enable = true;

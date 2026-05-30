@@ -9,6 +9,7 @@
   custom.boot.mode = "uefi";
 
   custom.hardware = {
+    audio.enable = true;
     bluetooth.enable = true;
     cpu.intel.enable = true;
     firmware.enable = true;
