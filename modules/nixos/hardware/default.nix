@@ -8,6 +8,5 @@
     ./gpu/nvidia.nix
     ./kernel/cachyos.nix
     ./storage/ssd.nix
-    ./power.nix
   ];
 }

@@ -16,8 +16,10 @@
     ./derper.nix
     ./my-derper.nix
 
-    ../../modules/nixos/core
+    ../../modules/nixos
   ];
+
+  custom.service.power.profile = "performance";
 
   time.timeZone = "Asia/Shanghai";
 

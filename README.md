@@ -73,7 +73,7 @@ modules/
 │   │       └── ssd.nix
 │   ├── fhs.nix
 │   ├── home-manager.nix
-│   └── extraServices/
+│   └── service/
 │       ├── desktop/             # 桌面、音频、字体和安全配置
 │       ├── agenix.nix
 │       ├── gaming.nix
@@ -106,7 +106,7 @@ modules/
 
 ### `brain-holder`
 
-日常使用的桌面主机，导入完整的 `modules/nixos/extraServices/` 服务集合。
+日常使用的桌面主机，导入完整的 `modules/nixos/service/` 服务集合。
 
 主要功能：
 

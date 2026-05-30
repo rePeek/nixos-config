@@ -1,7 +1,5 @@
 {
   imports = [
-    ../hardware
-
     ./boot.nix
     ./fonts.nix
     ./i18n.nix
@@ -9,6 +7,11 @@
     ./packages.nix
     ./ssh.nix
     ./system.nix
+
+    ./hardware
+    ./desktop
+    ./service
+    ./tools.nix
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?

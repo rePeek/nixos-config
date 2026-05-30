@@ -93,7 +93,7 @@ modules/nixos/
 │       └── ssd.nix
 ├── fhs.nix
 ├── home-manager.nix             # 按 hostName 和 usernames 加载用户配置
-└── extraServices/
+└── service/
     ├── default.nix              # 完整服务集合，brain-holder 使用
     ├── agenix.nix
     ├── gaming.nix
@@ -124,7 +124,7 @@ modules/home-manager/
 
 - `secrets/secrets.nix` 声明可解密密钥和加密文件。
 - `secrets/*.age` 保存加密内容。
-- `modules/nixos/extraServices/agenix.nix` 提供 `myModule.agenix.enable`。
+- `modules/nixos/service/agenix.nix` 提供 `myModule.agenix.enable`。
 - 需要密钥的模块通过 `config.age.secrets.<name>.path` 读取运行时解密文件。
 
 禁止在 `.nix`、脚本、文档或提交信息中新增明文密码、订阅地址、私钥和 API Token。发现历史遗留明文时，应指出风险并优先迁移到 agenix，不要继续复制扩散。
@@ -135,8 +135,8 @@ modules/home-manager/
 
 - 所有主机共享的系统配置放入 `modules/nixos/core/`。
 - 可复用但需要主机显式选择的硬件能力放入 `modules/nixos/hardware/`，并通过 `custom.hardware.*` 选项开启。
-- 可选系统服务放入 `modules/nixos/extraServices/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
-- 桌面系统服务放入 `modules/nixos/extraServices/desktop/`。
+- 可选系统服务放入 `modules/nixos/service/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
+- 桌面系统服务放入 `modules/nixos/desktop/`。
 - 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
 - 桌面用户配置放入 `modules/home-manager/gui/`。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
@@ -148,7 +148,7 @@ modules/home-manager/
 - 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
 - 主机硬件能力集中在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明。
 - 启动模式通过 `custom.hardware.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
-- `brain-holder` 导入完整的 `../../modules/nixos/extraServices`。
+- `brain-holder` 导入完整的 `../../modules/nixos/service`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。
 - Home Manager 用户入口位于 `hosts/<host>/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 自动加载。
 - 外部 Flake 输入通过 `inputs` 参数使用；稳定软件包通过 `pkgs` 使用，需要新版本时再使用 `pkgsUnstable`。
@@ -187,7 +187,7 @@ nixfmt <files...>
 
 ### 4.3 添加或修改系统服务
 
-1. 检查 `modules/nixos/extraServices/` 是否已有对应模块。
+1. 检查 `modules/nixos/service/` 是否已有对应模块。
 2. 通用可选服务优先新增独立模块，并使用 `options`、`lib.mkEnableOption` 和 `lib.mkIf`。
 3. 只在需要该服务的主机入口导入并启用。
 4. 检查端口、防火墙、运行用户、目录权限、密钥路径和服务依赖。

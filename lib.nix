@@ -6,6 +6,8 @@
   system,
 }:
 let
+  nixosModulesPath = ./modules/nixos;
+
   mkPkgsUnstable =
     system:
     import nixpkgs-unstable {
@@ -38,7 +40,7 @@ in
       ]
       ++ nixpkgs.lib.optionals enableHomeManager [
         home-manager.nixosModules.home-manager
-        (import ./modules/nixos/core/home-manager.nix {
+        (import (nixosModulesPath + "/home-manager.nix") {
           inherit hostName usernames;
         })
       ]

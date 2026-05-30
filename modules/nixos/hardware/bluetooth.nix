@@ -9,8 +9,7 @@ in
   options.custom.hardware.bluetooth.enable = lib.mkEnableOption "Bluetooth support";
 
   config = lib.mkIf cfg.enable {
-    # Use bluetoothctl for CLI pairing and blueman for GUI pairing.
     hardware.bluetooth.enable = true;
-    services.blueman.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
   };
 }

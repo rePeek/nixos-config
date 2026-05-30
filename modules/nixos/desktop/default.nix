@@ -9,9 +9,11 @@
 
   imports = [
     ./fonts.nix
+    ./blueman.nix
     ./pipewire.nix
     ./greeted.nix
     ./misc.nix
+    ./network.nix
     ./security.nix
     ./wayland.nix
   ];

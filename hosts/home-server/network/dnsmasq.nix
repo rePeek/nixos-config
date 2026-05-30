@@ -16,8 +16,8 @@ in
       ];
 
       dhcp-option = [
-        "3,${lanIp}" # 默认网关
-        "6,${lanIp}" # DNS
+        "3,${lanIp}"
+        "6,${lanIp}"
       ];
 
       domain-needed = true;
