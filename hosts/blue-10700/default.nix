@@ -17,12 +17,28 @@
     ../../modules/nixos
   ];
 
-  custom.service.agenix.enable = true;
-  custom.service.fhs.enable = true;
-  custom.service.mihomo.enable = true;
-  custom.service.power.profile = "performance";
-  custom.service.virtualization = {
-    docker = true;
+  custom = {
+    boot.mode = "uefi";
+
+    hardware = {
+      cpu.intel.enable = true;
+      firmware.enable = true;
+      kernel.cachyos = {
+        enable = true;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
+      };
+      storage.ssd.enable = true;
+    };
+
+    service = {
+      agenix.enable = true;
+      fhs.enable = true;
+      mihomo.enable = true;
+      power.profile = "performance";
+      virtualization = {
+        docker = true;
+      };
+      tailscale.enable = true;
+    };
   };
-  custom.service.tailscale.enable = true;
 }

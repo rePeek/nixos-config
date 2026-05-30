@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   networking.hostName = "brain-holder";
 
@@ -11,17 +12,42 @@
     ../../modules/nixos
   ];
 
-  custom.service.desktop.enable = true;
-  custom.desktop.bluetooth.enable = true;
-  custom.desktop.network.enable = true;
-  custom.service.fhs.enable = true;
-  custom.service.gaming.enable = true;
-  custom.service.power.profile = "performance";
-  custom.service.virtualization = {
-    docker = true;
-    libvirtd = true;
+  custom = {
+    boot.mode = "uefi";
+
+    hardware = {
+      audio.enable = true;
+      bluetooth.enable = true;
+      cpu.intel.enable = true;
+      firmware.enable = true;
+      gpu.nvidia.enable = true;
+      kernel.cachyos = {
+        enable = true;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
+      };
+      storage.ssd.enable = true;
+    };
+
+    desktop = {
+      bluetooth.enable = true;
+      network.enable = true;
+    };
+
+    service = {
+      desktop.enable = true;
+      fhs.enable = true;
+      gaming.enable = true;
+      power.profile = "performance";
+      virtualization = {
+        docker = true;
+        libvirtd = true;
+      };
+      agenix.enable = true;
+    };
+
+    tools = {
+      audio.enable = true;
+      network.enable = true;
+    };
   };
-  custom.service.agenix.enable = true;
-  custom.tools.audio.enable = true;
-  custom.tools.network.enable = true;
 }

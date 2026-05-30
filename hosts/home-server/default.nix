@@ -17,12 +17,24 @@
     ../../modules/nixos
   ];
 
-  custom.service.agenix.enable = true;
-  custom.service.fhs.enable = true;
-  custom.service.mihomo.enable = true;
-  custom.service.power.profile = "efficiency";
-  custom.service.virtualization = {
-    docker = true;
+  custom = {
+    boot.mode = "uefi";
+
+    hardware = {
+      cpu.intel.enable = true;
+      firmware.enable = true;
+      storage.ssd.enable = true;
+    };
+
+    service = {
+      agenix.enable = true;
+      fhs.enable = true;
+      mihomo.enable = true;
+      power.profile = "efficiency";
+      virtualization = {
+        docker = true;
+      };
+      tailscale.enable = true;
+    };
   };
-  custom.service.tailscale.enable = true;
 }

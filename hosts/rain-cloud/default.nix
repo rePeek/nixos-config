@@ -19,7 +19,17 @@
     ../../modules/nixos
   ];
 
-  custom.service.power.profile = "performance";
+  custom = {
+    boot.mode = "bios";
+
+    hardware = {
+      storage.ssd.enable = true;
+    };
+
+    service = {
+      power.profile = "performance";
+    };
+  };
 
   time.timeZone = "Asia/Shanghai";
 
