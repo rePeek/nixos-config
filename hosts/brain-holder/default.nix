@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
+  networking.hostName = "brain-holder";
+
   imports = [
     ./hardware
 

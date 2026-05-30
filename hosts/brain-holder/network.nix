@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   networking = {
-    hostName = "brain-holder";
     networkmanager.enable = true;
     nameservers = [
       "8.8.8.8"
