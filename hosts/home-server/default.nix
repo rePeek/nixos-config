@@ -22,7 +22,6 @@
   custom.service.mihomo.enable = true;
   custom.service.power.profile = "efficiency";
   custom.service.virtualization = {
-    enable = true;
     docker = true;
   };
   custom.service.tailscale.enable = true;

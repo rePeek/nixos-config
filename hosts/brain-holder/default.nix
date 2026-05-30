@@ -18,7 +18,6 @@
   custom.service.gaming.enable = true;
   custom.service.power.profile = "performance";
   custom.service.virtualization = {
-    enable = true;
     docker = true;
     libvirtd = true;
   };
