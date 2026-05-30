@@ -1,14 +1,14 @@
 { config, pkgs, ... }:
 {
-  users.users.wanglei = {
+  users.users.asen = {
     isNormalUser = true;
-    description = "wanglei";
+    description = "asen";
     extraGroups = [
       "networkmanager"
       "wheel"
       "docker"
     ];
-    home = "/home/wanglei";
+    home = "/home/asen";
     shell = pkgs.nushell;
     openssh.authorizedKeys.keys = config.custom.ssh.sharedAuthorizedKeys ++ [
       # Windows game PC
@@ -18,6 +18,6 @@
   # given the users in this list the right to specify additional substituters via:
   #    1. `nixConfig.substituers` in `flake.nix`
   #    2. command line args `--options substituers http://xxx`
-  nix.settings.trusted-users = [ "wanglei" ];
-  nix.settings.allowed-users = [ "wanglei" ];
+  nix.settings.trusted-users = [ "asen" ];
+  nix.settings.allowed-users = [ "asen" ];
 }

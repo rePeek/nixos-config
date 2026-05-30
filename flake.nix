@@ -96,7 +96,7 @@
         home-server = myLib.mkHost {
           hostPath = ./hosts/home-server;
           hostName = "home-server";
-          usernames = [ "wanglei" ];
+          usernames = [ "asen" ];
         };
 
         rainyun = myLib.mkHost {
