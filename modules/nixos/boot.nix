@@ -8,10 +8,10 @@
 }:
 
 let
-  cfg = config.custom.hardware.boot;
+  cfg = config.custom.boot;
 in
 {
-  options.custom.hardware.boot = {
+  options.custom.boot = {
     mode = lib.mkOption {
       type = lib.types.enum [
         "bios"

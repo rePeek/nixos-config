@@ -6,8 +6,9 @@
     ./filesystem.nix
   ];
 
+  custom.boot.mode = "uefi";
+
   custom.hardware = {
-    boot.mode = "uefi";
     cpu.intel.enable = true;
     firmware.enable = true;
     kernel.cachyos = {

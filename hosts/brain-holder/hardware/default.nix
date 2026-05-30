@@ -6,9 +6,10 @@
     ./filesystem.nix
   ];
 
+  custom.boot.mode = "uefi";
+
   custom.hardware = {
     bluetooth.enable = true;
-    boot.mode = "uefi";
     cpu.intel.enable = true;
     firmware.enable = true;
     gpu.nvidia.enable = true;

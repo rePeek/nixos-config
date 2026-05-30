@@ -4,8 +4,9 @@
     ./filesystem.nix
   ];
 
+  custom.boot.mode = "bios";
+
   custom.hardware = {
-    boot.mode = "bios";
     storage.ssd.enable = true;
   };
 }
