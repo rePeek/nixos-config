@@ -38,7 +38,7 @@ in
       ]
       ++ nixpkgs.lib.optionals enableHomeManager [
         home-manager.nixosModules.home-manager
-        (import ./modules/nixos/home-manager.nix {
+        (import ./modules/nixos/core/home-manager.nix {
           inherit hostName usernames;
         })
       ]
