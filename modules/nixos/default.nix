@@ -5,6 +5,7 @@
     ./i18n.nix
     ./nix.nix
     ./packages.nix
+    ./security.nix
     ./ssh.nix
     ./system.nix
 
