@@ -53,9 +53,7 @@ hosts/<host>/
 ├── default.nix                  # 主机入口，导入硬件、网络、用户和所需服务
 ├── hardware/
 │   ├── default.nix
-│   ├── disk.nix                 # disko 磁盘布局
-│   ├── filesystem.nix
-│   ├── gpu.nix                  # 仅部分主机存在
+│   ├── filesystem.nix           # 主机专属磁盘布局、挂载点和 UUID
 │   └── hardware-configuration.nix
 ├── network.nix                  # 或 network/ 目录
 ├── user.nix                     # 系统用户配置
@@ -64,7 +62,7 @@ hosts/<host>/
 
 `home-server` 的网络配置拆分在 `hosts/home-server/network/` 下，由 `default.nix` 聚合。
 
-`rain-cloud` 是轻量远程主机，直接导入目录内的 `tailscale.nix`、`derper.nix` 和 `my-derper.nix`，没有接入公共 NixOS 模块集合。
+`rain-cloud` 是轻量远程主机，在公共 core 的基础上直接导入目录内的 `tailscale.nix`、`derper.nix` 和 `my-derper.nix`。
 
 ### 2.4 可复用模块
 
@@ -72,15 +70,29 @@ hosts/<host>/
 
 ```text
 modules/nixos/
-├── default.nix                  # 基础系统模块聚合入口
-├── boot.nix
+├── core/                        # 所有 NixOS 主机共享的基础模块
+│   ├── default.nix
+│   ├── boot.nix                 # 通用默认值与 custom.hardware.boot 选项
+│   ├── fonts.nix                # 桌面和服务器共用的基础字体
+│   ├── i18n.nix
+│   ├── nix.nix
+│   ├── packages.nix
+│   ├── ssh.nix
+│   └── system.nix
+├── hardware/                    # 通过 custom.hardware.* 开启的可复用硬件能力
+│   ├── default.nix
+│   ├── bluetooth.nix
+│   ├── firmware.nix
+│   ├── cpu/
+│   │   └── intel.nix
+│   ├── gpu/
+│   │   └── nvidia.nix
+│   ├── kernel/
+│   │   └── cachyos.nix
+│   └── storage/
+│       └── ssd.nix
 ├── fhs.nix
 ├── home-manager.nix             # 按 hostName 和 usernames 加载用户配置
-├── i18n.nix
-├── misc.nix
-├── nix.nix
-├── pkgs.nix
-├── ssh.nix
 └── extraServices/
     ├── default.nix              # 完整服务集合，brain-holder 使用
     ├── agenix.nix
@@ -121,17 +133,21 @@ modules/home-manager/
 
 ### 3.1 修改位置
 
-- 所有主机共享的系统配置放入 `modules/nixos/`。
+- 所有主机共享的系统配置放入 `modules/nixos/core/`。
+- 可复用但需要主机显式选择的硬件能力放入 `modules/nixos/hardware/`，并通过 `custom.hardware.*` 选项开启。
 - 可选系统服务放入 `modules/nixos/extraServices/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
 - 桌面系统服务放入 `modules/nixos/extraServices/desktop/`。
 - 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
 - 桌面用户配置放入 `modules/home-manager/gui/`。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 硬件、磁盘和文件系统配置放入对应主机的 `hardware/`。
+- 可复用的 CPU、GPU、内核和存储优化放入 `modules/nixos/hardware/`。
+- 主机专属磁盘布局、UUID 和 initrd 驱动保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
 
-- 公共 NixOS 基础模块通过 `../../modules/nixos` 导入。
+- 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
+- 主机硬件能力集中在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明。
+- 启动模式通过 `custom.hardware.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `brain-holder` 导入完整的 `../../modules/nixos/extraServices`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。
 - Home Manager 用户入口位于 `hosts/<host>/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 自动加载。
@@ -163,7 +179,7 @@ nixfmt <files...>
 ### 4.2 添加软件包
 
 1. 判断软件包是系统级、公共用户级还是单主机专用。
-2. 系统级软件包优先加入 `modules/nixos/pkgs.nix` 或对应服务模块。
+2. 系统级软件包优先加入 `modules/nixos/core/packages.nix` 或对应服务模块。
 3. 公共用户级软件包优先加入 `modules/home-manager/common/` 下合适模块。
 4. 图形软件优先加入 `modules/home-manager/gui/` 下合适模块。
 5. 仅单个用户或主机需要时，修改对应 `hosts/<host>/users/<username>.nix` 或主机模块。

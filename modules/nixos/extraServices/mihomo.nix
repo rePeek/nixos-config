@@ -7,20 +7,20 @@
 }:
 with lib;
 let
-  cfg = config.modules.network.clash;
+  cfg = config.custom.service.mihomo;
   runtimeConfig = "/run/mihomo/config.yaml";
 in
 {
 
-  options.modules.network.clash = {
-    enable = mkEnableOption "clash VPN client.";
+  options.custom.service.mihomo = {
+    enable = mkEnableOption "Mihomo client service.";
   };
 
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.myModule.agenix.enable;
-        message = "modules.network.clash.enable requires myModule.agenix.enable = true;";
+        assertion = config.custom.service.agenix.enable;
+        message = "custom.service.mihomo.enable requires custom.service.agenix.enable = true;";
       }
     ];
 

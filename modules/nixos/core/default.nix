@@ -1,13 +1,14 @@
 {
   imports = [
-    # ./extraServices
-    ./pkgs.nix
-    ./nix.nix
-    ./ssh.nix
-    ./i18n.nix
-    ./misc.nix
+    ../hardware
+
     ./boot.nix
-    ./fhs.nix
+    ./fonts.nix
+    ./i18n.nix
+    ./nix.nix
+    ./packages.nix
+    ./ssh.nix
+    ./system.nix
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?

@@ -38,9 +38,7 @@ hosts/<host>/
 ├── default.nix                  # 主机入口
 ├── hardware/
 │   ├── default.nix
-│   ├── disk.nix                 # disko 磁盘布局
-│   ├── filesystem.nix
-│   ├── gpu.nix                  # 部分主机使用
+│   ├── filesystem.nix           # 主机专属磁盘布局、挂载点和 UUID
 │   └── hardware-configuration.nix
 ├── network.nix                  # 或 network/ 目录
 ├── user.nix                     # NixOS 用户配置
@@ -52,17 +50,31 @@ hosts/<host>/
 ```text
 modules/
 ├── nixos/
-│   ├── default.nix              # 基础系统模块聚合入口
-│   ├── boot.nix
+│   ├── core/                    # 所有 NixOS 主机共享的基础模块
+│   │   ├── default.nix
+│   │   ├── boot.nix             # 通用默认值与 custom.hardware.boot 选项
+│   │   ├── fonts.nix            # 桌面和服务器共用的基础字体
+│   │   ├── i18n.nix
+│   │   ├── nix.nix
+│   │   ├── packages.nix
+│   │   ├── ssh.nix
+│   │   └── system.nix
+│   ├── hardware/                # 通过 custom.hardware.* 开启的可复用硬件能力
+│   │   ├── default.nix
+│   │   ├── bluetooth.nix
+│   │   ├── firmware.nix
+│   │   ├── cpu/
+│   │   │   └── intel.nix
+│   │   ├── gpu/
+│   │   │   └── nvidia.nix
+│   │   ├── kernel/
+│   │   │   └── cachyos.nix
+│   │   └── storage/
+│   │       └── ssd.nix
 │   ├── fhs.nix
 │   ├── home-manager.nix
-│   ├── i18n.nix
-│   ├── misc.nix
-│   ├── nix.nix
-│   ├── pkgs.nix
-│   ├── ssh.nix
 │   └── extraServices/
-│       ├── desktop/             # 桌面、音频、字体、蓝牙和安全配置
+│       ├── desktop/             # 桌面、音频、字体和安全配置
 │       ├── agenix.nix
 │       ├── gaming.nix
 │       ├── jellyfin.nix
@@ -79,6 +91,8 @@ modules/
     ├── llm-agents-package.nix
     └── xdg-mimes.nix
 ```
+
+每台 NixOS 主机在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明硬件能力。启动模式使用 `custom.hardware.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。磁盘分区布局仍由主机自己的 `hardware/filesystem.nix` 管理。
 
 ## 主机说明
 

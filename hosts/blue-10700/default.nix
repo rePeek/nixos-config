@@ -7,7 +7,6 @@
 }:
 
 {
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
   networking.hostName = "Blue-10700";
 
   imports = [
@@ -15,14 +14,19 @@
     ./network.nix
     ./user.nix
 
-    ../../modules/nixos
+    ../../modules/nixos/core
+    ../../modules/nixos/fhs.nix
     ../../modules/nixos/extraServices/tailscale.nix
     ../../modules/nixos/extraServices/virtualization.nix
     ../../modules/nixos/extraServices/mihomo.nix
     ../../modules/nixos/extraServices/agenix.nix
   ];
 
-  myModule.agenix.enable = true;
-  modules.network.clash.enable = true;
-  modules.virtualization.custom.docker = true;
+  custom.service.agenix.enable = true;
+  custom.service.mihomo.enable = true;
+  custom.service.virtualization = {
+    enable = true;
+    docker = true;
+  };
+  custom.service.tailscale.enable = true;
 }

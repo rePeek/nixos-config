@@ -1,6 +1,4 @@
-{ pkgs, ... }:
 {
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
   networking.hostName = "brain-holder";
 
   imports = [
@@ -10,13 +8,18 @@
     ./misc.nix
     ./network.nix
 
-    ../../modules/nixos
+    ../../modules/nixos/core
+    ../../modules/nixos/fhs.nix
     ../../modules/nixos/extraServices
   ];
 
-  modules.desktop.gaming.enable = true;
-  modules.virtualization.custom.docker = true;
-  modules.virtualization.custom.libvirtd = true;
-  myModule.agenix.enable = true;
-  # modules.powerManagement.type = "workstation";
+  custom.service.desktop.enable = true;
+  custom.service.gaming.enable = true;
+  custom.service.virtualization = {
+    enable = true;
+    docker = true;
+    libvirtd = true;
+  };
+  custom.service.agenix.enable = true;
+  # custom.service.desktop.power.type = "workstation";
 }

@@ -1,9 +1,16 @@
 {
+  config,
+  lib,
+  ...
+}:
+
+{
+  options.custom.service.desktop.enable = lib.mkEnableOption "desktop base services";
+
   imports = [
     ./fonts.nix
     ./pipewire.nix
     ./greeted.nix
-    ./bluetooth.nix
     ./misc.nix
     ./security.nix
     ./wayland.nix
@@ -17,5 +24,7 @@
   #  - 在 NixOS 中，如果禁用了 dconf，你可能会看到类似“无法写入设置”的警告或 GUI 程序配置无法保存。
   #  nixos 配置 (programs.dconf.enable)	启用 dconf 后台服务
   #  home-manager 配置 (dconf.settings)	写入具体的用户配置值
-  programs.dconf.enable = true;
+  config = lib.mkIf config.custom.service.desktop.enable {
+    programs.dconf.enable = true;
+  };
 }

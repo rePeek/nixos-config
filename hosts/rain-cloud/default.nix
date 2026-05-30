@@ -15,6 +15,8 @@
     ./tailscale.nix
     ./derper.nix
     ./my-derper.nix
+
+    ../../modules/nixos/core
   ];
 
   time.timeZone = "Asia/Shanghai";

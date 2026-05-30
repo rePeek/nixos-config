@@ -1,7 +1,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./disk.nix
     ./filesystem.nix
   ];
+
+  custom.hardware = {
+    boot.mode = "bios";
+    storage.ssd.enable = true;
+  };
 }

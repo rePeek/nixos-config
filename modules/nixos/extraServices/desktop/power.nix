@@ -1,10 +1,11 @@
 { config, lib, ... }:
 
 let
-  cfg = config.modules.powerManagement;
+  cfg = config.custom.service.desktop.power;
 in
 {
-  options.modules.powerManagement = {
+  options.custom.service.desktop.power = {
+    enable = lib.mkEnableOption "desktop power profile";
     type = lib.mkOption {
       type = lib.types.enum [
         "workstation"
@@ -15,7 +16,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf (config.custom.service.desktop.enable && cfg.enable) {
     # 工作站固定性能模式
     powerManagement.cpuFreqGovernor = lib.mkIf (cfg.type == "workstation") "performance";
 
