@@ -21,5 +21,4 @@
     libvirtd = true;
   };
   custom.service.agenix.enable = true;
-  # custom.service.desktop.power.type = "workstation";
 }
