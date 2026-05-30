@@ -7,7 +7,7 @@
 }:
 with lib;
 let
-  cfg = config.custom.service.gaming;
+  cfg = config.custom.desktop.gaming;
   nix-gaming = inputs.nix-gaming;
 in
 {
@@ -16,11 +16,11 @@ in
     nix-gaming.nixosModules.platformOptimizations
   ];
 
-  options.custom.service.gaming = {
+  options.custom.desktop.gaming = {
     enable = mkEnableOption "Install Game Suite(steam, lutris, etc)";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (config.custom.service.desktop.enable && cfg.enable) {
     # ==========================================================================
     # Gaming on Linux
     #

@@ -11,6 +11,7 @@
     ./fonts.nix
     ./blueman.nix
     ./pipewire.nix
+    ./gaming.nix
     ./greeted.nix
     ./misc.nix
     ./network.nix

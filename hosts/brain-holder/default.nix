@@ -30,13 +30,13 @@
 
     desktop = {
       bluetooth.enable = true;
+      gaming.enable = true;
       network.enable = true;
     };
 
     service = {
       desktop.enable = true;
       fhs.enable = true;
-      gaming.enable = true;
       power.profile = "performance";
       virtualization = {
         docker = true;
