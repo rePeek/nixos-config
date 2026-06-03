@@ -23,6 +23,7 @@
     hardware = {
       cpu.intel.enable = true;
       firmware.enable = true;
+      gpu.intel.enable = true;
       storage.ssd.enable = true;
     };
 

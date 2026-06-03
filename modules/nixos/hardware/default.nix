@@ -6,6 +6,7 @@
     ./firmware.nix
     ./audio.nix
     ./cpu/intel.nix
+    ./gpu/intel.nix
     ./gpu/nvidia.nix
     ./kernel/cachyos.nix
     ./storage/ssd.nix

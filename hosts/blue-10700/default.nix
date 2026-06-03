@@ -23,6 +23,7 @@
     hardware = {
       cpu.intel.enable = true;
       firmware.enable = true;
+      gpu.intel.enable = true;
       kernel.cachyos = {
         enable = true;
         package = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
@@ -37,6 +38,7 @@
       power.profile = "performance";
       virtualization = {
         docker = true;
+        qemuUserAarch64 = true;
       };
       tailscale.enable = true;
     };
