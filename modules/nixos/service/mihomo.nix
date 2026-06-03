@@ -141,6 +141,7 @@ in
             type: url-test
             use:
               - jms_sub
+              - dream_sub
             interval: 300
             timeout: 3000
             tolerance: 50
@@ -161,6 +162,7 @@ in
             type: url-test
             use:
               - jms_sub
+              - dream_sub
             filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
