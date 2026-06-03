@@ -6,7 +6,7 @@
 
 这是一个使用 NixOS、Flake、Home Manager 和 agenix 管理的声明式系统配置仓库。核心目标是保持配置可重现、可迁移、模块化，并避免把主机特有逻辑散落到公共模块中。
 
-当前稳定 Nixpkgs 分支为 `nixos-25.11`，同时通过 `nixpkgs-unstable` 提供少量需要较新版本的软件包。
+当前稳定 Nixpkgs 分支为 `nixos-26.05`，同时通过 `nixpkgs-unstable` 提供少量需要较新版本的软件包。
 
 ## 2. 仓库结构
 

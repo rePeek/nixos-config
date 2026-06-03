@@ -11,7 +11,7 @@
 - Disko
 - agenix
 - devenv
-- `nixos-25.11` 与少量 `nixpkgs-unstable` 软件包
+- `nixos-26.05` 与少量 `nixpkgs-unstable` 软件包
 
 ## 仓库结构
 
