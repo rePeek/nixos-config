@@ -12,6 +12,7 @@ in
   options.custom.service.virtualization = {
     docker = lib.mkEnableOption "Docker container support";
     libvirtd = lib.mkEnableOption "Libvirtd/QEMU virtualization support";
+    qemuUserAarch64 = lib.mkEnableOption "QEMU user-mode AArch64 emulation support";
   };
 
   config = lib.mkMerge [
@@ -34,6 +35,12 @@ in
         # 存储驱动，默认 overlay2 已足够
         storageDriver = "overlay2";
       };
+    })
+
+    (lib.mkIf cfg.qemuUserAarch64 {
+      boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+      environment.systemPackages = [ pkgs.qemu-user ];
     })
 
     (lib.mkIf cfg.libvirtd {
