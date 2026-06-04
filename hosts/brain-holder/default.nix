@@ -20,7 +20,13 @@
       bluetooth.enable = true;
       cpu.intel.enable = true;
       firmware.enable = true;
-      gpu.nvidia.enable = true;
+      gpu.nvidia = {
+        enable = true;
+        profiles = [
+          "display"
+          "compute"
+        ];
+      };
       # CachyOS LTO currently fails while linking kernel modules with ld.lld.
       # kernel.cachyos = {
       #   enable = true;

@@ -102,7 +102,7 @@ modules/
 
 - `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
 - `custom.hardware.*`：可复用硬件能力。当前包括 `audio`、`bluetooth`、`firmware`、`cpu.intel`、`gpu.intel`、`gpu.nvidia`、`kernel.cachyos` 和 `storage.ssd`。
-- `custom.hardware.gpu.*`：GPU 在本机中的角色和能力组合。显卡 profile 可使用 `display`、`compute`、`offload` 和 `laptop` 等 role；其中 `laptop` 用于笔记本特有能力和约束，例如 Dynamic Boost、混合显卡、省电和挂起恢复，不应在台式机默认 profile 中启用。
+- `custom.hardware.gpu.*`：GPU 在本机中的角色和能力组合。NVIDIA 使用 `enable = true` 开启本仓库的 workstation profile，并通过 `profiles = [ "display" "compute" "offload" ]` 表达用途；笔记本特有能力和省电约束后续应作为独立 laptop profile 成套引入。
 - `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud`、`power.profile`、`tailscale` 和 `virtualization`。
 - `custom.desktop.*`：桌面体验中的可选图形能力。当前包括 `bluetooth`、`gaming` 和 `network`，并通常依赖 `custom.service.desktop.enable`。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
