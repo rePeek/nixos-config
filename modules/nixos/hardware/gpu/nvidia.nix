@@ -6,7 +6,12 @@ let
   cfg = config.custom.hardware.gpu.nvidia;
 in
 {
-  options.custom.hardware.gpu.nvidia.enable = lib.mkEnableOption "NVIDIA GPU support";
+  options.custom.hardware.gpu.nvidia = {
+    enable = lib.mkEnableOption "NVIDIA GPU support";
+
+    # nvidia-powerd is only useful on supported laptops with Dynamic Boost.
+    dynamicBoost.enable = lib.mkEnableOption "NVIDIA Dynamic Boost support through nvidia-powerd";
+  };
 
   config = lib.mkIf cfg.enable {
     boot.kernelParams = [
@@ -22,7 +27,7 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       modesetting.enable = true;
       powerManagement.enable = true;
-      dynamicBoost.enable = lib.mkForce true;
+      dynamicBoost.enable = cfg.dynamicBoost.enable;
     };
 
     hardware.nvidia-container-toolkit.enable = true;
