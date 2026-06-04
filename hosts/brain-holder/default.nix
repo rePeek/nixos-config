@@ -48,6 +48,7 @@
     service = {
       desktop.enable = true;
       fhs.enable = true;
+      tailscale.enable = true;
       agenix.enable = true;
     };
 
