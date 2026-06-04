@@ -147,7 +147,7 @@ modules/home-manager/
 
 - 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
 - 主机硬件能力集中在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明。
-- 启动模式通过 `custom.hardware.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
+- 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `brain-holder` 导入完整的 `../../modules/nixos/service`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。
 - Home Manager 用户入口位于 `hosts/<host>/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 自动加载。

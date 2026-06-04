@@ -92,7 +92,21 @@ modules/
     └── xdg-mimes.nix
 ```
 
-每台 NixOS 主机在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明硬件能力。启动模式使用 `custom.hardware.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。磁盘分区布局仍由主机自己的 `hardware/filesystem.nix` 管理。
+每台 NixOS 主机在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明硬件能力。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。磁盘分区布局仍由主机自己的 `hardware/filesystem.nix` 管理。
+
+## `custom` 配置
+
+`custom.*` 是本仓库的 profile 和意图层，用来把主机配置简化为“启用什么能力、采用什么角色或模式”。模块内部会把这些 profile 展开为 NixOS 和 Home Manager 的原生配置；主机文件只保留 profile 选择和无法抽象的机器事实，例如 PCI Bus ID、UUID、hostname、用户名和端口。
+
+当前主要命名空间：
+
+- `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
+- `custom.hardware.*`：可复用硬件能力。当前包括 `audio`、`bluetooth`、`firmware`、`cpu.intel`、`gpu.intel`、`gpu.nvidia`、`kernel.cachyos` 和 `storage.ssd`。
+- `custom.hardware.gpu.*`：GPU 在本机中的角色和能力组合。显卡 profile 可使用 `display`、`compute`、`offload` 和 `laptop` 等 role；其中 `laptop` 用于笔记本特有能力和约束，例如 Dynamic Boost、混合显卡、省电和挂起恢复，不应在台式机默认 profile 中启用。
+- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud`、`power.profile`、`tailscale` 和 `virtualization`。
+- `custom.desktop.*`：桌面体验中的可选图形能力。当前包括 `bluetooth`、`gaming` 和 `network`，并通常依赖 `custom.service.desktop.enable`。
+- `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
+- `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 
 ## 主机说明
 
