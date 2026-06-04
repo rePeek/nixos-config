@@ -6,16 +6,34 @@
 }:
 
 let
-  cfg = config.custom.service.virtualization;
+  cfg = config.custom.features.virtualization;
 in
 {
-  options.custom.service.virtualization = {
+  options.custom.features.virtualization = {
     docker = lib.mkEnableOption "Docker container support";
-    libvirtd = lib.mkEnableOption "Libvirtd/QEMU virtualization support";
     qemuUserAarch64 = lib.mkEnableOption "QEMU user-mode AArch64 emulation support";
+
+    libvirtd = {
+      enable = lib.mkEnableOption "Libvirtd/QEMU virtualization support";
+
+      kvm.cpu = lib.mkOption {
+        type = lib.types.nullOr (
+          lib.types.enum [
+            "intel"
+            "amd"
+          ]
+        );
+        default = null;
+        description = "CPU vendor for loading the matching KVM kernel module.";
+      };
+    };
   };
 
   config = lib.mkMerge [
+    (lib.mkIf (cfg.libvirtd.enable && cfg.libvirtd.kvm.cpu != null) {
+      boot.kernelModules = [ "kvm-${cfg.libvirtd.kvm.cpu}" ];
+    })
+
     (lib.mkIf cfg.docker {
       virtualisation.docker = {
         enable = true;
@@ -43,7 +61,7 @@ in
       environment.systemPackages = [ pkgs.qemu-user ];
     })
 
-    (lib.mkIf cfg.libvirtd {
+    (lib.mkIf cfg.libvirtd.enable {
       # 宿主机侧：启用 libvirt 图形管理工具
       programs.virt-manager.enable = true;
 

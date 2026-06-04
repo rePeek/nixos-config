@@ -3,11 +3,10 @@
   imports = [
     ./audio.nix
     ./bluetooth.nix
-    ./firmware.nix
-    ./cpu/intel.nix
-    ./gpu/intel.nix
-    ./gpu/nvidia.nix
+    ./graphics.nix
     ./kernel/cachyos.nix
-    ./storage/ssd.nix
+    ./nvidia.nix
+    ./power.nix
+    ./virtualization.nix
   ];
 }

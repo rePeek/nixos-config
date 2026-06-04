@@ -63,16 +63,12 @@ modules/
 │   │   ├── default.nix
 │   │   ├── audio.nix
 │   │   ├── bluetooth.nix
-│   │   ├── firmware.nix
-│   │   ├── cpu/
-│   │   │   └── intel.nix
-│   │   ├── gpu/
-│   │   │   ├── intel.nix
-│   │   │   └── nvidia.nix
+│   │   ├── graphics.nix
 │   │   ├── kernel/
 │   │   │   └── cachyos.nix
-│   │   └── storage/
-│   │       └── ssd.nix
+│   │   ├── nvidia.nix
+│   │   ├── power.nix
+│   │   └── virtualization.nix
 │   ├── fhs.nix
 │   ├── home-manager.nix
 │   └── service/
@@ -82,8 +78,7 @@ modules/
 │       ├── jellyfin.nix
 │       ├── mihomo.nix
 │       ├── nextcloud.nix
-│       ├── tailscale.nix
-│       └── virtualization.nix
+│       └── tailscale.nix
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
     ├── gui/                     # GNOME、Hyprland、Waybar、SwayNC、输入法等
@@ -94,7 +89,7 @@ modules/
     └── xdg-mimes.nix
 ```
 
-每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动，以及后续按需导入的 `nixos-hardware` 机型或硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
+每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
 
 ## `custom` 配置
 
@@ -103,9 +98,13 @@ modules/
 当前主要命名空间：
 
 - `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
-- `custom.features.*`：可复用系统能力。当前包括 `audio`、`bluetooth`、`firmware`、`cpu.intel`、`gpu.intel`、`gpu.nvidia`、`kernel.cachyos` 和 `storage.ssd`。
-- `custom.features.gpu.*`：GPU 在本机中的角色和能力组合。NVIDIA 使用 `enable = true` 开启本仓库的 workstation profile，并通过 `profiles = [ "display" "compute" "offload" ]` 表达用途；笔记本特有能力和省电约束后续应作为独立 laptop profile 成套引入。
-- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud`、`power.profile`、`tailscale` 和 `virtualization`。
+- `custom.features.*`：可复用系统能力。当前包括 `audio`、`bluetooth`、`graphics`、`kernel.cachyos`、`nvidia.compute`、`nvidia.driver`、`power` 和 `virtualization`。
+- `custom.features.graphics.*`：通用图形栈能力。`enable` 启用硬件加速图形环境，`compat32.enable` 为 Wine、Steam 和 Proton 启用 32 位图形驱动。
+- `custom.features.nvidia.driver.enable`：本仓库的 NVIDIA 驱动默认策略，包括 DRM framebuffer、open module、settings、latest driver、modesetting 和基础电源管理。
+- `custom.features.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
+- `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
+- `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
+- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud` 和 `tailscale`。
 - `custom.desktop.*`：桌面体验中的可选图形能力。当前包括 `bluetooth`、`gaming` 和 `network`，并通常依赖 `custom.service.desktop.enable`。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。

@@ -23,13 +23,7 @@
   custom = {
     boot.mode = "bios";
 
-    features = {
-      storage.ssd.enable = true;
-    };
-
-    service = {
-      power.profile = "performance";
-    };
+    features.power.profile = "performance";
   };
 
   time.timeZone = "Asia/Shanghai";

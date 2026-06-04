@@ -83,16 +83,12 @@ modules/nixos/
 │   ├── default.nix
 │   ├── audio.nix
 │   ├── bluetooth.nix
-│   ├── firmware.nix
-│   ├── cpu/
-│   │   └── intel.nix
-│   ├── gpu/
-│   │   ├── intel.nix
-│   │   └── nvidia.nix
+│   ├── graphics.nix
 │   ├── kernel/
 │   │   └── cachyos.nix
-│   └── storage/
-│       └── ssd.nix
+│   ├── nvidia.nix
+│   ├── power.nix
+│   └── virtualization.nix
 ├── fhs.nix
 ├── home-manager.nix             # 按 hostName 和 usernames 加载用户配置
 └── service/
@@ -103,7 +99,6 @@ modules/nixos/
     ├── mihomo.nix
     ├── nextcloud.nix
     ├── tailscale.nix
-    ├── virtualization.nix
     └── desktop/
 ```
 
@@ -142,13 +137,13 @@ modules/home-manager/
 - 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
 - 桌面用户配置放入 `modules/home-manager/gui/`。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 可复用的 CPU、GPU、内核、音频、蓝牙和存储能力放入 `modules/nixos/features/`。
-- 主机专属磁盘布局、UUID 和 initrd 驱动保留在对应主机的 `hardware/`。
+- 可复用的图形栈、NVIDIA 驱动默认策略、NVIDIA 计算、电源策略、虚拟化、内核、音频和蓝牙能力放入 `modules/nixos/features/`。
+- 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
 
 - 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
-- 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中；可复用系统能力在主机入口中通过 `custom.features.*` 声明。
+- 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中，包括 `nixos-hardware` 的机型或通用硬件模块；可复用系统能力在主机入口中通过 `custom.features.*` 声明。
 - 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `brain-holder` 导入完整的 `../../modules/nixos/service`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。

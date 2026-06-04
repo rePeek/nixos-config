@@ -21,20 +21,17 @@
     boot.mode = "uefi";
 
     features = {
-      cpu.intel.enable = true;
-      firmware.enable = true;
-      gpu.intel.enable = true;
-      storage.ssd.enable = true;
+      graphics.enable = true;
+      power.profile = "efficiency";
+      virtualization = {
+        docker = true;
+      };
     };
 
     service = {
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      power.profile = "efficiency";
-      virtualization = {
-        docker = true;
-      };
       tailscale.enable = true;
     };
   };

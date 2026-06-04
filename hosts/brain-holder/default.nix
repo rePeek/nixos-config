@@ -18,21 +18,25 @@
     features = {
       audio.enable = true;
       bluetooth.enable = true;
-      cpu.intel.enable = true;
-      firmware.enable = true;
-      gpu.nvidia = {
+      graphics = {
         enable = true;
-        profiles = [
-          "display"
-          "compute"
-        ];
+        compat32.enable = true;
+      };
+      nvidia.compute.enable = true;
+      nvidia.driver.enable = true;
+      power.profile = "performance";
+      virtualization = {
+        docker = true;
+        libvirtd = {
+          enable = true;
+          kvm.cpu = "intel";
+        };
       };
       # CachyOS LTO currently fails while linking kernel modules with ld.lld.
       # kernel.cachyos = {
       #   enable = true;
       #   package = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
       # };
-      storage.ssd.enable = true;
     };
 
     desktop = {
@@ -44,11 +48,6 @@
     service = {
       desktop.enable = true;
       fhs.enable = true;
-      power.profile = "performance";
-      virtualization = {
-        docker = true;
-        libvirtd = true;
-      };
       agenix.enable = true;
     };
 
