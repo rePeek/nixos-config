@@ -154,7 +154,14 @@ modules/home-manager/
 - 外部 Flake 输入通过 `inputs` 参数使用；稳定软件包通过 `pkgs` 使用，需要新版本时再使用 `pkgsUnstable`。
 - 不要直接引用 `<nixpkgs>` 全局路径。
 
-### 3.3 命名
+### 3.3 自定义选项设计
+
+- `custom.*` 选项是本仓库的 profile 和意图层，用来把主机配置简化为“启用什么能力、采用什么角色或模式”，不要把它设计成 NixOS、Home Manager 原生选项的一比一镜像。
+- 新增 `custom.*` 选项前先判断它是否能隐藏一组重复的底层配置、表达仓库内稳定的 profile，或隔离主机间的差异；如果只是改名转发单个原生选项，优先直接使用原生选项。
+- 模块内部负责把 `custom.*` profile 展开为具体的 `hardware.*`、`services.*`、`programs.*`、`virtualisation.*` 等原生配置；主机文件只保留 profile 选择和无法抽象的机器事实，例如 PCI Bus ID、UUID、hostname、用户名和端口。
+- 可复用模块应提供保守默认值，避免启用只有特定硬件、特定角色或特定部署场景才需要的能力；这类能力应通过明确的 role、mode 或子 profile 开启。
+
+### 3.4 命名
 
 - 新文件和自定义属性优先使用小写字母与短横线组成的 kebab-case。
 - 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`modules.desktop.gaming.enable` 和 `myModule.agenix.enable`。
