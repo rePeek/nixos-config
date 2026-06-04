@@ -8,10 +8,10 @@
 }:
 
 let
-  cfg = config.custom.hardware.kernel.cachyos;
+  cfg = config.custom.features.kernel.cachyos;
 in
 {
-  options.custom.hardware.kernel.cachyos = {
+  options.custom.features.kernel.cachyos = {
     enable = lib.mkEnableOption "CachyOS kernel support";
 
     package = lib.mkOption {

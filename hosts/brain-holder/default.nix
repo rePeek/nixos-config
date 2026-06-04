@@ -15,7 +15,7 @@
   custom = {
     boot.mode = "uefi";
 
-    hardware = {
+    features = {
       audio.enable = true;
       bluetooth.enable = true;
       cpu.intel.enable = true;

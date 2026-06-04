@@ -13,8 +13,8 @@ in
   config = lib.mkIf (config.custom.service.desktop.enable && cfg.enable) {
     assertions = [
       {
-        assertion = config.custom.hardware.bluetooth.enable;
-        message = "custom.desktop.bluetooth.enable requires custom.hardware.bluetooth.enable = true;";
+        assertion = config.custom.features.bluetooth.enable;
+        message = "custom.desktop.bluetooth.enable requires custom.features.bluetooth.enable = true;";
       }
     ];
 

@@ -20,7 +20,7 @@
   custom = {
     boot.mode = "uefi";
 
-    hardware = {
+    features = {
       cpu.intel.enable = true;
       firmware.enable = true;
       gpu.intel.enable = true;

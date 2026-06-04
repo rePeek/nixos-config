@@ -72,20 +72,22 @@ hosts/<host>/
 modules/nixos/
 ├── core/                        # 所有 NixOS 主机共享的基础模块
 │   ├── default.nix
-│   ├── boot.nix                 # 通用默认值与 custom.hardware.boot 选项
+│   ├── boot.nix                 # 通用默认值与 custom.boot 选项
 │   ├── fonts.nix                # 桌面和服务器共用的基础字体
 │   ├── i18n.nix
 │   ├── nix.nix
 │   ├── packages.nix
 │   ├── ssh.nix
 │   └── system.nix
-├── hardware/                    # 通过 custom.hardware.* 开启的可复用硬件能力
+├── features/                    # 通过 custom.features.* 开启的可复用系统能力
 │   ├── default.nix
+│   ├── audio.nix
 │   ├── bluetooth.nix
 │   ├── firmware.nix
 │   ├── cpu/
 │   │   └── intel.nix
 │   ├── gpu/
+│   │   ├── intel.nix
 │   │   └── nvidia.nix
 │   ├── kernel/
 │   │   └── cachyos.nix
@@ -134,19 +136,19 @@ modules/home-manager/
 ### 3.1 修改位置
 
 - 所有主机共享的系统配置放入 `modules/nixos/core/`。
-- 可复用但需要主机显式选择的硬件能力放入 `modules/nixos/hardware/`，并通过 `custom.hardware.*` 选项开启。
+- 可复用但需要主机显式选择的系统能力放入 `modules/nixos/features/`，并通过 `custom.features.*` 选项开启。
 - 可选系统服务放入 `modules/nixos/service/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
 - 桌面系统服务放入 `modules/nixos/desktop/`。
 - 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
 - 桌面用户配置放入 `modules/home-manager/gui/`。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 可复用的 CPU、GPU、内核和存储优化放入 `modules/nixos/hardware/`。
+- 可复用的 CPU、GPU、内核、音频、蓝牙和存储能力放入 `modules/nixos/features/`。
 - 主机专属磁盘布局、UUID 和 initrd 驱动保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
 
 - 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
-- 主机硬件能力集中在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明。
+- 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中；可复用系统能力在主机入口中通过 `custom.features.*` 声明。
 - 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `brain-holder` 导入完整的 `../../modules/nixos/service`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。

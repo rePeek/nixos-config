@@ -3,10 +3,10 @@
 { config, lib, ... }:
 
 let
-  cfg = config.custom.hardware.firmware;
+  cfg = config.custom.features.firmware;
 in
 {
-  options.custom.hardware.firmware.enable = lib.mkEnableOption "redistributable firmware";
+  options.custom.features.firmware.enable = lib.mkEnableOption "redistributable firmware";
 
   config = lib.mkIf cfg.enable {
     hardware.enableRedistributableFirmware = true;

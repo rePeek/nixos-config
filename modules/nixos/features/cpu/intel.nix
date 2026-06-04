@@ -7,10 +7,10 @@
 }:
 
 let
-  cfg = config.custom.hardware.cpu.intel;
+  cfg = config.custom.features.cpu.intel;
 in
 {
-  options.custom.hardware.cpu.intel.enable = lib.mkEnableOption "Intel CPU support";
+  options.custom.features.cpu.intel.enable = lib.mkEnableOption "Intel CPU support";
 
   config = lib.mkIf cfg.enable {
     boot.kernelModules = [ "kvm-intel" ];

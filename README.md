@@ -52,20 +52,22 @@ modules/
 ├── nixos/
 │   ├── core/                    # 所有 NixOS 主机共享的基础模块
 │   │   ├── default.nix
-│   │   ├── boot.nix             # 通用默认值与 custom.hardware.boot 选项
+│   │   ├── boot.nix             # 通用默认值与 custom.boot 选项
 │   │   ├── fonts.nix            # 桌面和服务器共用的基础字体
 │   │   ├── i18n.nix
 │   │   ├── nix.nix
 │   │   ├── packages.nix
 │   │   ├── ssh.nix
 │   │   └── system.nix
-│   ├── hardware/                # 通过 custom.hardware.* 开启的可复用硬件能力
+│   ├── features/                # 通过 custom.features.* 开启的可复用系统能力
 │   │   ├── default.nix
+│   │   ├── audio.nix
 │   │   ├── bluetooth.nix
 │   │   ├── firmware.nix
 │   │   ├── cpu/
 │   │   │   └── intel.nix
 │   │   ├── gpu/
+│   │   │   ├── intel.nix
 │   │   │   └── nvidia.nix
 │   │   ├── kernel/
 │   │   │   └── cachyos.nix
@@ -92,7 +94,7 @@ modules/
     └── xdg-mimes.nix
 ```
 
-每台 NixOS 主机在 `hosts/<host>/hardware/default.nix` 中通过 `custom.hardware.*` 声明硬件能力。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。磁盘分区布局仍由主机自己的 `hardware/filesystem.nix` 管理。
+每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动，以及后续按需导入的 `nixos-hardware` 机型或硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
 
 ## `custom` 配置
 
@@ -101,8 +103,8 @@ modules/
 当前主要命名空间：
 
 - `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
-- `custom.hardware.*`：可复用硬件能力。当前包括 `audio`、`bluetooth`、`firmware`、`cpu.intel`、`gpu.intel`、`gpu.nvidia`、`kernel.cachyos` 和 `storage.ssd`。
-- `custom.hardware.gpu.*`：GPU 在本机中的角色和能力组合。NVIDIA 使用 `enable = true` 开启本仓库的 workstation profile，并通过 `profiles = [ "display" "compute" "offload" ]` 表达用途；笔记本特有能力和省电约束后续应作为独立 laptop profile 成套引入。
+- `custom.features.*`：可复用系统能力。当前包括 `audio`、`bluetooth`、`firmware`、`cpu.intel`、`gpu.intel`、`gpu.nvidia`、`kernel.cachyos` 和 `storage.ssd`。
+- `custom.features.gpu.*`：GPU 在本机中的角色和能力组合。NVIDIA 使用 `enable = true` 开启本仓库的 workstation profile，并通过 `profiles = [ "display" "compute" "offload" ]` 表达用途；笔记本特有能力和省电约束后续应作为独立 laptop profile 成套引入。
 - `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud`、`power.profile`、`tailscale` 和 `virtualization`。
 - `custom.desktop.*`：桌面体验中的可选图形能力。当前包括 `bluetooth`、`gaming` 和 `network`，并通常依赖 `custom.service.desktop.enable`。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。

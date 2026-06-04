@@ -23,7 +23,7 @@
   custom = {
     boot.mode = "bios";
 
-    hardware = {
+    features = {
       storage.ssd.enable = true;
     };
 

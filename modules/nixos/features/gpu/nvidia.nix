@@ -3,14 +3,14 @@
 { config, lib, ... }:
 
 let
-  cfg = config.custom.hardware.gpu.nvidia;
+  cfg = config.custom.features.gpu.nvidia;
   hasProfile = profile: lib.elem profile cfg.profiles;
   displayProfile = hasProfile "display";
   computeProfile = hasProfile "compute";
   offloadProfile = hasProfile "offload";
 in
 {
-  options.custom.hardware.gpu.nvidia = {
+  options.custom.features.gpu.nvidia = {
     enable = lib.mkEnableOption "NVIDIA workstation GPU profile";
 
     profiles = lib.mkOption {
@@ -50,11 +50,11 @@ in
     assertions = [
       {
         assertion = cfg.profiles != [ ];
-        message = "custom.hardware.gpu.nvidia.profiles must include at least one of display, compute, or offload.";
+        message = "custom.features.gpu.nvidia.profiles must include at least one of display, compute, or offload.";
       }
       {
         assertion = !(displayProfile && offloadProfile);
-        message = "custom.hardware.gpu.nvidia.profiles cannot combine display and offload.";
+        message = "custom.features.gpu.nvidia.profiles cannot combine display and offload.";
       }
       {
         assertion =
@@ -62,11 +62,11 @@ in
           || (
             cfg.prime.nvidiaBusId != null && (cfg.prime.amdgpuBusId != null || cfg.prime.intelBusId != null)
           );
-        message = "custom.hardware.gpu.nvidia offload profile requires prime.nvidiaBusId and one of prime.amdgpuBusId or prime.intelBusId.";
+        message = "custom.features.gpu.nvidia offload profile requires prime.nvidiaBusId and one of prime.amdgpuBusId or prime.intelBusId.";
       }
       {
         assertion = !(cfg.prime.amdgpuBusId != null && cfg.prime.intelBusId != null);
-        message = "custom.hardware.gpu.nvidia.prime must not set both amdgpuBusId and intelBusId.";
+        message = "custom.features.gpu.nvidia.prime must not set both amdgpuBusId and intelBusId.";
       }
     ];
 

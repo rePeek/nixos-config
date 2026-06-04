@@ -9,7 +9,7 @@
     ./ssh.nix
     ./system.nix
 
-    ./hardware
+    ./features
     ./desktop
     ./service
     ./tools.nix

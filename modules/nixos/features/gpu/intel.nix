@@ -8,10 +8,10 @@
 }:
 
 let
-  cfg = config.custom.hardware.gpu.intel;
+  cfg = config.custom.features.gpu.intel;
 in
 {
-  options.custom.hardware.gpu.intel.enable = lib.mkEnableOption "Intel integrated GPU support";
+  options.custom.features.gpu.intel.enable = lib.mkEnableOption "Intel integrated GPU support";
 
   config = lib.mkIf cfg.enable {
     hardware.graphics = {
