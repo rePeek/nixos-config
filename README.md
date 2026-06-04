@@ -242,16 +242,16 @@ nixfmt <files...>
 nixConfig = {
   # substituers will be appended to the default substituters when fetching packages
   extra-substituters = [
-    # cache mirror located in China
+    "https://cache.nixos.org"
+    "https://nix-community.cachix.org"
+    "https://attic.xuyh0120.win/lantian"
+    "https://cache.numtide.com"
+
+    # China mirrors are kept after the upstream caches so they act as fallback.
     # status: https://mirrors.ustc.edu.cn/status/
     "https://mirrors.ustc.edu.cn/nix-channels/store"
     # status: https://mirror.sjtu.edu.cn/
     "https://mirror.sjtu.edu.cn/nix-channels/store"
-
-    "https://nix-community.cachix.org"
-    "https://attic.xuyh0120.win/lantian"
-    "https://cache.nixos.org"
-    "https://cache.numtide.com"
   ];
   extra-trusted-public-keys = [
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="

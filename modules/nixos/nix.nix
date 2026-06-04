@@ -18,16 +18,16 @@
     # trusted-users = [ myvars.username ];
 
     substituters = [
-      # cache mirror located in China
-      # status: https://mirrors.ustc.edu.cn/status/
-      "https://mirrors.ustc.edu.cn/nix-channels/store"
-      # status: https://mirror.sjtu.edu.cn/
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-
+      "https://cache.nixos.org"
       "https://nix-community.cachix.org"
       "https://attic.xuyh0120.win/lantian"
-      "https://cache.nixos.org"
       "https://cache.numtide.com"
+
+      # China mirrors are kept after the upstream caches so they act as fallback.
+      # status: https://mirror.sjtu.edu.cn/
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
+      # status: https://mirrors.ustc.edu.cn/status/
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
     ];
 
     trusted-public-keys = [
