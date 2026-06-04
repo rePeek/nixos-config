@@ -21,12 +21,12 @@
       imv
       mpv
       libreoffice
-      wechat-uos
       qbittorrent-enhanced
       scrot
       xfce.thunar
       webp-pixbuf-loader
       pkgsUnstable.telegram-desktop
+      # pkgsUnstable.wechat-uos
     ];
   };
 }

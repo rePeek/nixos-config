@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   networking.hostName = "brain-holder";
 
@@ -21,10 +21,11 @@
       cpu.intel.enable = true;
       firmware.enable = true;
       gpu.nvidia.enable = true;
-      kernel.cachyos = {
-        enable = true;
-        package = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
-      };
+      # CachyOS LTO currently fails while linking kernel modules with ld.lld.
+      # kernel.cachyos = {
+      #   enable = true;
+      #   package = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
+      # };
       storage.ssd.enable = true;
     };
 
