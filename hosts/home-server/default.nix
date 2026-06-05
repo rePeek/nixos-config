@@ -13,6 +13,7 @@
     ./network
 
     ./user.nix
+    ./service
 
     ../../modules/nixos
   ];
