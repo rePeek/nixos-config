@@ -8,6 +8,7 @@
     ./user.nix
     ./misc.nix
     ./network.nix
+    ./service
 
     ../../modules/nixos
   ];
