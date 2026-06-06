@@ -3,6 +3,8 @@
   ...
 }:
 {
+  users.users.jellyfin.extraGroups = [ "media" ];
+
   services.jellyfin = {
     enable = true;
     logDir = "/var/lib/jellyfin/log";

@@ -1,4 +1,6 @@
 {
+  users.users.komga.extraGroups = [ "media" ];
+
   services.komga = {
     enable = true;
     openFirewall = true;

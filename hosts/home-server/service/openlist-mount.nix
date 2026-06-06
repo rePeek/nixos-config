@@ -16,10 +16,10 @@
 
   systemd = {
     tmpfiles.rules = [
-      "d /mnt/rc115 0755 media media -"
-      "d /srv/media/local 0755 media media -"
-      "d /srv/media/local/comics 0755 media media -"
-      "d /srv/media/local/videos 0755 media media -"
+      "d /mnt/rc115 0750 media media -"
+      "d /srv/media/local 0750 media media -"
+      "d /srv/media/local/comics 0750 media media -"
+      "d /srv/media/local/videos 0750 media media -"
     ];
 
     services = {
@@ -69,7 +69,7 @@
           Group = "media";
           RuntimeDirectory = "rclone115";
           RuntimeDirectoryMode = "0700";
-          ExecStart = "${pkgs.rclone}/bin/rclone mount \"115:/115/\" \"/mnt/rc115\" --config=/run/rclone115/rclone115.conf --allow-other --dir-perms=0555 --file-perms=0444 --vfs-cache-mode=off --ignore-checksum";
+          ExecStart = "${pkgs.rclone}/bin/rclone mount \"115:/115/\" \"/mnt/rc115\" --config=/run/rclone115/rclone115.conf --allow-other --dir-perms=0750 --file-perms=0640 --vfs-cache-mode=off --ignore-checksum";
           ExecStop = "/run/wrappers/bin/fusermount -u /mnt/rc115";
           Restart = "on-failure";
           RestartSec = 5;
