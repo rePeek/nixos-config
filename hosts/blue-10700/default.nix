@@ -20,6 +20,14 @@
   custom = {
     boot.mode = "uefi";
 
+    tuning.builder = {
+      enable = true;
+      nix = {
+        maxJobs = 16;
+        cores = 0;
+      };
+    };
+
     features = {
       kernel.cachyos = {
         enable = true;

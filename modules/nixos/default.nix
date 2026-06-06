@@ -10,6 +10,7 @@
     ./system.nix
 
     ./features
+    ./tuning
     ./desktop
     ./service
     ./tools.nix
