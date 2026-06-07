@@ -257,6 +257,13 @@ in
             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.yaml"
             interval: 86400
 
+          grok:
+            type: http
+            behavior: classical
+            url: "https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Grok/Grok.yaml"
+            path: ./ruleset/grok.yaml
+            interval: 86400
+  
           openai:
             type: http
             behavior: classical
@@ -332,6 +339,7 @@ in
           - RULE-SET,telegram-domain,HK
           - RULE-SET,telegram-ip,HK
 
+          - RULE-SET,grok,US
           - RULE-SET,openai,US
           - RULE-SET,claude,US
           - RULE-SET,copilot,US
