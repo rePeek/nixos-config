@@ -18,6 +18,7 @@
     ./network.nix
     ./shell
     ./wayland.nix
+    ./xdg-mimes.nix
   ];
 
   # 作用：启用 dconf 配置数据库。
