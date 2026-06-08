@@ -1,28 +1,17 @@
-# 桌面环境设置
+# 桌面 profile
 
-## 音频和蓝牙
+`modules/nixos/desktop/` 只放图形会话相关配置，通过 `custom.desktop.enable` 统一启用。
 
-这里音频和蓝牙模块并没有针对服务器和图形界面做分层考虑。即没有考虑服务器上使用音频和蓝牙的场景，当前这种场景对对我来说用不上，所以没有设置，后续有需求的话，可以再次拆分出来。。
+目录职责：
 
-## misc
-这里我不知道要不要放到公告接口里。需要后续分析一下。
-1. printing.enable
-功能：启用CUPS打印服务。
+- `base.nix`：图形会话基础系统服务，例如 dconf、libinput、printing、geoclue2、gvfs 和桌面 udev 规则。
+- `gaming.nix`：Steam 和 GameMode，由 `custom.desktop.gaming.enable` 开启。
+- `input-method/`：输入法 profile，以及需要注入 Home Manager 用户的默认配置。
+- `shell/`：DMS shell、Hyprland session、DMS greeter、字体、Wayland portal、默认应用和 XDG MIME 关联。
 
-服务器是否需要：通常不需要。服务器很少连接物理打印机，也不提供打印服务。除非你的服务器专门用作打印服务器，否则可以关闭。
+底层硬件或系统能力不放在这里：
 
-2. geoclue2.enable
-功能：提供地理位置信息服务，用于桌面应用（如地图、天气、自动时区调整）。
-
-服务器是否需要：不需要。服务器没有图形界面，也不依赖地理位置。
-
-3. udev.packages（含 gnome-settings-daemon 和注释掉的嵌入式工具）
-gnome-settings-daemon
-
-功能：提供GNOME桌面的硬件热插拔、电源管理等规则。
-
-服务器是否需要：不需要。这是桌面组件，服务器没有图形会话，也不需要这些规则。
-
-platformio、openocd、openfpgaloader 等（注释中）
-
-功能：为嵌入式开发（如单片机、FPGA）提供udev规则，使普通用户有权访问编程器/调试器设备。
+- 音频栈在 `modules/nixos/features/audio.nix`，DMS shell 会在该 feature 启用时把 `pactl` 加入 user service PATH。
+- 蓝牙硬件支持在 `modules/nixos/features/bluetooth.nix`，DMS 通过 BlueZ DBus 提供蓝牙控制界面。
+- 网络服务仍由主机网络配置负责，DMS 通过 NetworkManager DBus 提供网络控制界面。
+- 图形硬件和 NVIDIA 策略在 `modules/nixos/features/graphics.nix` 和 `modules/nixos/features/nvidia.nix`。

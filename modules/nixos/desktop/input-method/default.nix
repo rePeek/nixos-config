@@ -30,7 +30,7 @@ let
     };
 
     xdg.configFile."fcitx5/profile" = {
-      source = ./profile;
+      source = ./fcitx5-profile;
       force = true;
     };
   };
@@ -50,7 +50,7 @@ in
     };
   };
 
-  config = lib.mkIf (config.custom.service.desktop.enable && cfg.enable) {
+  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
     home-manager.users = lib.mkIf cfg.manageUserDefaults (
       lib.genAttrs desktopUsers (_username: {
         imports = [ fcitx5UserModule ];

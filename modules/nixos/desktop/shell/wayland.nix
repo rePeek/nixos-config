@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.custom.service.desktop.enable {
+  config = lib.mkIf config.custom.desktop.enable {
     programs.hyprland = {
       enable = true;
     };

@@ -5,8 +5,10 @@
   ...
 }:
 {
-  config = lib.mkIf config.custom.service.desktop.enable {
-    # maybe have better config
+  config = lib.mkIf config.custom.desktop.enable {
+    # Required by GTK/GNOME applications and Home Manager dconf settings.
+    programs.dconf.enable = true;
+
     services = {
       libinput.enable = true; # Enable touchpad, mouse and keyboard input handling.
       printing.enable = true; # Enable CUPS to print documents.

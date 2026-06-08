@@ -69,10 +69,15 @@ modules/
 │   │   ├── nvidia.nix
 │   │   ├── power.nix
 │   │   └── virtualization.nix
+│   ├── desktop/                 # 通过 custom.desktop.* 开启的桌面 profile
+│   │   ├── input-method/        # 输入法 profile
+│   │   ├── shell/               # DMS shell、Hyprland session、字体和 Wayland portal
+│   │   ├── base.nix             # 图形会话基础系统服务
+│   │   ├── default.nix
+│   │   └── gaming.nix
 │   ├── fhs.nix
 │   ├── home-manager.nix
 │   └── service/
-│       ├── desktop/             # 桌面、音频、字体和安全配置
 │       ├── agenix.nix
 │       ├── gaming.nix
 │       ├── jellyfin.nix
@@ -104,8 +109,8 @@ modules/
 - `custom.features.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
 - `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
 - `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
-- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`desktop`、`fhs`、`jellyfin`、`mihomo`、`nextcloud` 和 `tailscale`。
-- `custom.desktop.*`：桌面体验中的可选图形能力。当前包括 `bluetooth`、`gaming` 和 `network`，并通常依赖 `custom.service.desktop.enable`。
+- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo`、`nextcloud` 和 `tailscale`。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。`enable` 启用桌面基础配置，子项包括 `fcitx5`、`gaming` 和 `shell`。DMS 自带音频、蓝牙和网络控制界面，并注入默认 XDG MIME 关联。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 
