@@ -21,6 +21,9 @@
     boot.mode = "uefi";
 
     features = {
+      audio.enable = true;
+      bluetooth.enable = true;
+      graphics.enable = true;
       kernel.cachyos = {
         enable = true;
         package = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
@@ -32,8 +35,19 @@
       };
     };
 
+    desktop = {
+      bluetooth.enable = true;
+      network.enable = true;
+      shell = {
+        enable = true;
+        backend = "dank-material-shell";
+        compositor = "hyprland";
+      };
+    };
+
     service = {
       agenix.enable = true;
+      desktop.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
       tailscale.enable = true;
