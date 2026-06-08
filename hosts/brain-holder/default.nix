@@ -44,6 +44,11 @@
       bluetooth.enable = true;
       gaming.enable = true;
       network.enable = true;
+      shell = {
+        enable = true;
+        backend = "dank-material-shell";
+        compositor = "hyprland";
+      };
     };
 
     service = {

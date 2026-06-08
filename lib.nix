@@ -33,6 +33,7 @@ in
       specialArgs = {
         inherit inputs;
         inherit pkgsUnstable;
+        hostUsernames = usernames;
       };
       modules = [
         hostPath

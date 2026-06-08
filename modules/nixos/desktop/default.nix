@@ -9,13 +9,14 @@
 
   imports = [
     ./fonts.nix
+    ./fcitx5
     ./blueman.nix
     ./pipewire.nix
     ./gaming.nix
     ./greeted.nix
     ./misc.nix
     ./network.nix
-    ./security.nix
+    ./shell
     ./wayland.nix
   ];
 
