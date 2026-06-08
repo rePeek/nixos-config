@@ -176,7 +176,7 @@ modules/home-manager/
 devenv shell
 ```
 
-`devenv.nix` 启用了 `nixfmt-rfc-style` 和对应 git hook。格式化 Nix 文件时使用：
+`devenv.nix` 启用了 `nixfmt-rfc-style` 和对应 git hook。无需每次修改后手动格式化；提交时 pre-commit 会自动处理。需要提前整理格式时使用：
 
 ```bash
 nixfmt <files...>
@@ -259,7 +259,7 @@ just secret-rekey
 
 ## 6. 代码风格
 
-- 修改 `.nix` 文件后运行 `nixfmt`。
+- 不需要每次修改 `.nix` 文件后立即运行 `nixfmt`；提交时由 git pre-commit hook 自动格式化。仅在需要提前查看格式化结果或排查格式问题时手动运行。
 - 保持列表项分行，相关配置放在同一逻辑块中。
 - 局部变量使用可读名称，避免无意义缩写。
 - 注释解释原因、约束或非直观行为，不重复描述代码表面含义。
@@ -281,7 +281,7 @@ git diff -- AGENTS.md
 
 ### 7.2 单个 Nix 文件修改
 
-格式化并做语法检查：
+按需格式化，并做语法检查：
 
 ```bash
 nixfmt <file>
