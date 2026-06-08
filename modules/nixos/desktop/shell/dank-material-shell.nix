@@ -288,7 +288,6 @@ let
             exec-once = ${startDmsSession}
 
             env = GLFW_IM_MODULE,ibus
-            env = GTK_IM_MODULE,fcitx
             env = QT_IM_MODULE,fcitx
             env = SDL_IM_MODULE,fcitx
             env = TERMINAL,kitty
