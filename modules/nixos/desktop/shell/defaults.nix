@@ -218,18 +218,11 @@
     imv
     mpv
     libreoffice
-    qbittorrent-enhanced
-    scrot
-    xfce.thunar
     webp-pixbuf-loader
     nemo
     evince
     file-roller
     gnome-text-editor
-    discord
-    koodo-reader
-    calibre
-    pkgsUnstable.telegram-desktop
   ];
 
   gtk = {
