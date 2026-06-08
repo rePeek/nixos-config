@@ -107,12 +107,10 @@ modules/nixos/
 ```text
 modules/home-manager/
 ├── common/                      # 基础 CLI、shell、Helix、Git、Zellij 等
-├── gui/                         # GNOME、Hyprland、Waybar、SwayNC、输入法等
 ├── extraServices/               # openlist、rclone
 ├── scripts/                     # scripts.nix 与脚本文件
 ├── ghostty.nix
-├── llm-agents-package.nix
-└── xdg-mimes.nix
+└── llm-agents-package.nix
 ```
 
 ### 2.5 敏感信息
@@ -135,7 +133,7 @@ modules/home-manager/
 - 可选系统服务放入 `modules/nixos/service/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
 - 桌面系统服务放入 `modules/nixos/desktop/`。
 - 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
-- 桌面用户配置放入 `modules/home-manager/gui/`。
+- 桌面 profile 和对应的用户默认值放入 `modules/nixos/desktop/`。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
 - 可复用的图形栈、NVIDIA 驱动默认策略、NVIDIA 计算、电源策略、虚拟化、内核、音频和蓝牙能力放入 `modules/nixos/features/`。
 - 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
@@ -185,7 +183,7 @@ nixfmt <files...>
 1. 判断软件包是系统级、公共用户级还是单主机专用。
 2. 系统级软件包优先加入 `modules/nixos/core/packages.nix` 或对应服务模块。
 3. 公共用户级软件包优先加入 `modules/home-manager/common/` 下合适模块。
-4. 图形软件优先加入 `modules/home-manager/gui/` 下合适模块。
+4. 图形软件优先加入 `modules/nixos/desktop/` 下合适 profile。
 5. 仅单个用户或主机需要时，修改对应 `hosts/<host>/users/<username>.nix` 或主机模块。
 6. 使用 `nix search nixpkgs <package>` 确认包名。
 

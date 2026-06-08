@@ -86,12 +86,10 @@ modules/
 │       └── tailscale.nix
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
-    ├── gui/                     # GNOME、Hyprland、Waybar、SwayNC、输入法等
     ├── extraServices/           # openlist、rclone
     ├── scripts/                 # 桌面与日常脚本
     ├── ghostty.nix
-    ├── llm-agents-package.nix
-    └── xdg-mimes.nix
+    └── llm-agents-package.nix
 ```
 
 每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
