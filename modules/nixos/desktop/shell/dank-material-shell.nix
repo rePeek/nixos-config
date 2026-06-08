@@ -10,7 +10,7 @@ let
   cfg = config.custom.desktop.shell;
   terminal = config.custom.desktop.addons.terminal;
   terminalCommand = terminal.command;
-  defaults = import ./defaults.nix {
+  defaults = import ./dank-material-shell-defaults.nix {
     inherit
       lib
       pkgs
