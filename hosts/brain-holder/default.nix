@@ -41,9 +41,8 @@
     };
 
     desktop = {
-      bluetooth.enable = true;
+      enable = true;
       gaming.enable = true;
-      network.enable = true;
       shell = {
         enable = true;
         backend = "dank-material-shell";
@@ -52,7 +51,6 @@
     };
 
     service = {
-      desktop.enable = true;
       fhs.enable = true;
       tailscale.enable = true;
       agenix.enable = true;

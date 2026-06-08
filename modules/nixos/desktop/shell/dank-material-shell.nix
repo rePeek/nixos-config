@@ -9,13 +9,19 @@
 let
   cfg = config.custom.desktop.shell;
   defaults = import ./defaults.nix {
-    inherit pkgs pkgsUnstable;
+    inherit lib pkgs pkgsUnstable;
   };
 
-  dmsEnabled =
-    config.custom.service.desktop.enable && cfg.enable && cfg.backend == "dank-material-shell";
+  dmsEnabled = config.custom.desktop.enable && cfg.enable && cfg.backend == "dank-material-shell";
+  dmsServicePath = [
+    quickshellPackage
+  ]
+  ++ lib.optionals config.custom.features.audio.enable [
+    pkgs.pulseaudio
+  ];
 
   desktopUsers = config.custom.desktop.users;
+  primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
   startDmsSession = pkgs.writeShellScript "start-dms-session" ''
     sleep 1
@@ -255,8 +261,16 @@ let
 
       dconf.settings = defaults.dconfSettings;
 
+      xdg.configFile."mimeapps.list".force = true;
+      xdg.mimeApps = {
+        enable = true;
+        associations.added = defaults.xdgMimeAssociations;
+        defaultApplications = defaults.xdgMimeAssociations;
+      };
+
       home.sessionVariables = {
         TERMINAL = lib.mkDefault "kitty";
+        WINEDLLOVERRIDES = lib.mkDefault "winemenubuilder.exe=d";
       };
 
       home.activation.migrateDmsSessionState = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
@@ -347,6 +361,7 @@ in
 {
   imports = [
     inputs.dms.nixosModules.dank-material-shell
+    inputs.dms.nixosModules.greeter
   ];
 
   config = lib.mkIf dmsEnabled {
@@ -362,6 +377,18 @@ in
       dgop.package = pkgsUnstable.dgop;
       systemd.enable = true;
       quickshell.package = quickshellPackage;
+      greeter = {
+        enable = true;
+        compositor.name = "hyprland";
+      }
+      // lib.optionalAttrs (primaryDesktopUser != null) {
+        configHome = "/home/${primaryDesktopUser}";
+      };
+    };
+
+    services.greetd = {
+      enable = true;
+      settings.default_session.user = lib.mkDefault "greeter";
     };
 
     systemd.user.services.dms = {
@@ -374,9 +401,7 @@ in
           "QML2_IMPORT_PATH"
         ];
       };
-      path = [
-        quickshellPackage
-      ];
+      path = dmsServicePath;
     };
 
     services.displayManager.sessionPackages = [

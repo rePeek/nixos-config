@@ -6,6 +6,8 @@
 {
   imports = [
     ./dank-material-shell.nix
+    ./fonts.nix
+    ./wayland.nix
   ];
 
   options.custom.desktop = {
