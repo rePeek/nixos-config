@@ -70,11 +70,11 @@ modules/
 │   │   ├── power.nix
 │   │   └── virtualization.nix
 │   ├── desktop/                 # 通过 custom.desktop.* 开启的桌面 profile
-│   │   ├── input-method/        # 输入法 profile
-│   │   ├── shell/               # DMS shell、Hyprland session、字体和 Wayland portal
-│   │   ├── base.nix             # 图形会话基础系统服务
+│   │   ├── addons/              # 输入法、默认终端、默认应用、MIME 关联和 gaming
+│   │   ├── core/                # 图形基础服务、字体和 Wayland portal
+│   │   ├── shell/               # DMS shell、Hyprland session 和 greeter
 │   │   ├── default.nix
-│   │   └── gaming.nix
+│   │   └── README.md
 │   ├── fhs.nix
 │   ├── home-manager.nix
 │   └── service/
@@ -108,7 +108,7 @@ modules/
 - `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
 - `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
 - `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo`、`nextcloud` 和 `tailscale`。
-- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。`enable` 启用桌面基础配置，子项包括 `fcitx5`、`gaming` 和 `shell`。DMS 自带音频、蓝牙和网络控制界面，并注入默认 XDG MIME 关联。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。`enable` 启用桌面基础配置，子项包括 `shell` 和 `addons`。DMS 自带音频、蓝牙和网络控制界面；默认应用和 XDG MIME 关联由对应 addon 随应用注册。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 

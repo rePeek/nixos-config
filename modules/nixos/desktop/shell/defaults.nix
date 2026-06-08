@@ -1,95 +1,8 @@
 {
-  lib,
   pkgs,
-  pkgsUnstable,
+  terminalCommand ? "",
   ...
 }:
-
-let
-  defaultMimeApps = {
-    browser = [ "firefox.desktop" ];
-    text = [ "org.gnome.TextEditor.desktop" ];
-    image = [ "imv-dir.desktop" ];
-    audio = [ "mpv.desktop" ];
-    video = [ "mpv.desktop" ];
-    directory = [ "nemo.desktop" ];
-    office = [ "libreoffice.desktop" ];
-    pdf = [ "org.gnome.Evince.desktop" ];
-    terminal = [ "kitty.desktop" ];
-    archive = [ "org.gnome.FileRoller.desktop" ];
-    discord = [ "webcord.desktop" ];
-  };
-
-  mimeMap = {
-    text = [ "text/plain" ];
-    image = [
-      "image/bmp"
-      "image/gif"
-      "image/jpeg"
-      "image/jpg"
-      "image/png"
-      "image/svg+xml"
-      "image/tiff"
-      "image/vnd.microsoft.icon"
-      "image/webp"
-    ];
-    audio = [
-      "audio/aac"
-      "audio/mpeg"
-      "audio/ogg"
-      "audio/opus"
-      "audio/wav"
-      "audio/webm"
-      "audio/x-matroska"
-    ];
-    video = [
-      "video/mp2t"
-      "video/mp4"
-      "video/mpeg"
-      "video/ogg"
-      "video/webm"
-      "video/x-flv"
-      "video/x-matroska"
-      "video/x-msvideo"
-    ];
-    directory = [ "inode/directory" ];
-    browser = [
-      "text/html"
-      "x-scheme-handler/about"
-      "x-scheme-handler/http"
-      "x-scheme-handler/https"
-      "x-scheme-handler/unknown"
-    ];
-    office = [
-      "application/vnd.oasis.opendocument.text"
-      "application/vnd.oasis.opendocument.spreadsheet"
-      "application/vnd.oasis.opendocument.presentation"
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-      "application/msword"
-      "application/vnd.ms-excel"
-      "application/vnd.ms-powerpoint"
-      "application/rtf"
-    ];
-    pdf = [ "application/pdf" ];
-    terminal = [ "terminal" ];
-    archive = [
-      "application/zip"
-      "application/rar"
-      "application/7z"
-      "application/*tar"
-    ];
-  };
-
-  xdgMimeAssociations =
-    with lib;
-    listToAttrs (
-      flatten (
-        mapAttrsToList (key: map (type: attrsets.nameValuePair type defaultMimeApps.${key})) mimeMap
-      )
-    );
-in
 {
   settings = {
     configVersion = 11;
@@ -281,7 +194,7 @@ in
   session = {
     configVersion = 3;
     isLightMode = false;
-    terminalOverride = "kitty";
+    terminalOverride = terminalCommand;
     doNotDisturb = false;
     weatherLocation = "New York, NY";
     weatherCoordinates = "40.7128,-74.0060";
@@ -299,17 +212,7 @@ in
     lastBrightnessDevice = "";
   };
 
-  homePackages = with pkgs; [
-    kitty
-    imv
-    mpv
-    libreoffice
-    webp-pixbuf-loader
-    nemo
-    evince
-    file-roller
-    gnome-text-editor
-  ];
+  homePackages = [ ];
 
   gtk = {
     font = {
@@ -339,58 +242,4 @@ in
     };
   };
 
-  dconfSettings = {
-    "org/gnome/TextEditor" = {
-      custom-font = "Maple Mono 15";
-      highlight-current-line = true;
-      indent-style = "space";
-      restore-session = false;
-      show-grid = false;
-      show-line-numbers = true;
-      show-right-margin = false;
-      style-scheme = "builder-dark";
-      style-variant = "dark";
-      tab-width = "uint32 4";
-      use-system-font = false;
-      wrap-text = false;
-    };
-
-    "org/nemo/preferences" = {
-      always-use-browser = true;
-      close-device-view-on-device-eject = true;
-      date-font-choice = "auto-mono";
-      date-format = "iso";
-      last-server-connect-method = 3;
-      quick-renames-with-pause-in-between = true;
-      show-edit-icon-toolbar = false;
-      show-full-path-titles = false;
-      show-hidden-files = true;
-      show-home-icon-toolbar = true;
-      show-new-folder-icon-toolbar = true;
-      show-open-in-terminal-toolbar = false;
-      show-search-icon-toolbar = false;
-      show-show-thumbnails-toolbar = false;
-      thumbnail-limit = 10485760;
-    };
-    "org/nemo/preferences/menu-config" = {
-      background-menu-open-as-root = false;
-      selection-menu-open-as-root = false;
-      selection-menu-open-in-terminal = false;
-      selection-menu-scripts = false;
-    };
-    "org/nemo/search" = {
-      search-reverse-sort = false;
-      search-sort-column = "name";
-    };
-    "org/nemo/window-state" = {
-      maximized = true;
-      network-expanded = true;
-      side-pane-view = "places";
-      sidebar-bookmark-breakpoint = 2;
-      sidebar-width = 220;
-      start-with-sidebar = true;
-    };
-  };
-
-  inherit xdgMimeAssociations;
 }

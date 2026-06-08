@@ -41,8 +41,8 @@
     };
 
     desktop = {
+      addons.gaming.enable = true;
       enable = true;
-      gaming.enable = true;
       shell = {
         enable = true;
         backend = "dank-material-shell";

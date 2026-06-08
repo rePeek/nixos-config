@@ -8,8 +8,15 @@
 }:
 let
   cfg = config.custom.desktop.shell;
+  terminal = config.custom.desktop.addons.terminal;
+  terminalCommand = terminal.command;
   defaults = import ./defaults.nix {
-    inherit lib pkgs pkgsUnstable;
+    inherit
+      lib
+      pkgs
+      pkgsUnstable
+      terminalCommand
+      ;
   };
 
   dmsEnabled = config.custom.desktop.enable && cfg.enable && cfg.backend == "dank-material-shell";
@@ -49,10 +56,10 @@ let
     bind = SUPER, N, exec, dms ipc notifications toggle
     bind = CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 11] resources'
     bind = SUPER, F1, exec, dms ipc keybinds toggle
-    bind = SUPER, Return, exec, kitty
-    bind = ALT, Return, exec, [float; size 1111 700] kitty
-    bind = SUPER SHIFT, Return, exec, [fullscreen] kitty
-    bind = SUPER SHIFT, E, exec, hyprctl dispatch exec '[float; size 1111 700] kitty -e yazi'
+    bind = SUPER, Return, exec, ${terminalCommand}
+    bind = ALT, Return, exec, [float; size 1111 700] ${terminalCommand}
+    bind = SUPER SHIFT, Return, exec, [fullscreen] ${terminalCommand}
+    bind = SUPER SHIFT, E, exec, hyprctl dispatch exec '[float; size 1111 700] ${terminalCommand} -e yazi'
     bind = SUPER, B, exec, hyprctl dispatch exec '[workspace 1 silent] firefox'
     bind = SUPER, D, exec, dms ipc launcher toggle
     bind = SUPER SHIFT, S, exec, dms screenshot
@@ -153,10 +160,10 @@ let
     hl.bind("SUPER + N", hl.dsp.exec_cmd("dms ipc notifications toggle"))
     hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd([[hyprctl dispatch exec '[workspace 11] resources']]))
     hl.bind("SUPER + F1", hl.dsp.exec_cmd("dms ipc keybinds toggle"))
-    hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"))
-    hl.bind("ALT + Return", hl.dsp.exec_cmd("[float; size 1111 700] kitty"))
-    hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd("[fullscreen] kitty"))
-    hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd([[hyprctl dispatch exec '[float; size 1111 700] kitty -e yazi']]))
+    hl.bind("SUPER + Return", hl.dsp.exec_cmd("${terminalCommand}"))
+    hl.bind("ALT + Return", hl.dsp.exec_cmd("[float; size 1111 700] ${terminalCommand}"))
+    hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd("[fullscreen] ${terminalCommand}"))
+    hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd([[hyprctl dispatch exec '[float; size 1111 700] ${terminalCommand} -e yazi']]))
     hl.bind("SUPER + B", hl.dsp.exec_cmd([[hyprctl dispatch exec '[workspace 1 silent] firefox']]))
     hl.bind("SUPER + D", hl.dsp.exec_cmd("dms ipc launcher toggle"))
     hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("dms screenshot"))
@@ -240,8 +247,6 @@ let
 
       programs.home-manager.enable = lib.mkDefault true;
 
-      programs.firefox.enable = lib.mkDefault true;
-
       programs.dank-material-shell = {
         enable = lib.mkDefault true;
         dgop.package = lib.mkDefault pkgsUnstable.dgop;
@@ -259,19 +264,7 @@ let
         cursorTheme = lib.mkDefault defaults.gtk.cursorTheme;
       };
 
-      dconf.settings = defaults.dconfSettings;
-
-      xdg.configFile."mimeapps.list".force = true;
-      xdg.mimeApps = {
-        enable = true;
-        associations.added = defaults.xdgMimeAssociations;
-        defaultApplications = defaults.xdgMimeAssociations;
-      };
-
-      home.sessionVariables = {
-        TERMINAL = lib.mkDefault "kitty";
-        WINEDLLOVERRIDES = lib.mkDefault "winemenubuilder.exe=d";
-      };
+      home.sessionVariables.WINEDLLOVERRIDES = lib.mkDefault "winemenubuilder.exe=d";
 
       home.activation.migrateDmsSessionState = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
         sessionFile="${config.xdg.stateHome}/DankMaterialShell/session.json"
@@ -288,10 +281,6 @@ let
       '';
 
       xdg.configFile = {
-        "xdg-terminals.list".text = lib.mkDefault ''
-          kitty.desktop
-        '';
-
         "hypr/hyprland.conf" = {
           force = true;
           text = ''
@@ -304,7 +293,7 @@ let
             env = GLFW_IM_MODULE,ibus
             env = QT_IM_MODULE,fcitx
             env = SDL_IM_MODULE,fcitx
-            env = TERMINAL,kitty
+            env = TERMINAL,${terminalCommand}
             env = QT_QPA_PLATFORM,wayland
             env = XCURSOR_SIZE,24
             env = HYPRCURSOR_SIZE,24
@@ -346,7 +335,7 @@ let
           '';
         };
         "hypr/hyprland.lua".text = builtins.readFile "${dmsHyprlandConfig}/hyprland.lua";
-        "hypr/dms/binds.lua".text = builtins.replaceStrings [ "{{TERMINAL_COMMAND}}" ] [ "kitty" ] (
+        "hypr/dms/binds.lua".text = builtins.replaceStrings [ "{{TERMINAL_COMMAND}}" ] [ terminalCommand ] (
           builtins.readFile "${dmsHyprlandConfig}/hypr-binds.lua"
         );
         "hypr/dms/binds-user.lua".text = legacyHyprlandBindsLua;
@@ -369,6 +358,10 @@ in
       {
         assertion = cfg.compositor == "hyprland";
         message = "custom.desktop.shell.compositor currently only supports hyprland.";
+      }
+      {
+        assertion = terminal.enable;
+        message = "custom.desktop.shell requires custom.desktop.addons.terminal.enable.";
       }
     ];
 

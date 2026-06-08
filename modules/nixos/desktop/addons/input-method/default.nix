@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.custom.desktop.fcitx5;
+  cfg = config.custom.desktop.addons.fcitx5;
   desktopUsers = config.custom.desktop.users;
 
   fcitx5UserModule = {
@@ -36,7 +36,7 @@ let
   };
 in
 {
-  options.custom.desktop.fcitx5 = {
+  options.custom.desktop.addons.fcitx5 = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

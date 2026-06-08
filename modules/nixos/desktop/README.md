@@ -4,10 +4,11 @@
 
 目录职责：
 
-- `base.nix`：图形会话基础系统服务，例如 dconf、libinput、printing、geoclue2、gvfs 和桌面 udev 规则。
-- `gaming.nix`：Steam 和 GameMode，由 `custom.desktop.gaming.enable` 开启。
-- `input-method/`：输入法 profile，以及需要注入 Home Manager 用户的默认配置。
-- `shell/`：DMS shell、Hyprland session、DMS greeter、字体、Wayland portal、默认应用和 XDG MIME 关联。
+- `core/`：图形会话基础系统服务、字体和 Wayland portal。
+- `addons/`：输入法、默认终端、默认应用、对应应用配置、XDG MIME 关联和 gaming。
+- `shell/`：DMS shell、Hyprland session 和 DMS greeter。
+
+默认应用和 XDG MIME 关联跟随 addon 注册：例如 `addons/browser.nix` 启用 Firefox 并注册浏览器 MIME，`addons/files.nix` 启用 Nemo 并注册目录 MIME。
 
 底层硬件或系统能力不放在这里：
 

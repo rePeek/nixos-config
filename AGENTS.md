@@ -89,6 +89,10 @@ modules/nixos/
 │   ├── nvidia.nix
 │   ├── power.nix
 │   └── virtualization.nix
+├── desktop/                     # 通过 custom.desktop.* 开启的桌面 profile
+│   ├── addons/                  # 输入法、默认终端、默认应用、MIME 关联和 gaming
+│   ├── core/                    # 图形基础服务、字体和 Wayland portal
+│   └── shell/                   # DMS shell、Hyprland session 和 greeter
 ├── fhs.nix
 ├── home-manager.nix             # 按 hostName 和 usernames 加载用户配置
 └── service/
@@ -159,7 +163,7 @@ modules/home-manager/
 ### 3.4 命名
 
 - 新文件和自定义属性优先使用小写字母与短横线组成的 kebab-case。
-- 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`modules.desktop.gaming.enable` 和 `myModule.agenix.enable`。
+- 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`custom.desktop.addons.gaming.enable` 和 `myModule.agenix.enable`。
 - 新增自定义选项时，优先使用清晰、统一的命名空间；不要为了一致性顺手重命名已有公开选项。
 
 ## 4. 常用工作流

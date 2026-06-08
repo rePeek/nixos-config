@@ -7,7 +7,7 @@
 }:
 with lib;
 let
-  cfg = config.custom.desktop.gaming;
+  cfg = config.custom.desktop.addons.gaming;
   nix-gaming = inputs.nix-gaming;
 in
 {
@@ -16,7 +16,7 @@ in
     nix-gaming.nixosModules.platformOptimizations
   ];
 
-  options.custom.desktop.gaming = {
+  options.custom.desktop.addons.gaming = {
     enable = mkEnableOption "Install Game Suite(steam, lutris, etc)";
   };
 
