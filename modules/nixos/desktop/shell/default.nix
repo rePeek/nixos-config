@@ -30,12 +30,6 @@
         default = "hyprland";
         description = "Wayland compositor used with the desktop shell.";
       };
-
-      manageUserDefaults = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Inject default per-user shell configuration from the system module.";
-      };
     };
   };
 }
