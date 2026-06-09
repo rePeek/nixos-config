@@ -19,12 +19,6 @@
       url = "github:xddxdd/nix-cachyos-kernel/release";
     };
 
-    hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland";
-      submodules = true;
-    };
-
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";

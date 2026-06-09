@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   config,
   lib,
   ...
@@ -8,6 +9,9 @@
   config = lib.mkIf config.custom.desktop.enable {
     programs.hyprland = {
       enable = true;
+      withUWSM = true;
+      package = pkgsUnstable.hyprland;
+      portalPackage = pkgsUnstable.xdg-desktop-portal-hyprland;
     };
     xdg.portal = {
       enable = true;
@@ -21,7 +25,7 @@
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-hyprland
+        pkgsUnstable.xdg-desktop-portal-hyprland
       ];
     };
   };

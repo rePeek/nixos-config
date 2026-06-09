@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-hyprctl dispatch togglefloating
-hyprctl dispatch resizeactive exact 1111 700
-hyprctl dispatch centerwindow
+hyprctl eval 'hl.dispatch(hl.dsp.window.float({ action = "toggle" })); hl.dispatch(hl.dsp.window.resize({ x = 1111, y = 700 })); hl.dispatch(hl.dsp.window.center())'

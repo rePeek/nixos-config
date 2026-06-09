@@ -14,11 +14,9 @@ let
   desktopUsers = config.custom.desktop.users;
   primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
   quickshellPackage = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  hyprlandConfig = import ./hyprland-config.nix {
-    inherit
-      pkgs
-      ;
-  };
+  uwsmHyprlandCommand = pkgs.writeShellScriptBin "Hyprland" ''
+    exec /run/current-system/sw/bin/start-hyprland "$@"
+  '';
 in
 {
   imports = [
@@ -35,6 +33,10 @@ in
       {
         assertion = terminal.enable;
         message = "custom.desktop.shell requires custom.desktop.addons.terminal.enable.";
+      }
+      {
+        assertion = primaryDesktopUser != null;
+        message = "custom.desktop.shell requires at least one custom.desktop.users entry.";
       }
     ];
 
@@ -56,10 +58,17 @@ in
       enable = true;
       settings.default_session.user = lib.mkDefault "greeter";
     };
+    services.displayManager.defaultSession = lib.mkDefault "hyprland-uwsm";
 
-    services.displayManager.sessionPackages = [
-      hyprlandConfig.sessionPackage
-    ];
-    services.displayManager.defaultSession = "hyprland-dms";
+    programs.uwsm.waylandCompositors.hyprland = lib.mkIf (primaryDesktopUser != null) {
+      # UWSM derives XDG_CURRENT_DESKTOP from the executable basename.
+      # Keep that as Hyprland while still entering through start-hyprland.
+      binPath = lib.mkForce "${uwsmHyprlandCommand}/bin/Hyprland";
+      extraArgs = lib.mkForce [
+        "--"
+        "-c"
+        "/home/${primaryDesktopUser}/.config/hypr/hyprland.lua"
+      ];
+    };
   };
 }

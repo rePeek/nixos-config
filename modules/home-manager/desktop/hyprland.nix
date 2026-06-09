@@ -1,19 +1,14 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
 let
   terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
+  dmsCommand = "${config.programs.dank-material-shell.package}/bin/dms run";
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
-  startDmsSession = pkgs.writeShellScript "start-dms-session" ''
-    sleep 1
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE QT_QPA_PLATFORM
-    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE QT_QPA_PLATFORM
-    systemctl --user reset-failed dms.service
-    systemctl --user start dms.service
-  '';
   hyprlandLua =
     builtins.replaceStrings
       [
@@ -39,27 +34,89 @@ let
           hl.env("XMODIFIERS", "@im=fcitx")
 
           hl.on("hyprland.start", function()
-          	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+          	hl.exec_cmd("uwsm finalize GLFW_IM_MODULE QT_IM_MODULE SDL_IM_MODULE TERMINAL QT_QPA_PLATFORM XMODIFIERS XCURSOR_SIZE HYPRCURSOR_SIZE")
           	hl.exec_cmd("fcitx5 -d --replace")
-          	hl.exec_cmd(${builtins.toJSON "${startDmsSession}"})
-          	hl.exec_cmd("systemctl --user start hyprland-session.target")
+          	hl.exec_cmd(${builtins.toJSON dmsCommand})
           end)
           -- DMS_STARTUP_END
         ''
       ]
       (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua");
+  hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
+  dmsHyprlandFragments = {
+    "binds.lua" = pkgs.writeText "dms-hypr-binds.lua" (
+      builtins.replaceStrings
+        [
+          "{{TERMINAL_COMMAND}}"
+          ''hl.bind("SUPER + SHIFT + E", hl.dsp.exit())''
+        ]
+        [
+          terminalCommand
+          ''hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("uwsm stop"))''
+        ]
+        (builtins.readFile "${dmsHyprlandConfig}/hypr-binds.lua")
+    );
+    "binds-user.lua" = ./hyprland-binds-user.lua;
+    "colors.lua" = "${dmsHyprlandConfig}/hypr-colors.lua";
+    "cursor.lua" = "${dmsHyprlandConfig}/hypr-cursor.lua";
+    "layout.lua" = "${dmsHyprlandConfig}/hypr-layout.lua";
+    "outputs.lua" = "${dmsHyprlandConfig}/hypr-outputs.lua";
+    "windowrules.lua" = "${dmsHyprlandConfig}/hypr-windowrules.lua";
+  };
 in
 {
-  xdg.configFile = {
-    "hypr/hyprland.lua".text = hyprlandLua;
-    "hypr/dms/binds.lua".text = builtins.replaceStrings [ "{{TERMINAL_COMMAND}}" ] [ terminalCommand ] (
-      builtins.readFile "${dmsHyprlandConfig}/hypr-binds.lua"
-    );
-    "hypr/dms/binds-user.lua".text = builtins.readFile ./hyprland-binds-user.lua;
-    "hypr/dms/colors.lua".source = "${dmsHyprlandConfig}/hypr-colors.lua";
-    "hypr/dms/cursor.lua".source = "${dmsHyprlandConfig}/hypr-cursor.lua";
-    "hypr/dms/layout.lua".source = "${dmsHyprlandConfig}/hypr-layout.lua";
-    "hypr/dms/outputs.lua".source = "${dmsHyprlandConfig}/hypr-outputs.lua";
-    "hypr/dms/windowrules.lua".source = "${dmsHyprlandConfig}/hypr-windowrules.lua";
-  };
+  home.activation.installDmsHyprlandConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    hypr_dir="${config.xdg.configHome}/hypr"
+    dms_dir="$hypr_dir/dms"
+    run mkdir -p "$dms_dir"
+
+    hypr_lua="$hypr_dir/hyprland.lua"
+    if [ -L "$hypr_lua" ]; then
+      run rm "$hypr_lua"
+    fi
+    run cp ${builtins.toJSON "${hyprlandLuaFile}"} "$hypr_lua"
+    run chmod u+w "$hypr_lua"
+
+    install_writable_fragment() {
+      local source="$1"
+      local target="$2"
+      local replace_existing="$3"
+
+      if [ -L "$target" ]; then
+        local link_target
+        link_target="$(readlink "$target")"
+        if [[ "$link_target" == /nix/store/* ]]; then
+          run rm "$target"
+        else
+          return
+        fi
+      fi
+
+      if [ "$replace_existing" = 1 ] || [ ! -e "$target" ]; then
+        run cp "$source" "$target"
+        run chmod u+w "$target"
+      elif [ -f "$target" ] && [ ! -w "$target" ]; then
+        run chmod u+w "$target"
+      fi
+    }
+
+    ${lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (
+        name: source:
+        let
+          replaceExisting =
+            if
+              lib.elem name [
+                "binds.lua"
+                "binds-user.lua"
+              ]
+            then
+              "1"
+            else
+              "0";
+        in
+        ''install_writable_fragment ${builtins.toJSON "${source}"} "$dms_dir/${name}" ${replaceExisting}''
+      ) dmsHyprlandFragments
+    )}
+  '';
 }

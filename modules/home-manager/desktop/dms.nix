@@ -93,7 +93,7 @@ in
     enable = lib.mkDefault true;
     dgop.package = lib.mkDefault pkgsUnstable.dgop;
     quickshell.package = lib.mkDefault quickshellPackage;
-    systemd.enable = lib.mkDefault true;
+    systemd.enable = lib.mkDefault false;
     settings = lib.mkDefault {
       configVersion = 11;
 
@@ -114,12 +114,12 @@ in
       monoFontFamily = "Maple Mono NF CN";
       terminalsAlwaysDark = true;
       matugenTemplateGhostty = false;
+      customPowerActionLogout = "uwsm stop";
     };
     clipboardSettings = lib.mkDefault { };
-    session = lib.mkDefault {
-      configVersion = 3;
-      terminalOverride = terminalCommand;
-    };
+    # DMS mutates session.json at runtime; keeping it as an HM-managed stateFile
+    # causes activation conflicts once a real user-owned file exists.
+    session = lib.mkForce { };
   };
 
   gtk = {
