@@ -18,6 +18,7 @@ let
     id = "default";
     name = "Main Bar";
     enabled = true;
+    autoHide = true;
     # DMS replaces barConfigs as a whole. Keep only the fields needed to
     # preserve the default bar contents while moving it to the bottom.
     position = 1;
