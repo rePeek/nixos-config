@@ -36,9 +36,16 @@
     };
 
     desktop = {
-      addons.avatar = {
-        enable = true;
-        users.asen = ../../assets/avatars/asen.jpg;
+      addons = {
+        avatar = {
+          enable = true;
+          users.asen = ../../assets/avatars/asen.jpg;
+        };
+        wallpaper = {
+          enable = true;
+          directory = ../../assets/wallpapers;
+          initialStrategy = "random";
+        };
       };
       enable = true;
       shell = {

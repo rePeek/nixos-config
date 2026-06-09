@@ -47,6 +47,11 @@
           users.asen = ../../assets/avatars/asen.jpg;
         };
         gaming.enable = true;
+        wallpaper = {
+          enable = true;
+          directory = ../../assets/wallpapers;
+          initialStrategy = "random";
+        };
       };
       enable = true;
       shell = {

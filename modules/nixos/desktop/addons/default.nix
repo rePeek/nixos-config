@@ -10,5 +10,6 @@
     ./media.nix
     ./office.nix
     ./terminal.nix
+    ./wallpaper.nix
   ];
 }
