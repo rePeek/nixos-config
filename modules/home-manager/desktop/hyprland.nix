@@ -7,7 +7,11 @@
 }:
 let
   terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
-  dmsCommand = "${config.programs.dank-material-shell.package}/bin/dms run";
+  dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-compose-input" ''
+    export QT_IM_MODULE=compose
+    exec ${lib.getExe config.programs.dank-material-shell.package} run "$@"
+  '';
+  dmsCommand = "${dmsLauncher}/bin/dms-run-with-compose-input";
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
   hyprlandLua =
     builtins.replaceStrings
