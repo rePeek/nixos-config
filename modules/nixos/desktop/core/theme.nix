@@ -74,7 +74,7 @@ in
 
     scheme = lib.mkOption {
       type = lib.types.str;
-      default = "wolf-alabaster-light";
+      default = "wolf-alabaster-dark";
       description = ''
         Base16 scheme name. Built-in repository schemes take precedence; other
         names are resolved from pkgs.base16-schemes without the .yaml suffix.
@@ -88,7 +88,7 @@ in
         "light"
         "dark"
       ];
-      default = "light";
+      default = "dark";
       description = "Theme polarity passed to Stylix.";
     };
 
