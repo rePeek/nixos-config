@@ -193,6 +193,7 @@ in
         useAutoLocation = true;
         popupTransparency = 0.92;
         cornerRadius = 12;
+        systemTrayIconTintMode = "primary";
 
         clockDateFormat = "ddd d";
         lockDateFormat = "dddd, MMMM d";

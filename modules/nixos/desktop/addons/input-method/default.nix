@@ -7,24 +7,30 @@
 let
   cfg = config.custom.desktop.addons.fcitx5;
   desktopUsers = config.custom.desktop.users;
-  fcitx5ChineseAddons = pkgs.qt6Packages.fcitx5-chinese-addons;
-  # Chinese Addons metadata uses legacy icon names like fcitx-pinyin, while
-  # the package installs namespaced files like org.fcitx.Fcitx5.fcitx-pinyin.
-  fcitx5ChineseAddonIconLinks = pkgs.runCommand "fcitx5-chinese-addon-icon-links" { } ''
-    icon_dir="${fcitx5ChineseAddons}/share/icons"
+  fcitx5ChineseAddons = pkgs.qt6Packages.fcitx5-chinese-addons.overrideAttrs (oldAttrs: {
+    postInstall = (oldAttrs.postInstall or "") + ''
+      papirus_icons="${pkgs.papirus-icon-theme}/share/icons/Papirus"
 
-    for icon in "$icon_dir"/hicolor/*/apps/org.fcitx.Fcitx5.*; do
-        [ -e "$icon" ] || continue
+      for size in 16x16 22x22 24x24; do
+        icon_dir="$out/share/icons/hicolor/$size/apps"
+        for icon in \
+          fcitx-cangjie fcitx-chn fcitx-chttrans-active fcitx-chttrans-inactive \
+          fcitx-erbi fcitx-fullwidth-active fcitx-fullwidth-inactive fcitx-pinyin \
+          fcitx-punc-active fcitx-punc-inactive fcitx-remind-active fcitx-remind-inactive \
+          fcitx-shuangpin fcitx-wbpy fcitx-wubi fcitx-ziranma
+        do
+          source_icon="$icon"
+          [ "$icon" = "fcitx-wbpy" ] && source_icon="fcitx-wubi"
 
-        rel_path="''${icon#"$icon_dir"/}"
-        dir="$out/share/icons/$(dirname "$rel_path")"
-        name="$(basename "$icon")"
-        legacy_name="''${name#org.fcitx.Fcitx5.}"
+          rm -f "$icon_dir/org.fcitx.Fcitx5.$icon.png" "$icon_dir/$icon.png"
+          ln -sf "$papirus_icons/$size/actions/$source_icon.svg" "$icon_dir/org.fcitx.Fcitx5.$icon.svg"
+          ln -sf "org.fcitx.Fcitx5.$icon.svg" "$icon_dir/$icon.svg"
+        done
+      done
 
-        mkdir -p "$dir"
-        ln -s "$icon" "$dir/$legacy_name"
-    done
-  '';
+      find "$out/share/icons/hicolor" -name '*.png' -delete
+    '';
+  });
   fcitx5KeyboardIconLinks = pkgs.runCommand "fcitx5-keyboard-icon-links" { } ''
     icon_dir="$out/share/icons/hicolor/scalable/apps"
     mkdir -p "$icon_dir"
@@ -45,7 +51,6 @@ let
 
     home.packages = [
       fcitx5ChineseAddons
-      fcitx5ChineseAddonIconLinks
       fcitx5KeyboardIconLinks
     ];
 
