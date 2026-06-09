@@ -8,6 +8,7 @@
 
 let
   cfg = config.custom.desktop.addons.terminal;
+  theme = config.custom.desktop.theme;
   desktopUsers = config.custom.desktop.users;
 
   mimeDefaults = {
@@ -23,11 +24,15 @@ let
       sessionVariables.TERMINAL = lib.mkDefault cfg.command;
     };
 
-    programs.kitty = lib.mkIf (cfg.package == "kitty") {
-      enable = lib.mkDefault true;
-      package = lib.mkDefault null;
-      themeFile = lib.mkDefault "GitHub_Light";
-    };
+    programs.kitty = lib.mkIf (cfg.package == "kitty") (
+      {
+        enable = lib.mkDefault true;
+        package = lib.mkDefault null;
+      }
+      // lib.optionalAttrs (!theme.enable) {
+        themeFile = lib.mkDefault "GitHub_Light";
+      }
+    );
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
       ${cfg.desktopFile}

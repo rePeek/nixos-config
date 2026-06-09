@@ -1,8 +1,12 @@
 {
+  config,
   lib,
   pkgsUnstable,
   ...
 }:
+let
+  stylixThemeEnabled = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config != null;
+in
 {
   home.shellAliases = {
     zs = "zellij -s";
@@ -14,39 +18,41 @@
   programs.zellij = {
     enable = true;
     package = pkgsUnstable.zellij;
-    settings = {
-      # ui
-      theme = "catppuccin-mocha";
-      ui.pane_frames.rounded_corners = true;
-      simplified_ui = true;
-      default_layout = "compact";
-      # misc
-      default_shell = "nu";
-      # keybind
-      keybinds =
-        with builtins;
-        let
-          binder =
-            bind:
-            let
-              keys = elemAt bind 0;
-              action = elemAt bind 1;
-              argKeys = map (k: "\"${k}\"") (lib.lists.flatten [ keys ]);
-            in
-            {
-              name = "bind ${concatStringsSep " " argKeys}";
-              value = action;
-            };
-          layer = binds: (listToAttrs (map binder binds));
-        in
-        {
-          locked = layer [
-            [
-              [ "Alt f" ]
-              { LaunchPlugin = "filepicker"; }
-            ]
-          ];
-        };
-    };
+    settings =
+      lib.optionalAttrs stylixThemeEnabled {
+        theme = "stylix";
+      }
+      // {
+        ui.pane_frames.rounded_corners = true;
+        simplified_ui = true;
+        default_layout = "compact";
+        # misc
+        default_shell = "nu";
+        # keybind
+        keybinds =
+          with builtins;
+          let
+            binder =
+              bind:
+              let
+                keys = elemAt bind 0;
+                action = elemAt bind 1;
+                argKeys = map (k: "\"${k}\"") (lib.lists.flatten [ keys ]);
+              in
+              {
+                name = "bind ${concatStringsSep " " argKeys}";
+                value = action;
+              };
+            layer = binds: (listToAttrs (map binder binds));
+          in
+          {
+            locked = layer [
+              [
+                [ "Alt f" ]
+                { LaunchPlugin = "filepicker"; }
+              ]
+            ];
+          };
+      };
   };
 }

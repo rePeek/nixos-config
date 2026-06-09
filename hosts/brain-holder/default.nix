@@ -59,6 +59,10 @@
         backend = "dank-material-shell";
         compositor = "hyprland";
       };
+      theme = {
+        enable = true;
+        image = ../../assets/wallpapers/a_woman_with_long_hair_wearing_sunglasses.png;
+      };
     };
 
     service = {

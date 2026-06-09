@@ -26,20 +26,30 @@ let
           qt6Packages.fcitx5-chinese-addons
           fcitx5-gtk
         ];
+        settings = {
+          inputMethod = {
+            GroupOrder."0" = lib.mkDefault "Default";
+            "Groups/0" = {
+              Name = lib.mkDefault "Default";
+              "Default Layout" = lib.mkDefault "us";
+              DefaultIM = lib.mkDefault "shuangpin";
+            };
+            "Groups/0/Items/0" = {
+              Name = lib.mkDefault "keyboard-us";
+              Layout = lib.mkDefault null;
+            };
+            "Groups/0/Items/1" = {
+              Name = lib.mkDefault "shuangpin";
+              Layout = lib.mkDefault null;
+            };
+            "Groups/0/Items/2" = {
+              Name = lib.mkDefault "pinyin";
+              Layout = lib.mkDefault null;
+            };
+          };
+          addons.pinyin.globalSection.ShuangpinProfile = lib.mkDefault "Xiaohe";
+        };
       };
-    };
-
-    xdg.configFile."fcitx5/profile" = {
-      source = ./fcitx5-profile;
-      force = true;
-    };
-
-    xdg.configFile."fcitx5/conf/pinyin.conf" = {
-      text = ''
-        # Shuangpin Profile
-        ShuangpinProfile=Xiaohe
-      '';
-      force = true;
     };
   };
 in

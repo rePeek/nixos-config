@@ -22,6 +22,17 @@ let
   userModule = {
     programs.firefox.enable = lib.mkIf (cfg.package == "firefox") (lib.mkDefault true);
 
+    stylix.targets.firefox = lib.mkIf (cfg.package == "firefox") (
+      if cfg.firefoxProfileNames == [ ] then
+        {
+          enable = lib.mkDefault false;
+        }
+      else
+        {
+          profileNames = cfg.firefoxProfileNames;
+        }
+    );
+
     xdg.configFile."mimeapps.list".force = lib.mkDefault true;
     xdg.mimeApps = {
       enable = lib.mkDefault true;
@@ -46,6 +57,13 @@ in
       type = lib.types.str;
       default = "firefox.desktop";
       description = "Desktop file used for browser MIME associations.";
+    };
+
+    firefoxProfileNames = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Firefox profile names that Stylix should theme. Leave empty when Firefox profiles are not managed declaratively.";
+      example = [ "default" ];
     };
 
     manageUserDefaults = lib.mkOption {

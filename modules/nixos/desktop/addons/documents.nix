@@ -31,17 +31,17 @@ let
     ];
 
     dconf.settings."org/gnome/TextEditor" = {
-      custom-font = "Maple Mono 15";
+      custom-font = lib.mkDefault "Maple Mono 15";
       highlight-current-line = true;
       indent-style = "space";
       restore-session = false;
       show-grid = false;
       show-line-numbers = true;
       show-right-margin = false;
-      style-scheme = "builder-dark";
-      style-variant = "dark";
+      style-scheme = lib.mkDefault "builder-dark";
+      style-variant = lib.mkDefault "dark";
       tab-width = "uint32 4";
-      use-system-font = false;
+      use-system-font = lib.mkDefault false;
       wrap-text = false;
     };
 
