@@ -8,7 +8,9 @@
 
 let
   cfg = config.custom.desktop.addons.documents;
+  theme = config.custom.desktop.theme;
   desktopUsers = config.custom.desktop.users;
+  textEditorStyleVariant = if theme.polarity == "either" then "follow" else theme.polarity;
 
   archiveMimeTypes = [
     "application/zip"
@@ -38,8 +40,8 @@ let
       show-grid = false;
       show-line-numbers = true;
       show-right-margin = false;
-      style-scheme = lib.mkDefault "builder-dark";
-      style-variant = lib.mkDefault "dark";
+      style-scheme = lib.mkDefault (if theme.enable then "stylix" else "Adwaita");
+      style-variant = lib.mkDefault textEditorStyleVariant;
       tab-width = "uint32 4";
       use-system-font = lib.mkDefault false;
       wrap-text = false;

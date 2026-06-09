@@ -11,6 +11,31 @@ let
   cfg = config.custom.desktop.theme;
 
   customSchemes = {
+    wolf-alabaster-light = {
+      system = "base16";
+      name = "Wolf Alabaster Light";
+      author = "Wolf <wolf@zv.cx>, adapted to Base16 for Stylix";
+      variant = "light";
+      palette = {
+        base00 = "#F7F7F7";
+        base01 = "#F3F3F3";
+        base02 = "#DDE7ED";
+        base03 = "#777777";
+        base04 = "#8090B8";
+        base05 = "#000000";
+        base06 = "#000000";
+        base07 = "#000000";
+        base08 = "#AA3731";
+        base09 = "#7A3E9D";
+        base0A = "#FFBC5D";
+        base0B = "#448C27";
+        base0C = "#8090B8";
+        base0D = "#325CC0";
+        base0E = "#007ACC";
+        base0F = "#5A9DC4";
+      };
+    };
+
     wolf-alabaster-dark = {
       system = "base16";
       name = "Wolf Alabaster Dark";
@@ -49,7 +74,7 @@ in
 
     scheme = lib.mkOption {
       type = lib.types.str;
-      default = "wolf-alabaster-dark";
+      default = "wolf-alabaster-light";
       description = ''
         Base16 scheme name. Built-in repository schemes take precedence; other
         names are resolved from pkgs.base16-schemes without the .yaml suffix.
@@ -63,7 +88,7 @@ in
         "light"
         "dark"
       ];
-      default = "dark";
+      default = "light";
       description = "Theme polarity passed to Stylix.";
     };
 

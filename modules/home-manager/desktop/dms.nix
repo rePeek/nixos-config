@@ -203,7 +203,7 @@ in
 
         fontFamily = "Maple Mono NF CN";
         monoFontFamily = "Maple Mono NF CN";
-        terminalsAlwaysDark = true;
+        terminalsAlwaysDark = false;
         matugenTemplateGhostty = false;
         customPowerActionLogout = "uwsm stop";
       }
