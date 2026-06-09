@@ -41,7 +41,13 @@
     };
 
     desktop = {
-      addons.gaming.enable = true;
+      addons = {
+        avatar = {
+          enable = true;
+          users.asen = ../../assets/avatars/asen.jpg;
+        };
+        gaming.enable = true;
+      };
       enable = true;
       shell = {
         enable = true;

@@ -1,6 +1,7 @@
 # Desktop addons: optional applications and their matching user defaults.
 {
   imports = [
+    ./avatar.nix
     ./browser.nix
     ./documents.nix
     ./files.nix

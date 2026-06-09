@@ -36,6 +36,10 @@
     };
 
     desktop = {
+      addons.avatar = {
+        enable = true;
+        users.asen = ../../assets/avatars/asen.jpg;
+      };
       enable = true;
       shell = {
         enable = true;
