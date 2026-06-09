@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.custom.desktop.hyprland;
   terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
   dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-compose-input" ''
     export QT_IM_MODULE=compose
@@ -47,6 +48,22 @@ let
       ]
       (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua");
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
+  luaLiteral = value: builtins.toJSON value;
+  renderMonitorRule =
+    rule:
+    let
+      fields = lib.filterAttrs (_: value: value != null) rule;
+      renderedFields = lib.mapAttrsToList (name: value: "${name} = ${luaLiteral value}") fields;
+    in
+    "hl.monitor({ ${lib.concatStringsSep ", " renderedFields} })";
+  outputsLua =
+    (builtins.readFile "${dmsHyprlandConfig}/hypr-outputs.lua")
+    + lib.optionalString (cfg.outputRules != [ ]) ''
+
+      -- Host-specific monitor rules
+      ${lib.concatStringsSep "\n" (map renderMonitorRule cfg.outputRules)}
+    '';
+  outputsLuaFile = pkgs.writeText "dms-hypr-outputs.lua" outputsLua;
   dmsHyprlandFragments = {
     "binds.lua" = pkgs.writeText "dms-hypr-binds.lua" (
       builtins.replaceStrings
@@ -64,12 +81,51 @@ let
     "colors.lua" = "${dmsHyprlandConfig}/hypr-colors.lua";
     "cursor.lua" = "${dmsHyprlandConfig}/hypr-cursor.lua";
     "layout.lua" = "${dmsHyprlandConfig}/hypr-layout.lua";
-    "outputs.lua" = "${dmsHyprlandConfig}/hypr-outputs.lua";
+    "outputs.lua" = outputsLuaFile;
     "windowrules.lua" = "${dmsHyprlandConfig}/hypr-windowrules.lua";
   };
 in
 {
-  home.activation.installDmsHyprlandConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  options.custom.desktop.hyprland.outputRules = lib.mkOption {
+    type = lib.types.listOf (
+      lib.types.submodule {
+        options = {
+          output = lib.mkOption {
+            type = lib.types.str;
+            description = "Hyprland output name, for example DP-1.";
+          };
+
+          mode = lib.mkOption {
+            type = lib.types.str;
+            default = "preferred";
+            description = "Hyprland monitor mode, for example preferred or 2560x1440@164.80.";
+          };
+
+          position = lib.mkOption {
+            type = lib.types.str;
+            default = "auto";
+            description = "Hyprland monitor position, for example auto or 0x0.";
+          };
+
+          scale = lib.mkOption {
+            type = lib.types.str;
+            default = "auto";
+            description = "Hyprland monitor scale, for example auto or 1.";
+          };
+
+          transform = lib.mkOption {
+            type = lib.types.nullOr lib.types.int;
+            default = null;
+            description = "Hyprland monitor transform. Use 2 for an upside-down physical display.";
+          };
+        };
+      }
+    );
+    default = [ ];
+    description = "Host-specific Hyprland monitor rules appended after the DMS default monitor rule.";
+  };
+
+  config.home.activation.installDmsHyprlandConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     hypr_dir="${config.xdg.configHome}/hypr"
     dms_dir="$hypr_dir/dms"
     run mkdir -p "$dms_dir"
@@ -114,6 +170,7 @@ in
                 "binds.lua"
                 "binds-user.lua"
               ]
+              || (name == "outputs.lua" && cfg.outputRules != [ ])
             then
               "1"
             else
