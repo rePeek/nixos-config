@@ -23,6 +23,12 @@ let
       sessionVariables.TERMINAL = lib.mkDefault cfg.command;
     };
 
+    programs.kitty = lib.mkIf (cfg.package == "kitty") {
+      enable = lib.mkDefault true;
+      package = lib.mkDefault null;
+      themeFile = lib.mkDefault "GitHub_Light";
+    };
+
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
       ${cfg.desktopFile}
     '';
