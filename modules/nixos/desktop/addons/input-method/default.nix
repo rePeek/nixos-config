@@ -33,6 +33,14 @@ let
       source = ./fcitx5-profile;
       force = true;
     };
+
+    xdg.configFile."fcitx5/conf/pinyin.conf" = {
+      text = ''
+        # Shuangpin Profile
+        ShuangpinProfile=Xiaohe
+      '';
+      force = true;
+    };
   };
 in
 {
