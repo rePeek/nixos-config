@@ -87,8 +87,6 @@ modules/
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
     ├── extraServices/           # openlist、rclone
-    ├── scripts/                 # 桌面与日常脚本
-    ├── ghostty.nix
     └── llm-agents-package.nix
 ```
 

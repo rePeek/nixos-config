@@ -112,8 +112,6 @@ modules/nixos/
 modules/home-manager/
 ├── common/                      # 基础 CLI、shell、Helix、Git、Zellij 等
 ├── extraServices/               # openlist、rclone
-├── scripts/                     # scripts.nix 与脚本文件
-├── ghostty.nix
 └── llm-agents-package.nix
 ```
 
