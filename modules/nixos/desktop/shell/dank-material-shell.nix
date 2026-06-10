@@ -14,6 +14,13 @@ let
   desktopUsers = config.custom.desktop.users;
   primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
   quickshellPackage = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  cursorTheme = lib.attrByPath [ "stylix" "cursor" ] {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 24;
+  } config;
+  cursorName = cursorTheme.name;
+  cursorSize = toString cursorTheme.size;
   uwsmHyprlandCommand = pkgs.writeShellScriptBin "Hyprland" ''
     exec /run/current-system/sw/bin/start-hyprland "$@"
   '';
@@ -47,16 +54,42 @@ in
       quickshell.package = quickshellPackage;
       greeter = {
         enable = true;
-        compositor.name = "hyprland";
+        compositor = {
+          name = "hyprland";
+          customConfig = ''
+            env = DMS_RUN_GREETER,1
+            env = XCURSOR_THEME,${cursorName}
+            env = XCURSOR_SIZE,${cursorSize}
+            env = HYPRCURSOR_THEME,${cursorName}
+            env = HYPRCURSOR_SIZE,${cursorSize}
+
+            misc {
+                disable_hyprland_logo = true
+            }
+
+            exec-once = hyprctl setcursor ${cursorName} ${cursorSize}
+          '';
+        };
       }
       // lib.optionalAttrs (primaryDesktopUser != null) {
         configHome = "/home/${primaryDesktopUser}";
       };
     };
 
+    environment.systemPackages = [
+      cursorTheme.package
+    ];
+
     services.greetd = {
       enable = true;
       settings.default_session.user = lib.mkDefault "greeter";
+    };
+    systemd.services.greetd.environment = {
+      XCURSOR_THEME = cursorName;
+      XCURSOR_SIZE = cursorSize;
+      HYPRCURSOR_THEME = cursorName;
+      HYPRCURSOR_SIZE = cursorSize;
+      XCURSOR_PATH = "${cursorTheme.package}/share/icons";
     };
     services.displayManager.defaultSession = lib.mkDefault "hyprland-uwsm";
 
