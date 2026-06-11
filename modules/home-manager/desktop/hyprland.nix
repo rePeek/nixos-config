@@ -59,6 +59,13 @@ let
       		force_zero_scaling = true,
       	},
       })
+
+      -- Telegram opens media previews as separate Wayland toplevels. Keep those
+      -- auxiliary windows floating while leaving the main chat window tiled.
+      hl.window_rule({
+      	match = { class = "^(org\\.telegram\\.desktop)$", title = "^(Media viewer|媒体查看器)$" },
+      	float = true,
+      })
     '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
   luaLiteral = value: builtins.toJSON value;
