@@ -9,6 +9,9 @@ devenv.local.nix
 devenv.local.yaml
 result
 
+# Local tool caches
+.cache/
+
 # direnv
 .direnv
 

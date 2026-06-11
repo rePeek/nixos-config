@@ -15,7 +15,7 @@ let
   dmsCommand = "${dmsLauncher}/bin/dms-run-with-compose-input";
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
   hyprlandLua =
-    builtins.replaceStrings
+    (builtins.replaceStrings
       [
         ''
           -- DMS_STARTUP_BEGIN
@@ -46,7 +46,17 @@ let
           -- DMS_STARTUP_END
         ''
       ]
-      (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua");
+      (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua")
+    )
+    + ''
+
+      -- Keep applications launched by the DMS shell on the currently active workspace.
+      hl.config({
+      	misc = {
+      		initial_workspace_tracking = 0,
+      	},
+      })
+    '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
   luaLiteral = value: builtins.toJSON value;
   renderMonitorRule =
