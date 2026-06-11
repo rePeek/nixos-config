@@ -8,11 +8,12 @@
 let
   cfg = config.custom.desktop.hyprland;
   terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
-  dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-compose-input" ''
-    export QT_IM_MODULE=compose
+  dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-wayland-input" ''
+    unset QT_IM_MODULE
+    export QT_QPA_PLATFORM=wayland
     exec ${lib.getExe config.programs.dank-material-shell.package} run "$@"
   '';
-  dmsCommand = "${dmsLauncher}/bin/dms-run-with-compose-input";
+  dmsCommand = "${dmsLauncher}/bin/dms-run-with-wayland-input";
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
   hyprlandLua =
     (builtins.replaceStrings

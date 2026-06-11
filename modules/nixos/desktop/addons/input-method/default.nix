@@ -52,6 +52,7 @@ let
     home.packages = [
       fcitx5ChineseAddons
       fcitx5KeyboardIconLinks
+      pkgs.qt6Packages.fcitx5-qt
     ];
 
     i18n.inputMethod = {
@@ -63,6 +64,7 @@ let
           pkgs.qt6Packages.fcitx5-configtool
           fcitx5ChineseAddons
           pkgs.fcitx5-gtk
+          pkgs.qt6Packages.fcitx5-qt
         ];
         settings = {
           inputMethod = {
