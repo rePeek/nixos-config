@@ -5,7 +5,6 @@
   inputs,
   ...
 }:
-with lib;
 let
   cfg = config.custom.desktop.addons.gaming;
   nix-gaming = inputs.nix-gaming;
@@ -17,10 +16,10 @@ in
   ];
 
   options.custom.desktop.addons.gaming = {
-    enable = mkEnableOption "Install Game Suite(steam, lutris, etc)";
+    enable = lib.mkEnableOption "Install Game Suite(steam, lutris, etc)";
   };
 
-  config = mkIf (config.custom.desktop.enable && cfg.enable) {
+  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
     # ==========================================================================
     # Gaming on Linux
     #
@@ -30,6 +29,8 @@ in
 
     # Games installed by Steam works fine on NixOS, no other configuration needed.
     # https://github.com/NixOS/nixpkgs/blob/master/doc/packages/steam.section.md
+    custom.features.graphics.compat32.enable = lib.mkDefault true;
+
     programs.steam = {
       # Some location that should be persistent:
       #   ~/.local/share/Steam - The default Steam install location
