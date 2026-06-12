@@ -20,7 +20,10 @@ let
   mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ cfg.desktopFile ]);
 
   userModule = {
-    programs.firefox.enable = lib.mkIf (cfg.package == "firefox") (lib.mkDefault true);
+    programs.firefox = lib.mkIf (cfg.package == "firefox") {
+      enable = lib.mkDefault true;
+      languagePacks = lib.mkDefault [ "zh-CN" ];
+    };
 
     stylix.targets.firefox = lib.mkIf (cfg.package == "firefox") (
       if cfg.firefoxProfileNames == [ ] then
