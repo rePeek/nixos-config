@@ -36,7 +36,7 @@
     };
 
     desktop = {
-      addons = {
+      components = {
         avatar = {
           enable = true;
           users.asen = ../../assets/avatars/asen.jpg;

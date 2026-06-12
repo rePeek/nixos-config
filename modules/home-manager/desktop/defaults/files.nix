@@ -1,20 +1,40 @@
-# File manager addon with matching directory defaults.
+# File manager user defaults for the desktop profile.
 {
   config,
   lib,
+  osConfig ? null,
   pkgs,
   ...
 }:
 
 let
-  cfg = config.custom.desktop.addons.files;
-  desktopUsers = config.custom.desktop.users;
+  cfg = config.custom.desktop.defaults.files;
+  desktopEnabled = osConfig == null || osConfig.custom.desktop.enable;
 
   mimeDefaults = {
     "inode/directory" = [ cfg.desktopFile ];
   };
+in
+{
+  options.custom.desktop.defaults.files = {
+    enable = lib.mkEnableOption "file manager default" // {
+      default = true;
+    };
 
-  userModule = {
+    desktopFile = lib.mkOption {
+      type = lib.types.str;
+      default = "nemo.desktop";
+      description = "Desktop file used for directory MIME associations.";
+    };
+
+    manageUserDefaults = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Apply file manager defaults for this desktop user.";
+    };
+  };
+
+  config = lib.mkIf (desktopEnabled && cfg.enable && cfg.manageUserDefaults) {
     home.packages = with pkgs; [
       nemo
     ];
@@ -63,30 +83,5 @@ let
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
     };
-  };
-in
-{
-  options.custom.desktop.addons.files = {
-    enable = lib.mkEnableOption "file manager addon" // {
-      default = true;
-    };
-
-    desktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "nemo.desktop";
-      description = "Desktop file used for directory MIME associations.";
-    };
-
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Inject file manager defaults into desktop Home Manager users.";
-    };
-  };
-
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
-    home-manager.users = lib.genAttrs desktopUsers (_username: {
-      imports = [ userModule ];
-    });
   };
 }

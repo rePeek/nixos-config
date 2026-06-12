@@ -5,10 +5,10 @@
 目录职责：
 
 - `core/`：图形会话基础系统服务、字体和 Wayland portal。
-- `addons/`：输入法、默认终端、默认应用、对应应用配置、XDG MIME 关联和 gaming。
+- `components/`：桌面系统组件，例如输入法、默认终端、头像、壁纸资源和 gaming。
 - `shell/`：DMS shell、Hyprland session 和 DMS greeter。
 
-默认应用和 XDG MIME 关联跟随 addon 注册：例如 `addons/browser.nix` 启用 Firefox 并注册浏览器 MIME，`addons/files.nix` 启用 Nemo 并注册目录 MIME。
+默认应用、应用配置和 XDG MIME 关联放在 Home Manager 的 `modules/home-manager/desktop/defaults/`，因为它们属于用户默认值。
 
 底层硬件或系统能力不放在这里：
 
