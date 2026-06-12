@@ -66,6 +66,7 @@ let
       hl.window_rule({
       	match = { class = "^(org\\.telegram\\.desktop)$", title = "^(Media viewer|媒体查看器)$" },
       	float = true,
+      	size = "1600 1000",
       })
     '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
