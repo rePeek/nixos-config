@@ -11,7 +11,7 @@
       output = "DP-1";
       mode = "preferred";
       position = "auto";
-      scale = "1.25";
+      scale = "1";
       transform = 2;
     }
   ];
