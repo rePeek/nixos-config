@@ -55,6 +55,9 @@ let
       	misc = {
       		initial_workspace_tracking = 0,
       	},
+      	xwayland = {
+      		force_zero_scaling = true,
+      	},
       })
     '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
