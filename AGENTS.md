@@ -126,6 +126,28 @@ modules/home-manager/
 
 禁止在 `.nix`、脚本、文档或提交信息中新增明文密码、订阅地址、私钥和 API Token。发现历史遗留明文时，应指出风险并优先迁移到 agenix，不要继续复制扩散。
 
+### 2.6 外部参考仓库
+
+需要参考更完整的 NixOS/Home Manager 桌面设计、模块拆分、密钥分层或多主机组织方式时，可以查看以下公开仓库。它们仅作为设计参考，不直接覆盖本仓库结构和命名约定；参考前先确认对应文件在上游当前版本中的实际路径和实现，不要凭记忆照搬。
+
+| 仓库 | 适合参考的方向 |
+| --- | --- |
+| `https://github.com/Misterio77/nix-starter-configs` | 新配置模板；NixOS + Home Manager + flakes 的清晰脚手架。 |
+| `https://github.com/hlissner/dotfiles` | 大型个人 NixOS 配置组织方式；复杂度高，只看结构和边界，不直接抄实现。 |
+| `https://github.com/fufexan/dotfiles` | flake-parts、Home Manager、NixOS modules、`home/`、`hosts/`、`modules/`、`secrets/` 等模块拆分。 |
+| `https://github.com/mitchellh/nixos-config` | 少抽象、偏直接的真实 NixOS 配置实践。 |
+| `https://github.com/raexera/yuki` | NixOS + Home Manager + flakes + flake-parts，偏 Hyprland 桌面美化。 |
+| `https://github.com/malob/nix-config` | NixOS、nix-darwin、Home Manager 的多平台统一管理。 |
+| `https://github.com/JaKooLit/NixOS-Hyprland` | NixOS + Hyprland 自动安装和整合思路；注意其 dot configs 不一定是纯 Nix 声明式配置。 |
+| `https://github.com/BirdeeHub/nix-wrapper-modules` | 用 Nix module 包装带配置的软件；适合参考桌面组件和应用配置抽象方式。 |
+| `https://github.com/NobbZ/nixos-config` | 老牌 Nix 配置仓库，可参考 flake 和配置组织。 |
+| `https://github.com/oddlama/nix-config` | 实际维护中的个人 Nix config + dotfiles。 |
+| `https://github.com/pinpox/nixos` | 多机、服务端、secrets 和 configuration management 方向。 |
+| `https://github.com/yunfachi/denix` | 可扩展 Nix 配置框架，面向 NixOS/Home Manager/nix-darwin 的 hosts、rices、modules 组织。 |
+| `https://github.com/ryan4yin/nix-config` | 桌面设计、密钥分层、GUI 应用密码管理和浏览器密码集成。 |
+
+对网站和 GUI 应用账户密码，优先参考 `ryan4yin/nix-config` 中 `pass`/GPG password-store 与 `browserpass` 的设计：Nix 固化工具链和 native messaging，密码数据留在加密 password-store 中，不把 Firefox 的 `logins.json`、`key4.db` 或明文账户密码写入本仓库。对系统服务密钥，参考其 agenix 分层思路；在本仓库中仍优先沿用现有 `secrets/secrets.nix` 和 `modules/nixos/service/agenix.nix`。
+
 ## 3. 架构约定
 
 ### 3.1 修改位置
