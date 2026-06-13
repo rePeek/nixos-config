@@ -109,6 +109,7 @@
       homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
+          inputs.stylix.homeModules.stylix
           ./hosts/nixos-in-docker/root.nix
         ];
         extraSpecialArgs = {
