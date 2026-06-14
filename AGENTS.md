@@ -101,7 +101,6 @@ modules/nixos/
     ├── gaming.nix
     ├── jellyfin.nix
     ├── mihomo.nix
-    ├── nextcloud.nix
     ├── tailscale.nix
     └── desktop/
 ```
@@ -168,7 +167,7 @@ modules/home-manager/
 - 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中，包括 `nixos-hardware` 的机型或通用硬件模块；可复用系统能力在主机入口中通过 `custom.features.*` 声明。
 - 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `brain-holder` 导入完整的 `../../modules/nixos/service`。
-- 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。
+- 其他主机按需导入具体服务文件，避免无意启用桌面或 Jellyfin 等服务。
 - Home Manager 用户入口位于 `hosts/<host>/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 自动加载。
 - 外部 Flake 输入通过 `inputs` 参数使用；Nixpkgs 软件包统一通过 `pkgs` 使用。
 - 不要直接引用 `<nixpkgs>` 全局路径。

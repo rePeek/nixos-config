@@ -82,7 +82,6 @@ modules/
 │       ├── gaming.nix
 │       ├── jellyfin.nix
 │       ├── mihomo.nix
-│       ├── nextcloud.nix
 │       └── tailscale.nix
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
@@ -105,7 +104,7 @@ modules/
 - `custom.features.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
 - `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
 - `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
-- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo`、`nextcloud` 和 `tailscale`。
+- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo` 和 `tailscale`。
 - `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。`enable` 启用桌面基础配置，子项包括 `shell` 和 `addons`。DMS 自带音频、蓝牙和网络控制界面；默认应用和 XDG MIME 关联由对应 addon 随应用注册。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
@@ -135,7 +134,6 @@ modules/
 - Jellyfin 媒体服务。
 - NTFS 文件系统支持。
 - agenix 密钥解密支持。
-- Nextcloud 目前仍随完整服务集合导入，后续计划停用。
 
 部署命令：
 
