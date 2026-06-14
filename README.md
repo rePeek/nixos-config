@@ -241,8 +241,8 @@ nixConfig = {
   extra-substituters = [
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
-    "https://attic.xuyh0120.win/lantian"
     "https://cache.numtide.com"
+    "https://attic.xuyh0120.win/lantian"
 
     # China mirrors are kept after the upstream caches so they act as fallback.
     # status: https://mirrors.ustc.edu.cn/status/
