@@ -22,6 +22,7 @@ let
   userModule = {
     programs.firefox = lib.mkIf (cfg.package == "firefox") {
       enable = lib.mkDefault true;
+      configPath = lib.mkDefault ".mozilla/firefox";
       languagePacks = lib.mkDefault [ "zh-CN" ];
     };
 
