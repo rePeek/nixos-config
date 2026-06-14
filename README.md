@@ -131,7 +131,6 @@ modules/
 - Steam、Gamescope、Protontricks、GameMode 和低延迟 PipeWire 游戏优化。
 - Docker、libvirt、QEMU、virt-manager、SPICE 和虚拟 TPM。
 - Tailscale 与 nftables 防火墙。
-- Jellyfin 媒体服务。
 - NTFS 文件系统支持。
 - agenix 密钥解密支持。
 

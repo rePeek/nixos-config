@@ -12,14 +12,8 @@
       allowedTCPPorts = [
         22
         5244
-
-        #jellyfin
-        8096
       ];
-      allowedUDPPorts = [
-        #jellyfin
-        7359
-      ];
+      allowedUDPPorts = [ ];
     };
   };
 }

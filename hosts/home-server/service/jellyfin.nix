@@ -5,6 +5,8 @@
 {
   users.users.jellyfin.extraGroups = [ "media" ];
 
+  networking.firewall.allowedTCPPorts = [ 8096 ];
+
   services.jellyfin = {
     enable = true;
     logDir = "/var/lib/jellyfin/log";
