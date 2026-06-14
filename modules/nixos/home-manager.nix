@@ -4,7 +4,6 @@
   pkgs,
   lib,
   inputs,
-  pkgsUnstable,
   ...
 }:
 {
@@ -16,7 +15,6 @@
     backupFileExtension = "bkp";
     extraSpecialArgs = {
       inherit inputs;
-      inherit pkgsUnstable;
     };
     users = builtins.listToAttrs (
       map (username: {

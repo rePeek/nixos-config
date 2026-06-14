@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 let
@@ -31,7 +30,7 @@ in
 
   programs.zellij = {
     enable = true;
-    package = pkgsUnstable.zellij;
+    package = pkgs.zellij;
     settings =
       lib.optionalAttrs stylixThemeEnabled {
         theme = "stylix";

@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 let
@@ -185,7 +184,7 @@ in
 
   programs.dank-material-shell = {
     enable = lib.mkDefault true;
-    dgop.package = lib.mkDefault pkgsUnstable.dgop;
+    dgop.package = lib.mkDefault pkgs.dgop;
     quickshell.package = lib.mkDefault quickshellPackage;
     systemd.enable = lib.mkDefault false;
     settings = lib.mkDefault (

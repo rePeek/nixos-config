@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 let
@@ -49,7 +48,7 @@ in
 
     programs.dank-material-shell = {
       enable = true;
-      dgop.package = pkgsUnstable.dgop;
+      dgop.package = pkgs.dgop;
       systemd.enable = false;
       quickshell.package = quickshellPackage;
       greeter = {
@@ -94,6 +93,8 @@ in
     services.displayManager.defaultSession = lib.mkDefault "hyprland-uwsm";
 
     programs.uwsm.waylandCompositors.hyprland = lib.mkIf (primaryDesktopUser != null) {
+      prettyName = "Hyprland";
+      comment = "Hyprland compositor managed by UWSM";
       # UWSM derives XDG_CURRENT_DESKTOP from the executable basename.
       # Keep that as Hyprland while still entering through start-hyprland.
       binPath = lib.mkForce "${uwsmHyprlandCommand}/bin/Hyprland";

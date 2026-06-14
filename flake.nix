@@ -2,8 +2,7 @@
   description = "Asen's NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixos-hardware = {
       url = "git+https://github.com/NixOS/nixos-hardware";
@@ -11,12 +10,12 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,12 +30,12 @@
 
     dms = {
       url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
@@ -64,7 +63,6 @@
       self,
       nixpkgs,
       home-manager,
-      nixpkgs-unstable,
       ...
     }@inputs:
     let
@@ -72,7 +70,6 @@
 
       myLib = import ./lib.nix {
         inherit nixpkgs;
-        inherit nixpkgs-unstable;
         inherit home-manager;
         inherit inputs;
         inherit system;
@@ -114,7 +111,6 @@
         ];
         extraSpecialArgs = {
           inherit inputs;
-          inherit (myLib) pkgsUnstable;
         };
       };
     };

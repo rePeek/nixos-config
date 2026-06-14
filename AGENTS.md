@@ -6,7 +6,7 @@
 
 这是一个使用 NixOS、Flake、Home Manager 和 agenix 管理的声明式系统配置仓库。核心目标是保持配置可重现、可迁移、模块化，并避免把主机特有逻辑散落到公共模块中。
 
-当前稳定 Nixpkgs 分支为 `nixos-25.11`，同时通过 `nixpkgs-unstable` 提供少量需要较新版本的软件包。
+当前 Nixpkgs 分支为 `nixos-unstable`。
 
 ## 2. 仓库结构
 
@@ -170,7 +170,7 @@ modules/home-manager/
 - `brain-holder` 导入完整的 `../../modules/nixos/service`。
 - 其他主机按需导入具体服务文件，避免无意启用桌面、Jellyfin 或 Nextcloud 等服务。
 - Home Manager 用户入口位于 `hosts/<host>/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 自动加载。
-- 外部 Flake 输入通过 `inputs` 参数使用；稳定软件包通过 `pkgs` 使用，需要新版本时再使用 `pkgsUnstable`。
+- 外部 Flake 输入通过 `inputs` 参数使用；Nixpkgs 软件包统一通过 `pkgs` 使用。
 - 不要直接引用 `<nixpkgs>` 全局路径。
 
 ### 3.3 自定义选项设计

@@ -90,7 +90,7 @@ in
             # 需要 TPM 的 Linux guest 可直接使用
             swtpm.enable = true;
 
-            # 25.11 不再写 ovmf.enable / ovmf.packages
+            # Newer nixpkgs no longer writes ovmf.enable / ovmf.packages.
             # 现在由 libvirt + qemu 的机制自动处理 UEFI 固件
           };
         };

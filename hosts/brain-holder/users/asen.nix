@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   ...
 }:
 {
@@ -17,8 +16,8 @@
     koodo-reader
     qbittorrent-enhanced
     scrot
-    xfce.thunar
-    pkgsUnstable.telegram-desktop
+    thunar
+    telegram-desktop
   ];
 
   custom.desktop.hyprland.outputRules = [

@@ -1,25 +1,13 @@
 {
   nixpkgs,
-  nixpkgs-unstable,
   home-manager,
   inputs,
   system,
 }:
 let
   nixosModulesPath = ./modules/nixos;
-
-  mkPkgsUnstable =
-    system:
-    import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
-  pkgsUnstable = mkPkgsUnstable system;
 in
 {
-  inherit mkPkgsUnstable pkgsUnstable;
-
   mkHost =
     {
       hostPath,
@@ -32,7 +20,6 @@ in
       inherit system;
       specialArgs = {
         inherit inputs;
-        inherit pkgsUnstable;
         hostUsernames = usernames;
       };
       modules = [

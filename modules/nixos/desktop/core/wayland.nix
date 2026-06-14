@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgsUnstable,
   config,
   lib,
   ...
@@ -10,8 +9,8 @@
     programs.hyprland = {
       enable = true;
       withUWSM = true;
-      package = pkgsUnstable.hyprland;
-      portalPackage = pkgsUnstable.xdg-desktop-portal-hyprland;
+      package = pkgs.hyprland;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
     };
     xdg.portal = {
       enable = true;
@@ -25,7 +24,7 @@
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgsUnstable.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
