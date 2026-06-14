@@ -187,35 +187,39 @@ in
     dgop.package = lib.mkDefault pkgs.dgop;
     quickshell.package = lib.mkDefault quickshellPackage;
     systemd.enable = lib.mkDefault false;
-    settings = lib.mkDefault (
+    settings = lib.mkMerge [
       {
         configVersion = 11;
-
-        currentThemeCategory = if stylixThemeEnabled then "custom" else "generic";
-        currentThemeName = if stylixThemeEnabled then "custom" else "blue";
-
-        useAutoLocation = true;
-        popupTransparency = 0.92;
-        cornerRadius = 12;
-        systemTrayIconTintMode = "primary";
-
-        clockDateFormat = "ddd d";
-        lockDateFormat = "dddd, MMMM d";
 
         barConfigs = [ bottomMainBar ];
 
         cursorSettings = dmsCursorSettings;
 
-        fontFamily = "Maple Mono NF CN";
-        monoFontFamily = "Maple Mono NF CN";
-        terminalsAlwaysDark = false;
-        matugenTemplateGhostty = false;
         customPowerActionLogout = "uwsm stop";
       }
-      // lib.optionalAttrs stylixThemeEnabled {
-        customThemeFile = "${config.xdg.configHome}/DankMaterialShell/themes/stylix/theme.json";
-      }
-    );
+      (lib.mkDefault (
+        {
+          currentThemeCategory = if stylixThemeEnabled then "custom" else "generic";
+          currentThemeName = if stylixThemeEnabled then "custom" else "blue";
+
+          useAutoLocation = true;
+          popupTransparency = 0.92;
+          cornerRadius = 12;
+          systemTrayIconTintMode = "primary";
+
+          clockDateFormat = "ddd d";
+          lockDateFormat = "dddd, MMMM d";
+
+          fontFamily = "Maple Mono NF CN";
+          monoFontFamily = "Maple Mono NF CN";
+          terminalsAlwaysDark = false;
+          matugenTemplateGhostty = false;
+        }
+        // lib.optionalAttrs stylixThemeEnabled {
+          customThemeFile = "${config.xdg.configHome}/DankMaterialShell/themes/stylix/theme.json";
+        }
+      ))
+    ];
     clipboardSettings = lib.mkDefault { };
     # DMS mutates session.json at runtime; keeping it as an HM-managed stateFile
     # causes activation conflicts once a real user-owned file exists.
