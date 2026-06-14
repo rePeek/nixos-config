@@ -112,7 +112,7 @@ in
           ydy_sub:
             type: http
             url: "$YDY_URL"
-            interval: 86400
+            interval: 14400
             health-check:
               enable: true
               url: "https://www.gstatic.com/generate_204"
@@ -121,7 +121,7 @@ in
           dream_sub:
             type: http
             url: "$DREAM_URL"
-            interval: 86400
+            interval: 14400
             health-check:
               enable: true
               url: "https://www.gstatic.com/generate_204"
@@ -130,7 +130,7 @@ in
           jms_sub:
             type: http
             url: "$JMS_URL"
-            interval: 86400
+            interval: 14400
             health-check:
               enable: true
               url: "https://www.gstatic.com/generate_204"
@@ -263,7 +263,7 @@ in
             url: "https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Grok/Grok.yaml"
             path: ./ruleset/grok.yaml
             interval: 86400
-  
+
           openai:
             type: http
             behavior: classical
