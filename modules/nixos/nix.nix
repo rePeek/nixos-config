@@ -22,12 +22,6 @@
       "https://nix-community.cachix.org"
       "https://cache.numtide.com"
       "https://attic.xuyh0120.win/lantian"
-
-      # China mirrors are kept after the upstream caches so they act as fallback.
-      # status: https://mirror.sjtu.edu.cn/
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-      # status: https://mirrors.ustc.edu.cn/status/
-      "https://mirrors.ustc.edu.cn/nix-channels/store"
     ];
 
     trusted-public-keys = [
