@@ -9,10 +9,7 @@
       "114.114.114.114"
     ];
     firewall = {
-      allowedTCPPorts = [
-        22
-        5244
-      ];
+      allowedTCPPorts = [ 22 ];
       allowedUDPPorts = [ ];
     };
   };

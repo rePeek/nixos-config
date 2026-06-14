@@ -85,7 +85,6 @@ modules/
 │       └── tailscale.nix
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
-    ├── extraServices/           # openlist、rclone
     └── llm-agents-package.nix
 ```
 

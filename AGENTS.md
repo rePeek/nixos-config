@@ -110,7 +110,6 @@ modules/nixos/
 ```text
 modules/home-manager/
 ├── common/                      # 基础 CLI、shell、Helix、Git、Zellij 等
-├── extraServices/               # openlist、rclone
 └── llm-agents-package.nix
 ```
 
