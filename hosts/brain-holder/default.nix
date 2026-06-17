@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   networking.hostName = "brain-holder";
 
@@ -32,11 +32,10 @@
           kvm.cpu = "intel";
         };
       };
-      # CachyOS LTO currently fails while linking kernel modules with ld.lld.
-      # kernel.cachyos = {
-      #   enable = true;
-      #   package = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-x86_64-v3;
-      # };
+      kernel.cachyos = {
+        enable = true;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v3;
+      };
     };
 
     desktop = {
