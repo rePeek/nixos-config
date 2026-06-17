@@ -103,10 +103,11 @@ in
           auto-route: true
           auto-redirect: true
           auto-detect-interface: true
-          exclude-interface:
-            - tailscale0
           route-exclude-address:
             - 100.64.0.0/10
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
 
         proxy-providers:
           ydy_sub:
