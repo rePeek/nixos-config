@@ -27,7 +27,7 @@
       graphics.enable = true;
       kernel.cachyos = {
         enable = true;
-        package = pkgs.cachyosKernels.linuxPackages-cachyos-server-lto;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v3;
       };
       power.profile = "performance";
       virtualization = {
