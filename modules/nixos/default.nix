@@ -10,7 +10,6 @@
     ./system.nix
 
     ./features
-    ./desktop
     ./service
     ./tools.nix
   ];

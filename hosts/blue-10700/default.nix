@@ -15,6 +15,7 @@
     ./user.nix
 
     ../../modules/nixos
+    ../../modules/nixos/desktop
   ];
 
   custom = {
