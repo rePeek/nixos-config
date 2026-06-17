@@ -1,5 +1,11 @@
 { pkgs, ... }:
 {
+  # Generate the devenv auto-activation hook declaratively so Nushell does not
+  # recreate it on every startup.
+  xdg.configFile."nushell/autoload/devenv-hook.nu".source = pkgs.runCommand "devenv-hook.nu" { } ''
+    ${pkgs.devenv}/bin/devenv hook nu > $out
+  '';
+
   programs = {
     nushell = {
       enable = true;
@@ -23,6 +29,12 @@
              completer: $carapace_completer # check 'carapace_completer'
            }
          }
+        }
+
+        # devenv sets a bash-style PS1 prefix like "(devenv)"; hide it so
+        # Starship remains the single source of prompt rendering in Nushell.
+        if "PS1" in $env {
+          hide-env PS1
         }
       '';
       environmentVariables = {
