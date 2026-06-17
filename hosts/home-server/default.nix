@@ -33,7 +33,10 @@
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      tailscale.enable = true;
+      tailscale = {
+        enable = true;
+        advertiseExitNode = true;
+      };
       cli-proxy-api = {
         enable = true;
         listenAddress = "0.0.0.0";

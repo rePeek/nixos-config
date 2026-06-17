@@ -9,13 +9,20 @@ let
   cfg = config.custom.service.tailscale;
 in
 {
-  options.custom.service.tailscale.enable = lib.mkEnableOption "Tailscale service";
+  options.custom.service.tailscale = {
+    enable = lib.mkEnableOption "Tailscale service";
+    advertiseExitNode = lib.mkEnableOption "Tailscale exit node advertising";
+  };
 
   config = lib.mkIf cfg.enable {
     # 1. Enable the service and the firewall
     services.tailscale = {
       enable = true;
       package = pkgs.tailscale;
+      useRoutingFeatures = lib.mkIf cfg.advertiseExitNode "server";
+      extraUpFlags = lib.optionals cfg.advertiseExitNode [
+        "--advertise-exit-node"
+      ];
     };
     networking.nftables.enable = true;
     networking.firewall = {
