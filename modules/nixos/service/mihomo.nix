@@ -76,6 +76,8 @@ in
           ipv6: false
           enhanced-mode: fake-ip
           fake-ip-filter:
+            - 'tailfd7184.ts.net'
+            - '*.tailfd7184.ts.net'
             - '*.tailscale.com'
             - '*.ts.net'
             - 'controlplane.tailscale.com'

@@ -33,6 +33,24 @@ in
       ];
     };
     networking.nftables.enable = true;
+    networking.hosts = {
+      "100.66.72.6" = [
+        "home-server"
+        "home-server.tailfd7184.ts.net"
+      ];
+      "100.71.185.73" = [
+        "blue-10700"
+        "blue-10700.tailfd7184.ts.net"
+      ];
+      "100.73.141.90" = [
+        "brain-holder"
+        "brain-holder.tailfd7184.ts.net"
+      ];
+      "100.82.124.57" = [
+        "rainyun"
+        "rainyun.tailfd7184.ts.net"
+      ];
+    };
     networking.firewall = {
       enable = true;
       # Always allow traffic from your Tailscale network
