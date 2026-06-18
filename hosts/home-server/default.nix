@@ -34,8 +34,9 @@
       fhs.enable = true;
       mihomo.enable = true;
       tailscale = {
-        enable = true;
+        acceptDns = false;
         advertiseExitNode = true;
+        enable = true;
       };
       cli-proxy-api = {
         enable = true;
