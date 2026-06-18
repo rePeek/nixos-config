@@ -12,6 +12,11 @@ in
   options.custom.service.tailscale = {
     enable = lib.mkEnableOption "Tailscale service";
     advertiseExitNode = lib.mkEnableOption "Tailscale exit node advertising";
+    acceptDns = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to accept DNS settings from the tailnet.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -22,6 +27,9 @@ in
       useRoutingFeatures = lib.mkIf cfg.advertiseExitNode "server";
       extraUpFlags = lib.optionals cfg.advertiseExitNode [
         "--advertise-exit-node"
+      ];
+      extraSetFlags = lib.optionals (!cfg.acceptDns) [
+        "--accept-dns=false"
       ];
     };
     networking.nftables.enable = true;
