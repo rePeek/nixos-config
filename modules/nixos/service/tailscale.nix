@@ -50,6 +50,10 @@ in
         "rainyun"
         "rainyun.tailfd7184.ts.net"
       ];
+      "100.86.97.62" = [
+        "laiku"
+        "laiku.tailfd7184.ts.net"
+      ];
     };
     networking.firewall = {
       enable = true;
