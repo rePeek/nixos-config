@@ -11,6 +11,13 @@ let
   desktopUsers = config.custom.desktop.users;
   configuredUsers = lib.attrNames cfg.users;
   invalidUsers = lib.filter (username: !(lib.elem username desktopUsers)) configuredUsers;
+  storeAvatars = lib.mapAttrs (
+    username: avatar:
+    builtins.path {
+      path = avatar;
+      name = "${username}-avatar";
+    }
+  ) cfg.users;
 
   installAccountsServiceAvatar =
     username: avatar:
@@ -75,7 +82,7 @@ let
     '';
 
   accountsServiceActivation = lib.concatStringsSep "\n" (
-    lib.mapAttrsToList installAccountsServiceAvatar cfg.users
+    lib.mapAttrsToList installAccountsServiceAvatar storeAvatars
   );
 in
 {
@@ -123,6 +130,8 @@ in
     ];
 
     services.accounts-daemon.enable = true;
+
+    system.extraDependencies = lib.attrValues storeAvatars;
 
     system.activationScripts.desktopAvatars = lib.mkIf (cfg.users != { }) {
       text = accountsServiceActivation;
