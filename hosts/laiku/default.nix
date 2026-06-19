@@ -1,5 +1,5 @@
 # Desktop profile for the Lecoo MINI PRO-AHP host.
-{ ... }:
+{ pkgs, ... }:
 
 {
   networking.hostName = "laiku";
@@ -23,6 +23,10 @@
       graphics = {
         enable = true;
         compat32.enable = true;
+      };
+      kernel.cachyos = {
+        enable = true;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
       };
       power.profile = "performance";
     };
