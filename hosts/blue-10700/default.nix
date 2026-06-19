@@ -64,10 +64,7 @@
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      tailscale = {
-        acceptDns = false;
-        enable = true;
-      };
+      tailscale.enable = true;
     };
   };
 

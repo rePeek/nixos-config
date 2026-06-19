@@ -34,7 +34,6 @@
       fhs.enable = true;
       mihomo.enable = true;
       tailscale = {
-        acceptDns = false;
         advertiseExitNode = true;
         enable = true;
       };

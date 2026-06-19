@@ -14,7 +14,7 @@ in
     advertiseExitNode = lib.mkEnableOption "Tailscale exit node advertising";
     acceptDns = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = "Whether to accept DNS settings from the tailnet.";
     };
   };
