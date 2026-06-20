@@ -29,6 +29,9 @@ in
 
     # Games installed by Steam works fine on NixOS, no other configuration needed.
     # https://github.com/NixOS/nixpkgs/blob/master/doc/packages/steam.section.md
+    custom.features.graphics.compat32.enable = lib.mkDefault true;
+    hardware.xpadneo.enable = true;
+
     programs.steam = {
       # Some location that should be persistent:
       #   ~/.local/share/Steam - The default Steam install location
@@ -46,6 +49,9 @@ in
       # Steam's 32-bit runtime tries to preload the 64-bit extest library on
       # Wayland, which can make the client updater exit during startup.
       extest.enable = false;
+      package = pkgs.steam.override {
+        extraArgs = "-language schinese";
+      };
       fontPackages = [
         pkgs.wqy_zenhei # Need by steam for Chinese
       ];
@@ -53,6 +59,9 @@ in
 
     # see https://github.com/fufexan/nix-gaming/#pipewire-low-latency
     services.pipewire.lowLatency.enable = true;
+    services.udev.packages = with pkgs; [
+      game-devices-udev-rules
+    ];
     programs.steam.platformOptimizations.enable = true;
 
     # Optimise Linux system performance on demand
