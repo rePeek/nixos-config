@@ -9,6 +9,9 @@
 deploy-brain:
   nixos-rebuild switch --flake .#brain-holder --sudo
 
+deploy-laiku:
+  nixos-rebuild switch --flake .#laiku --sudo
+
 deploy-server:
   nixos-rebuild switch --flake .#home-server --sudo
 
