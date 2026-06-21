@@ -1,25 +1,26 @@
-{ lib, ... }:
-
 {
   networking = {
-    networkmanager.enable = lib.mkForce false;
-    useDHCP = false;
+    networkmanager = {
+      enable = true;
 
-    interfaces = {
-      eno1 = {
-        useDHCP = false;
-        ipv4.addresses = [
-          {
-            address = "192.168.137.16";
-            prefixLength = 24;
-          }
-        ];
+      ensureProfiles.profiles.wired-gateway = {
+        connection = {
+          id = "wired-gateway";
+          type = "ethernet";
+          interface-name = "eno1";
+          autoconnect = true;
+        };
+
+        ipv4 = {
+          method = "manual";
+          addresses = "192.168.137.16/24";
+          gateway = "192.168.137.1";
+          dns = "1.1.1.1;8.8.8.8;";
+        };
+
+        ipv6.method = "ignore";
       };
-
-      enp2s0.useDHCP = false;
     };
-
-    defaultGateway = "192.168.137.1";
 
     nameservers = [
       "1.1.1.1"
