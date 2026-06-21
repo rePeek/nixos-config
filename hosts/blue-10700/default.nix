@@ -12,7 +12,6 @@
   imports = [
     ./hardware
     ./network.nix
-    ./user.nix
 
     ../../modules/nixos
     ../../modules/nixos/desktop
@@ -20,6 +19,31 @@
 
   custom = {
     boot.mode = "uefi";
+
+    users = {
+      enabled = [ "asen" ];
+      asen = {
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "docker"
+        ];
+        extraAuthorizedKeys = [
+          # Windows game PC
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
+        ];
+      };
+    };
+
+    home.users.asen.desktop.hyprland.outputRules = [
+      {
+        output = "DP-1";
+        mode = "preferred";
+        position = "auto";
+        scale = "1";
+        transform = 2;
+      }
+    ];
 
     features = {
       audio.enable = true;
@@ -37,7 +61,7 @@
     };
 
     desktop = {
-      addons = {
+      components = {
         avatar = {
           enable = true;
           users.asen = ../../assets/avatars/asen.jpg;

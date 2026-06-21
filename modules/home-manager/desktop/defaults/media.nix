@@ -1,4 +1,4 @@
-# Media addon with matching image, audio, and video defaults.
+# Media application user defaults for the desktop profile.
 {
   config,
   lib,
@@ -7,8 +7,7 @@
 }:
 
 let
-  cfg = config.custom.desktop.addons.media;
-  desktopUsers = config.custom.desktop.users;
+  cfg = config.custom.desktop.defaults.media;
 
   imageMimeTypes = [
     "image/bmp"
@@ -48,24 +47,10 @@ let
     // lib.genAttrs audioMimeTypes (_mimeType: [ cfg.mediaDesktopFile ])
     // lib.genAttrs videoMimeTypes (_mimeType: [ cfg.mediaDesktopFile ]);
 
-  userModule = {
-    home.packages = with pkgs; [
-      imv
-      mpv
-      webp-pixbuf-loader
-    ];
-
-    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
-    xdg.mimeApps = {
-      enable = lib.mkDefault true;
-      associations.added = mimeDefaults;
-      defaultApplications = mimeDefaults;
-    };
-  };
 in
 {
-  options.custom.desktop.addons.media = {
-    enable = lib.mkEnableOption "media application addon" // {
+  options.custom.desktop.defaults.media = {
+    enable = lib.mkEnableOption "media application defaults" // {
       default = true;
     };
 
@@ -84,13 +69,22 @@ in
     manageUserDefaults = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Inject media defaults into desktop Home Manager users.";
+      description = "Apply media defaults for this desktop user.";
     };
   };
 
   config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
-    home-manager.users = lib.genAttrs desktopUsers (_username: {
-      imports = [ userModule ];
-    });
+    home.packages = with pkgs; [
+      imv
+      mpv
+      webp-pixbuf-loader
+    ];
+
+    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
+    xdg.mimeApps = {
+      enable = lib.mkDefault true;
+      associations.added = mimeDefaults;
+      defaultApplications = mimeDefaults;
+    };
   };
 }

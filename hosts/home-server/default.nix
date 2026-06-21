@@ -12,7 +12,6 @@
     ./hardware
     ./network
 
-    ./user.nix
     ./service
 
     ../../modules/nixos
@@ -20,6 +19,21 @@
 
   custom = {
     boot.mode = "uefi";
+
+    users = {
+      enabled = [ "asen" ];
+      asen = {
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "docker"
+        ];
+        extraAuthorizedKeys = [
+          # Windows game PC
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
+        ];
+      };
+    };
 
     features = {
       graphics.enable = true;

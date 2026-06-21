@@ -8,7 +8,7 @@
 
   imports = [
     ./core
-    ./addons
+    ./components
     ./shell
   ];
 }

@@ -1,7 +1,7 @@
-{ inputs, ... }:
+# Shared Home Manager profile for the asen user.
 {
   imports = [
-    ../../../modules/home-manager/common
+    ../common
   ];
 
   programs.git.settings.user = {

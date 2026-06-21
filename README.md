@@ -40,9 +40,7 @@ hosts/<host>/
 │   ├── default.nix
 │   ├── filesystem.nix           # 主机专属磁盘布局、挂载点和 UUID
 │   └── hardware-configuration.nix
-├── network.nix                  # 或 network/ 目录
-├── user.nix                     # NixOS 用户配置
-└── users/<username>.nix         # Home Manager 用户入口
+└── network.nix                  # 或 network/ 目录
 ```
 
 ### 公共模块
@@ -70,13 +68,14 @@ modules/
 │   │   ├── power.nix
 │   │   └── virtualization.nix
 │   ├── desktop/                 # 通过 custom.desktop.* 开启的桌面 profile
-│   │   ├── addons/              # 输入法、默认终端、默认应用、MIME 关联和 gaming
+│   │   ├── components/          # 输入法、终端、壁纸、头像和 gaming 的系统侧 profile
 │   │   ├── core/                # 图形基础服务、字体和 Wayland portal
 │   │   ├── shell/               # DMS shell、Hyprland session 和 greeter
 │   │   ├── default.nix
 │   │   └── README.md
 │   ├── fhs.nix
-│   ├── home-manager.nix
+│   ├── home-manager.nix         # 加载用户 Home Manager profile 并应用主机级 custom.home.users.* 默认值
+│   ├── users/                   # 可复用系统用户账号 profile
 │   └── service/
 │       ├── agenix.nix
 │       ├── gaming.nix
@@ -85,10 +84,12 @@ modules/
 │       └── tailscale.nix
 └── home-manager/
     ├── common/                  # CLI、shell、Helix、Git、Zellij 等
+    ├── desktop/                 # DMS/Hyprland 用户配置和默认应用、MIME、壁纸等用户侧 defaults
+    ├── users/                   # 可复用 Home Manager 用户 profile
     └── llm-agents-package.nix
 ```
 
-每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
+每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明，系统用户通过 `custom.users.enabled` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
 
 ## `custom` 配置
 
@@ -103,8 +104,10 @@ modules/
 - `custom.features.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
 - `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
 - `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
+- `custom.users.*`：系统用户 profile。主机通过 `custom.users.enabled` 启用用户，并通过对应用户子选项追加主机专属 groups 或 SSH authorized keys。
+- `custom.home.users.*`：主机级 Home Manager 默认值。用于声明某台主机上某个用户的额外用户包、Hyprland 输出规则和 Firefox 代理等覆盖项。
 - `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo` 和 `tailscale`。
-- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。`enable` 启用桌面基础配置，子项包括 `shell` 和 `addons`。DMS 自带音频、蓝牙和网络控制界面；默认应用和 XDG MIME 关联由对应 addon 随应用注册。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。NixOS 侧 `enable` 启用桌面基础配置，子项包括 `shell` 和 `components`；Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
 - `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 

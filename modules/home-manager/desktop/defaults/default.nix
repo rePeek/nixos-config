@@ -1,12 +1,11 @@
-# Desktop addons: optional applications and their matching user defaults.
+# User-side defaults for the desktop profile.
 {
   imports = [
     ./avatar.nix
     ./browser.nix
     ./documents.nix
     ./files.nix
-    ./gaming.nix
-    ./input-method
+    ./input-method.nix
     ./media.nix
     ./office.nix
     ./terminal.nix

@@ -7,7 +7,6 @@
   imports = [
     ./hardware
     ./network.nix
-    ./user.nix
 
     ../../modules/nixos
     ../../modules/nixos/desktop
@@ -15,6 +14,14 @@
 
   custom = {
     boot.mode = "uefi";
+
+    users = {
+      enabled = [ "asen" ];
+      asen.extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+    };
 
     features = {
       amd.enable = true;
@@ -32,7 +39,7 @@
     };
 
     desktop = {
-      addons = {
+      components = {
         avatar = {
           enable = true;
           users.asen = ../../assets/avatars/asen.jpg;

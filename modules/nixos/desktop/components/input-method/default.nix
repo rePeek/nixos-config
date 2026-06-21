@@ -5,8 +5,7 @@
   ...
 }:
 let
-  cfg = config.custom.desktop.addons.fcitx5;
-  desktopUsers = config.custom.desktop.users;
+  cfg = config.custom.desktop.components.fcitx5;
   fcitx5ChineseAddons = pkgs.qt6Packages.fcitx5-chinese-addons.overrideAttrs (oldAttrs: {
     postInstall = (oldAttrs.postInstall or "") + ''
       papirus_icons="${pkgs.papirus-icon-theme}/share/icons/Papirus"
@@ -40,21 +39,23 @@ let
     ln -s ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/devices/input-keyboard-symbolic.svg \
       "$icon_dir/input-keyboard-symbolic.svg"
   '';
-
-  fcitx5UserModule = {
-    home.sessionVariables = {
-      GLFW_IM_MODULE = lib.mkDefault "ibus";
-      QT_IM_MODULE = lib.mkDefault "fcitx";
-      SDL_IM_MODULE = lib.mkDefault "fcitx";
-      XMODIFIERS = lib.mkDefault "@im=fcitx";
+in
+{
+  options.custom.desktop.components.fcitx5 = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable the default fcitx5 input method profile for desktop users.";
     };
 
-    home.packages = [
-      fcitx5ChineseAddons
-      fcitx5KeyboardIconLinks
-      pkgs.qt6Packages.fcitx5-qt
-    ];
+    manageUserDefaults = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Apply fcitx5 profile defaults in desktop Home Manager users.";
+    };
+  };
 
+  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
     i18n.inputMethod = {
       enable = lib.mkDefault true;
       type = lib.mkDefault "fcitx5";
@@ -66,53 +67,20 @@ let
           pkgs.fcitx5-gtk
           pkgs.qt6Packages.fcitx5-qt
         ];
-        settings = {
-          inputMethod = {
-            GroupOrder."0" = lib.mkDefault "Default";
-            "Groups/0" = {
-              Name = lib.mkDefault "Default";
-              "Default Layout" = lib.mkDefault "us";
-              DefaultIM = lib.mkDefault "shuangpin";
-            };
-            "Groups/0/Items/0" = {
-              Name = lib.mkDefault "keyboard-us";
-              Layout = lib.mkDefault null;
-            };
-            "Groups/0/Items/1" = {
-              Name = lib.mkDefault "shuangpin";
-              Layout = lib.mkDefault null;
-            };
-            "Groups/0/Items/2" = {
-              Name = lib.mkDefault "pinyin";
-              Layout = lib.mkDefault null;
-            };
-          };
-          addons.pinyin.globalSection.ShuangpinProfile = lib.mkDefault "Xiaohe";
-        };
       };
     };
-  };
-in
-{
-  options.custom.desktop.addons.fcitx5 = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable the default fcitx5 input method profile for desktop users.";
-    };
 
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Inject fcitx5 defaults into users managed by the system desktop profile.";
-    };
-  };
+    environment = {
+      systemPackages = [
+        fcitx5KeyboardIconLinks
+      ];
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
-    home-manager.users = lib.mkIf cfg.manageUserDefaults (
-      lib.genAttrs desktopUsers (_username: {
-        imports = [ fcitx5UserModule ];
-      })
-    );
+      sessionVariables = {
+        GLFW_IM_MODULE = lib.mkDefault "ibus";
+        QT_IM_MODULE = lib.mkDefault "fcitx";
+        SDL_IM_MODULE = lib.mkDefault "fcitx";
+        XMODIFIERS = lib.mkDefault "@im=fcitx";
+      };
+    };
   };
 }

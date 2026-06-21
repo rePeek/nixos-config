@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.custom.desktop.shell;
-  terminal = config.custom.desktop.addons.terminal;
+  terminal = config.custom.desktop.components.terminal;
 
   dmsEnabled = config.custom.desktop.enable && cfg.enable && cfg.backend == "dank-material-shell";
   desktopUsers = config.custom.desktop.users;
@@ -38,7 +38,7 @@ in
       }
       {
         assertion = terminal.enable;
-        message = "custom.desktop.shell requires custom.desktop.addons.terminal.enable.";
+        message = "custom.desktop.shell requires custom.desktop.components.terminal.enable.";
       }
       {
         assertion = primaryDesktopUser != null;

@@ -8,6 +8,7 @@
     ./security.nix
     ./ssh.nix
     ./system.nix
+    ./users
 
     ./features
     ./service

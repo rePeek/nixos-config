@@ -5,7 +5,6 @@
   imports = [
     ./hardware
 
-    ./user.nix
     ./misc.nix
     ./network.nix
 
@@ -15,6 +14,45 @@
 
   custom = {
     boot.mode = "uefi";
+
+    users = {
+      enabled = [ "asen" ];
+      asen.extraGroups = [
+        "networkmanager"
+        "wheel"
+        "libvirtd"
+        "docker"
+      ];
+    };
+
+    home.users.asen = {
+      extraPackages = with pkgs; [
+        calibre
+        discord
+        koodo-reader
+        qbittorrent-enhanced
+        scrot
+        thunar
+        telegram-desktop
+      ];
+
+      desktop.hyprland.outputRules = [
+        {
+          output = "DP-3";
+          mode = "2560x1440@239.99";
+          position = "auto";
+          scale = "1";
+        }
+      ];
+
+      browser.proxy = {
+        enable = true;
+        httpProxy = "home-server:7890";
+        sslProxy = "home-server:7890";
+        socksProxy = "home-server:7890";
+        passthrough = "localhost,127.0.0.1,::1,home-server,*.local";
+      };
+    };
 
     features = {
       audio.enable = true;
@@ -40,17 +78,10 @@
     };
 
     desktop = {
-      addons = {
+      components = {
         avatar = {
           enable = true;
           users.asen = ../../assets/avatars/asen.jpg;
-        };
-        browser.proxy = {
-          enable = true;
-          httpProxy = "home-server:7890";
-          sslProxy = "home-server:7890";
-          socksProxy = "home-server:7890";
-          passthrough = "localhost,127.0.0.1,::1,home-server,*.local";
         };
         gaming.enable = true;
         wallpaper = {

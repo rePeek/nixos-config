@@ -1,4 +1,4 @@
-# Avatar addon with AccountsService integration and user-directory fallbacks.
+# Avatar component with AccountsService integration.
 {
   config,
   lib,
@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.custom.desktop.addons.avatar;
+  cfg = config.custom.desktop.components.avatar;
   desktopUsers = config.custom.desktop.users;
   configuredUsers = lib.attrNames cfg.users;
   invalidUsers = lib.filter (username: !(lib.elem username desktopUsers)) configuredUsers;
@@ -86,7 +86,7 @@ let
   );
 in
 {
-  options.custom.desktop.addons.avatar = {
+  options.custom.desktop.components.avatar = {
     enable = lib.mkEnableOption "desktop user avatars";
 
     users = lib.mkOption {
@@ -103,7 +103,7 @@ in
     manageHomeFallback = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Link avatars as .face and .face.icon for desktop users.";
+      description = "Link avatars as .face and .face.icon in desktop Home Manager users.";
     };
 
     iconsDirectory = lib.mkOption {
@@ -124,7 +124,7 @@ in
       {
         assertion = invalidUsers == [ ];
         message =
-          "custom.desktop.addons.avatar.users contains users not listed in custom.desktop.users: "
+          "custom.desktop.components.avatar.users contains users not listed in custom.desktop.users: "
           + lib.concatStringsSep ", " invalidUsers;
       }
     ];
@@ -136,14 +136,5 @@ in
     system.activationScripts.desktopAvatars = lib.mkIf (cfg.users != { }) {
       text = accountsServiceActivation;
     };
-
-    home-manager.users = lib.mkIf cfg.manageHomeFallback (
-      lib.genAttrs configuredUsers (username: {
-        home.file = {
-          ".face".source = cfg.users.${username};
-          ".face.icon".source = cfg.users.${username};
-        };
-      })
-    );
   };
 }

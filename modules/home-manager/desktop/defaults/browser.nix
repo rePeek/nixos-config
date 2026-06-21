@@ -1,13 +1,66 @@
-# Browser addon with matching XDG MIME defaults.
+# Browser user defaults for the desktop profile.
 {
   config,
   lib,
+  osConfig ? null,
   ...
 }:
 
 let
-  cfg = config.custom.desktop.addons.browser;
-  desktopUsers = config.custom.desktop.users;
+  hostUserBrowserCfg =
+    if osConfig == null then
+      null
+    else
+      lib.attrByPath [
+        "custom"
+        "home"
+        "users"
+        config.home.username
+        "browser"
+      ] null osConfig;
+  osCfg =
+    if osConfig == null then
+      {
+        enable = true;
+        package = "firefox";
+        desktopFile = "firefox.desktop";
+        firefoxProfileNames = [ ];
+        manageUserDefaults = true;
+        proxy = {
+          enable = false;
+          httpProxy = "";
+          sslProxy = "";
+          socksProxy = "";
+          socksVersion = 5;
+          passthrough = "localhost,127.0.0.1,::1";
+        };
+      }
+    else if hostUserBrowserCfg != null then
+      {
+        enable = true;
+        package = "firefox";
+        desktopFile = "firefox.desktop";
+        firefoxProfileNames = [ ];
+        manageUserDefaults = true;
+        proxy = hostUserBrowserCfg.proxy;
+      }
+    else
+      {
+        enable = true;
+        package = "firefox";
+        desktopFile = "firefox.desktop";
+        firefoxProfileNames = [ ];
+        manageUserDefaults = true;
+        proxy = {
+          enable = false;
+          httpProxy = "";
+          sslProxy = "";
+          socksProxy = "";
+          socksVersion = 5;
+          passthrough = "localhost,127.0.0.1,::1";
+        };
+      };
+  cfg = config.custom.desktop.defaults.browser;
   proxyCfg = cfg.proxy;
 
   mimeTypes = [
@@ -57,56 +110,58 @@ let
   };
 in
 {
-  options.custom.desktop.addons.browser = {
+  options.custom.desktop.defaults.browser = {
     enable = lib.mkEnableOption "default browser addon" // {
-      default = true;
+      default = osCfg.enable;
     };
 
     package = lib.mkOption {
       type = lib.types.enum [ "firefox" ];
-      default = "firefox";
+      default = osCfg.package;
       description = "Browser profile to enable for desktop users.";
     };
 
     desktopFile = lib.mkOption {
       type = lib.types.str;
-      default = "firefox.desktop";
+      default = osCfg.desktopFile;
       description = "Desktop file used for browser MIME associations.";
     };
 
     firefoxProfileNames = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
+      default = osCfg.firefoxProfileNames;
       description = "Firefox profile names that Stylix should theme. Leave empty when Firefox profiles are not managed declaratively.";
       example = [ "default" ];
     };
 
     manageUserDefaults = lib.mkOption {
       type = lib.types.bool;
-      default = true;
-      description = "Inject browser defaults into desktop Home Manager users.";
+      default = osCfg.manageUserDefaults;
+      description = "Apply browser defaults for this desktop user.";
     };
 
     proxy = {
-      enable = lib.mkEnableOption "Firefox proxy policy";
+      enable = lib.mkEnableOption "Firefox proxy policy" // {
+        default = osCfg.proxy.enable;
+      };
 
       httpProxy = lib.mkOption {
         type = lib.types.str;
-        default = "";
+        default = osCfg.proxy.httpProxy;
         description = "Firefox HTTP proxy in host:port form.";
         example = "home-server:7890";
       };
 
       sslProxy = lib.mkOption {
         type = lib.types.str;
-        default = "";
+        default = osCfg.proxy.sslProxy;
         description = "Firefox HTTPS proxy in host:port form.";
         example = "home-server:7890";
       };
 
       socksProxy = lib.mkOption {
         type = lib.types.str;
-        default = "";
+        default = osCfg.proxy.socksProxy;
         description = "Firefox SOCKS proxy in host:port form.";
         example = "home-server:7890";
       };
@@ -116,21 +171,17 @@ in
           4
           5
         ];
-        default = 5;
+        default = osCfg.proxy.socksVersion;
         description = "Firefox SOCKS proxy protocol version.";
       };
 
       passthrough = lib.mkOption {
         type = lib.types.str;
-        default = "localhost,127.0.0.1,::1";
+        default = osCfg.proxy.passthrough;
         description = "Comma-separated Firefox proxy bypass list.";
       };
     };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
-    home-manager.users = lib.genAttrs desktopUsers (_username: {
-      imports = [ userModule ];
-    });
-  };
+  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) userModule;
 }

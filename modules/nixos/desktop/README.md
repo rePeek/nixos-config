@@ -5,10 +5,10 @@
 目录职责：
 
 - `core/`：图形会话基础系统服务、字体和 Wayland portal。
-- `addons/`：输入法、默认终端、默认应用、对应应用配置、XDG MIME 关联和 gaming。
+- `components/`：输入法、默认终端、壁纸、头像和 gaming 的系统侧 profile 与默认值。
 - `shell/`：DMS shell、Hyprland session 和 DMS greeter。
 
-默认应用和 XDG MIME 关联跟随 addon 注册：例如 `addons/browser.nix` 启用 Firefox 并注册浏览器 MIME，`addons/files.nix` 启用 Nemo 并注册目录 MIME。
+默认应用、用户应用配置、Firefox 代理和 XDG MIME 关联在 `modules/home-manager/desktop/defaults/` 中应用。系统侧 `components/` 只保留确实需要 NixOS 集成的部分，例如 AccountsService 头像、fcitx5 系统输入法、Steam/GameMode 和壁纸目录校验。主机级用户差异通过 `custom.home.users.<username>` 传给 Home Manager。
 
 底层硬件或系统能力不放在这里：
 
