@@ -19,6 +19,7 @@
       asen.extraGroups = [
         "networkmanager"
         "wheel"
+        "input"
       ];
     };
 

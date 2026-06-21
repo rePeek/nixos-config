@@ -29,7 +29,6 @@ in
 
     # Games installed by Steam works fine on NixOS, no other configuration needed.
     # https://github.com/NixOS/nixpkgs/blob/master/doc/packages/steam.section.md
-    custom.features.graphics.compat32.enable = lib.mkDefault true;
     hardware.xpadneo.enable = true;
 
     programs.steam = {
@@ -52,6 +51,9 @@ in
       package = pkgs.steam.override {
         extraArgs = "-language schinese";
       };
+      extraPackages = [
+        pkgs.mangohud
+      ];
       fontPackages = [
         pkgs.wqy_zenhei # Need by steam for Chinese
       ];
@@ -63,6 +65,9 @@ in
       game-devices-udev-rules
     ];
     programs.steam.platformOptimizations.enable = true;
+    environment.systemPackages = [
+      pkgs.mangohud
+    ];
 
     # Optimise Linux system performance on demand
     # https://github.com/FeralInteractive/GameMode
