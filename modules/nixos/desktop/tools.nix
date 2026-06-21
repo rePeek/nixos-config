@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.tools;
+  cfg = config.custom.desktop.tools;
 in
 {
-  options.custom.tools = {
+  options.custom.desktop.tools = {
     audio.enable = lib.mkEnableOption "audio CLI tools";
     network.enable = lib.mkEnableOption "network and bluetooth CLI tools";
   };

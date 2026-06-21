@@ -2,25 +2,11 @@
 {
   config,
   lib,
-  osConfig ? null,
   pkgs,
   ...
 }:
 
 let
-  osCfg =
-    if osConfig == null then
-      {
-        enable = false;
-        directory = null;
-        initialStrategy = "none";
-        fixedFile = null;
-        manageHomeCollection = false;
-        setDmsSession = false;
-        collectionDirectory = "Pictures/wallpapers/nixos";
-      }
-    else
-      osConfig.custom.desktop.components.wallpaper;
   cfg = config.custom.desktop.defaults.wallpaper;
   wallpaperFiles = if cfg.directory == null then { } else builtins.readDir cfg.directory;
   imageExtensions = [
@@ -54,13 +40,11 @@ let
 in
 {
   options.custom.desktop.defaults.wallpaper = {
-    enable = lib.mkEnableOption "desktop wallpaper defaults" // {
-      default = osCfg.enable;
-    };
+    enable = lib.mkEnableOption "desktop wallpaper defaults";
 
     directory = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
-      default = osCfg.directory;
+      default = null;
       description = "Directory containing wallpaper images for this user.";
       example = lib.literalExpression "../../assets/wallpapers";
     };
@@ -72,31 +56,31 @@ in
         "random"
         "fixed"
       ];
-      default = osCfg.initialStrategy;
+      default = "first";
       description = "Strategy used to choose the initial DMS session wallpaper from the wallpaper directory.";
     };
 
     fixedFile = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
-      default = osCfg.fixedFile;
+      default = null;
       description = "Wallpaper file name used when strategy is fixed.";
     };
 
     manageHomeCollection = lib.mkOption {
       type = lib.types.bool;
-      default = osCfg.manageHomeCollection;
+      default = true;
       description = "Link wallpaper images into this user's wallpaper collection.";
     };
 
     setDmsSession = lib.mkOption {
       type = lib.types.bool;
-      default = osCfg.setDmsSession;
+      default = true;
       description = "Set the DMS session wallpaper during Home Manager activation.";
     };
 
     collectionDirectory = lib.mkOption {
       type = lib.types.str;
-      default = osCfg.collectionDirectory;
+      default = "Pictures/wallpapers/nixos";
       description = "Home-relative directory used for wallpaper collection links.";
     };
   };

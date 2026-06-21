@@ -100,12 +100,6 @@ in
       '';
     };
 
-    manageHomeFallback = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Link avatars as .face and .face.icon in desktop Home Manager users.";
-    };
-
     iconsDirectory = lib.mkOption {
       type = lib.types.str;
       default = "/var/lib/AccountsService/icons";

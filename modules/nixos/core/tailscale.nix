@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.service.tailscale;
+  cfg = config.custom.core.tailscale;
 in
 {
-  options.custom.service.tailscale = {
+  options.custom.core.tailscale = {
     enable = lib.mkEnableOption "Tailscale service";
     advertiseExitNode = lib.mkEnableOption "Tailscale exit node advertising";
     acceptDns = lib.mkOption {

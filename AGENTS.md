@@ -33,7 +33,7 @@
 | Flake 输出 | 主机目录 | Home Manager 用户 | 用途 |
 | --- | --- | --- | --- |
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面主机 |
-| `home-server` | `hosts/home-server/` | `wanglei` | 家用服务器 |
+| `home-server` | `hosts/home-server/` | 无 | 家用服务器 |
 | `blue-10700` | `hosts/blue-10700/` | `asen` | 额外 NixOS 主机 |
 | `rainyun` | `hosts/rain-cloud/` | 无 | 远程云主机 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的独立 Home Manager 配置 |
@@ -75,43 +75,49 @@ modules/nixos/
 │   ├── i18n.nix
 │   ├── nix.nix
 │   ├── packages.nix
+│   ├── security.nix
 │   ├── ssh.nix
-│   └── system.nix
-├── features/                    # 通过 custom.features.* 开启的可复用系统能力
-│   ├── default.nix
+│   ├── system.nix
+│   ├── power.nix
+│   ├── kernel.nix
+│   └── tailscale.nix
+├── server/                      # 服务器 NixOS profile 入口，包含系统用户和通用服务
+│   ├── agenix.nix
+│   ├── cli-proxy-api.nix
+│   ├── fhs.nix
+│   ├── mihomo.nix
+│   └── virtualization.nix
+├── desktop/                     # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
+│   ├── amd.nix
 │   ├── audio.nix
 │   ├── bluetooth.nix
 │   ├── graphics.nix
-│   ├── kernel/
-│   │   └── cachyos.nix
 │   ├── nvidia.nix
-│   ├── power.nix
-│   └── virtualization.nix
-├── desktop/                     # 通过 custom.desktop.* 开启的桌面 profile
-│   ├── components/              # 输入法、终端、壁纸、头像和 gaming 的系统侧 profile
+│   ├── components/              # 输入法、终端、头像和 gaming 的系统侧 profile
 │   ├── core/                    # 图形基础服务、字体和 Wayland portal
-│   └── shell/                   # DMS shell、Hyprland session 和 greeter
-├── users/                       # 可复用系统用户账号 profile
-├── fhs.nix
-├── home-manager.nix             # 加载用户 Home Manager profile 并应用主机级 custom.home.users.* 默认值
-└── service/
-    ├── default.nix              # 完整服务集合，brain-holder 使用
-    ├── agenix.nix
-    ├── gaming.nix
-    ├── jellyfin.nix
-    ├── mihomo.nix
-    ├── tailscale.nix
-    └── desktop/
+│   ├── shell/                   # DMS shell、Hyprland session 和 greeter
+│   └── tools.nix                # 桌面相关 CLI 工具选项
+└── home-manager.nix             # 加载用户 Home Manager role 并应用主机级 custom.home.users.* 默认值
 ```
 
 用户级模块位于 `modules/home-manager/`：
 
 ```text
 modules/home-manager/
-├── common/                      # 基础 CLI、shell、Helix、Git、Zellij 等
-├── desktop/                     # DMS/Hyprland 用户配置和默认应用、MIME、壁纸等用户侧 defaults
-├── users/                       # 可复用 Home Manager 用户 profile
-└── llm-agents-package.nix
+├── server/                      # server 用户环境，基础 CLI、shell、Helix、Git、Zellij、LLM agents 等
+├── desktop/                     # desktop 用户环境，继承 server
+│   ├── dms/                     # DMS 和 Hyprland 会话配置
+│   ├── browser.nix              # 默认应用、用户应用配置和 XDG MIME 关联等平铺模块
+│   └── ...
+```
+
+可复用用户定义位于 `modules/user/`，按用户同时保存系统侧和 Home Manager 侧配置：
+
+```text
+modules/user/
+└── asen/
+    ├── nixos.nix
+    └── home.nix
 ```
 
 ### 2.5 敏感信息
@@ -120,7 +126,7 @@ modules/home-manager/
 
 - `secrets/secrets.nix` 声明可解密密钥和加密文件。
 - `secrets/*.age` 保存加密内容。
-- `modules/nixos/service/agenix.nix` 提供 `myModule.agenix.enable`。
+- `modules/nixos/server/agenix.nix` 提供 `custom.server.agenix.enable`。
 - 需要密钥的模块通过 `config.age.secrets.<name>.path` 读取运行时解密文件。
 
 禁止在 `.nix`、脚本、文档或提交信息中新增明文密码、订阅地址、私钥和 API Token。发现历史遗留明文时，应指出风险并优先迁移到 agenix，不要继续复制扩散。
@@ -145,30 +151,32 @@ modules/home-manager/
 | `https://github.com/yunfachi/denix` | 可扩展 Nix 配置框架，面向 NixOS/Home Manager/nix-darwin 的 hosts、rices、modules 组织。 |
 | `https://github.com/ryan4yin/nix-config` | 桌面设计、密钥分层、GUI 应用密码管理和浏览器密码集成。 |
 
-对网站和 GUI 应用账户密码，优先参考 `ryan4yin/nix-config` 中 `pass`/GPG password-store 与 `browserpass` 的设计：Nix 固化工具链和 native messaging，密码数据留在加密 password-store 中，不把 Firefox 的 `logins.json`、`key4.db` 或明文账户密码写入本仓库。对系统服务密钥，参考其 agenix 分层思路；在本仓库中仍优先沿用现有 `secrets/secrets.nix` 和 `modules/nixos/service/agenix.nix`。
+对网站和 GUI 应用账户密码，优先参考 `ryan4yin/nix-config` 中 `pass`/GPG password-store 与 `browserpass` 的设计：Nix 固化工具链和 native messaging，密码数据留在加密 password-store 中，不把 Firefox 的 `logins.json`、`key4.db` 或明文账户密码写入本仓库。对系统服务密钥，参考其 agenix 分层思路；在本仓库中仍优先沿用现有 `secrets/secrets.nix` 和 `modules/nixos/server/agenix.nix`。
 
 ## 3. 架构约定
 
 ### 3.1 修改位置
 
-- 所有主机共享的系统配置放入 `modules/nixos/core/`。
-- 可复用但需要主机显式选择的系统能力放入 `modules/nixos/features/`，并通过 `custom.features.*` 选项开启。
-- 可选系统服务放入 `modules/nixos/service/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
+- 所有主机共享的无用户最小系统配置放入 `modules/nixos/core/`。
+- 需要主机显式选择的系统能力按适用范围放入 `modules/nixos/core/`、`server/` 或 `desktop/`，并分别通过 `custom.core.*`、`custom.server.*` 或 `custom.desktop.*` 选项开启。
+- 可选通用系统服务放入 `modules/nixos/server/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
 - 桌面系统服务放入 `modules/nixos/desktop/`。
-- 所有用户共享的 Home Manager 配置放入 `modules/home-manager/common/`。
+- NixOS 主机角色聚合入口直接放入 `modules/nixos/core/`、`modules/nixos/server/` 和 `modules/nixos/desktop/`。
+- CLI 和显示无关的 Home Manager 用户环境放入 `modules/home-manager/server/`。
 - 桌面系统 profile 放入 `modules/nixos/desktop/`；桌面用户默认值放入 `modules/home-manager/desktop/`。
+- Home Manager 用户环境聚合入口直接放入 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；没有 `core` 用户环境，因为 NixOS `core` 是无个人用户的最小主机层。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 可复用的图形栈、NVIDIA 驱动默认策略、NVIDIA 计算、电源策略、虚拟化、内核、音频和蓝牙能力放入 `modules/nixos/features/`。
+- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；图形栈、NVIDIA、音频、蓝牙和桌面图形检查工具放入 `modules/nixos/desktop/`。
 - 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
 
-- 公共 NixOS 基础模块通过 `../../modules/nixos/core` 导入。
-- 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中，包括 `nixos-hardware` 的机型或通用硬件模块；可复用系统能力在主机入口中通过 `custom.features.*` 声明。
+- 主机入口通过 `../../modules/nixos/core`、`server` 或 `desktop` 导入公共 NixOS 配置；不要在主机里手动拼同一组公共模块。
+- 主机硬件事实集中在 `hosts/<host>/hardware/default.nix` 中，包括 `nixos-hardware` 的机型或通用硬件模块；可复用系统能力在主机入口中通过 `custom.core.*`、`custom.server.*` 和 `custom.desktop.*` 声明。
 - 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
-- `brain-holder` 导入完整的 `../../modules/nixos/service`。
+- `core` profile 不创建个人用户，默认启用 Tailscale；`server` profile 在 core 上增加系统用户和通用服务选项；`desktop` profile 在 server 上默认启用图形、音频和蓝牙能力。
 - 其他主机按需导入具体服务文件，避免无意启用桌面或 Jellyfin 等服务。
-- Home Manager 用户 profile 位于 `modules/home-manager/users/<username>.nix`，由 `modules/nixos/home-manager.nix` 按 `mkHost` 的 `usernames` 自动加载；主机专属用户默认值放在主机入口的 `custom.home.users.<username>`。
+- 用户定义位于 `modules/user/<username>/`，其中 `nixos.nix` 是系统账号 profile，`home.nix` 是 Home Manager 用户身份 profile；由 `modules/nixos/server/default.nix` 和 `modules/nixos/home-manager.nix` 自动加载。用户环境默认采用 `desktop` 或 `server` HM role，也可在主机入口通过 `custom.home.users.<username>.role` 覆盖。主机专属用户默认值放在主机入口的 `custom.home.users.<username>`。
 - 外部 Flake 输入通过 `inputs` 参数使用；Nixpkgs 软件包统一通过 `pkgs` 使用。
 - 不要直接引用 `<nixpkgs>` 全局路径。
 
@@ -178,8 +186,8 @@ modules/home-manager/
 - 新增 `custom.*` 选项前先判断它是否能隐藏一组重复的底层配置、表达仓库内稳定的 profile，或隔离主机间的差异；如果只是改名转发单个原生选项，优先直接使用原生选项。
 - 模块内部负责把 `custom.*` profile 展开为具体的 `hardware.*`、`services.*`、`programs.*`、`virtualisation.*` 等原生配置；主机文件只保留 profile 选择和无法抽象的机器事实，例如 PCI Bus ID、UUID、hostname、用户名和端口。
 - 可复用模块应提供保守默认值，避免启用只有特定硬件、特定角色或特定部署场景才需要的能力；这类能力应通过明确的 role、mode 或子 profile 开启。
-- 系统用户账号定义放在 `modules/nixos/users/`，主机通过 `custom.users.enabled` 声明启用哪些用户；主机专属 groups 或 SSH authorized keys 通过对应用户子选项追加，不再为每台主机维护重复的 `user.nix`。
-- Home Manager 用户共享配置放在 `modules/home-manager/users/`；主机只通过 `custom.home.users.<username>` 声明额外用户包、Hyprland 输出规则、Firefox 代理等主机差异，不再为每台主机维护重复的 `users/<username>.nix`。
+- 系统用户账号定义放在 `modules/user/<username>/nixos.nix`，server 和 desktop 主机通过 `custom.users.enabled` 声明启用哪些用户；主机专属 groups 或 SSH authorized keys 通过对应用户子选项追加，不再为每台主机维护重复的 `user.nix`。
+- Home Manager 用户身份差异放在 `modules/user/<username>/home.nix`；用户环境 role 放在 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；主机只通过 `custom.home.users.<username>` 声明 role 覆盖、额外用户包、Hyprland 输出规则、Firefox 代理等主机差异，不再为每台主机维护重复的 `users/<username>.nix`。
 
 ### 3.4 命名
 
@@ -207,14 +215,14 @@ nixfmt <files...>
 
 1. 判断软件包是系统级、公共用户级还是单主机专用。
 2. 系统级软件包优先加入 `modules/nixos/core/packages.nix` 或对应服务模块。
-3. 公共用户级软件包优先加入 `modules/home-manager/common/` 下合适模块。
+3. 公共用户级软件包优先加入 `modules/home-manager/server/` 下合适模块。
 4. 图形软件优先加入 `modules/nixos/desktop/` 下合适 profile。
-5. 仅单个用户或主机需要时，优先放入对应主机入口的 `custom.home.users.<username>.extraPackages`；多个主机共享时再放入 `modules/home-manager/users/` 或 `modules/home-manager/common/`。
+5. 仅单个用户或主机需要时，优先放入对应主机入口的 `custom.home.users.<username>.extraPackages`；多个主机共享时再放入 `modules/user/<username>/home.nix` 或 `modules/home-manager/server/`。
 6. 使用 `nix search nixpkgs <package>` 确认包名。
 
 ### 4.3 添加或修改系统服务
 
-1. 检查 `modules/nixos/service/` 是否已有对应模块。
+1. 检查 `modules/nixos/server/` 是否已有对应模块。
 2. 通用可选服务优先新增独立模块，并使用 `options`、`lib.mkEnableOption` 和 `lib.mkIf`。
 3. 只在需要该服务的主机入口导入并启用。
 4. 检查端口、防火墙、运行用户、目录权限、密钥路径和服务依赖。
@@ -224,7 +232,7 @@ nixfmt <files...>
 
 1. 创建 `hosts/<host>/default.nix`。
 2. 按需添加 `hardware/` 和网络模块。
-3. 在主机入口通过 `custom.users.enabled` 声明系统用户，并按需配置 `custom.home.users.<username>`。
+3. 在主机入口导入合适的 `modules/nixos/core`、`server` 或 `desktop` profile，通过 `custom.users.enabled` 声明系统用户，并按需配置 `custom.home.users.<username>`。
 4. 在 `flake.nix` 中通过 `myLib.mkHost` 注册输出。
 5. 需要 Home Manager 时传入 `usernames`；否则设置 `enableHomeManager = false`。
 6. 运行 `nixos-rebuild dry-build --flake .#<flake-output>`。

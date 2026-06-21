@@ -5,6 +5,5 @@
     ./gaming.nix
     ./input-method
     ./terminal.nix
-    ./wallpaper.nix
   ];
 }

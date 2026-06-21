@@ -3,6 +3,8 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
+  config,
+  lib,
   ...
 }:
 {
@@ -14,51 +16,36 @@
 
     ./service
 
-    ../../modules/nixos
+    ../../modules/nixos/server
   ];
 
   custom = {
     boot.mode = "uefi";
 
-    users = {
-      enabled = [ "asen" ];
-      asen = {
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "docker"
-        ];
-        extraAuthorizedKeys = [
-          # Windows game PC
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
-        ];
-      };
-    };
-
-    features = {
-      graphics.enable = true;
-      power.profile = "efficiency";
-      virtualization = {
-        docker = true;
-      };
-    };
-
-    service = {
+    server = {
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      tailscale = {
-        advertiseExitNode = true;
-        enable = true;
-      };
       cli-proxy-api = {
         enable = true;
         listenAddress = "0.0.0.0";
         port = 8317;
         openFirewall = true;
       };
+
+      virtualization = {
+        docker = true;
+      };
     };
+
+    core.tailscale = {
+      advertiseExitNode = true;
+    };
+
   };
 
   security.sudo.wheelNeedsPassword = false;
+
+  services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
+  users.users.root.openssh.authorizedKeys.keys = config.custom.ssh.sharedAuthorizedKeys;
 }

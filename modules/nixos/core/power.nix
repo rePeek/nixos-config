@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.custom.features.power;
+  cfg = config.custom.core.power;
 in
 {
-  options.custom.features.power = {
+  options.custom.core.power = {
     profile = lib.mkOption {
       type = lib.types.enum [
         "performance"

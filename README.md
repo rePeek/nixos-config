@@ -55,41 +55,45 @@ modules/
 │   │   ├── i18n.nix
 │   │   ├── nix.nix
 │   │   ├── packages.nix
+│   │   ├── security.nix
 │   │   ├── ssh.nix
-│   │   └── system.nix
-│   ├── features/                # 通过 custom.features.* 开启的可复用系统能力
+│   │   ├── system.nix
+│   │   ├── power.nix
+│   │   ├── kernel.nix
+│   │   └── tailscale.nix
+│   ├── server/                  # 服务器 NixOS profile 入口，包含系统用户和通用服务
 │   │   ├── default.nix
+│   │   ├── agenix.nix
+│   │   ├── cli-proxy-api.nix
+│   │   ├── fhs.nix
+│   │   ├── mihomo.nix
+│   │   └── virtualization.nix
+│   ├── desktop/                 # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
+│   │   ├── amd.nix
 │   │   ├── audio.nix
 │   │   ├── bluetooth.nix
 │   │   ├── graphics.nix
-│   │   ├── kernel/
-│   │   │   └── cachyos.nix
 │   │   ├── nvidia.nix
-│   │   ├── power.nix
-│   │   └── virtualization.nix
-│   ├── desktop/                 # 通过 custom.desktop.* 开启的桌面 profile
-│   │   ├── components/          # 输入法、终端、壁纸、头像和 gaming 的系统侧 profile
+│   │   ├── components/          # 输入法、终端、头像和 gaming 的系统侧 profile
 │   │   ├── core/                # 图形基础服务、字体和 Wayland portal
 │   │   ├── shell/               # DMS shell、Hyprland session 和 greeter
+│   │   ├── tools.nix            # 桌面相关 CLI 工具选项
 │   │   ├── default.nix
 │   │   └── README.md
-│   ├── fhs.nix
-│   ├── home-manager.nix         # 加载用户 Home Manager profile 并应用主机级 custom.home.users.* 默认值
-│   ├── users/                   # 可复用系统用户账号 profile
-│   └── service/
-│       ├── agenix.nix
-│       ├── gaming.nix
-│       ├── jellyfin.nix
-│       ├── mihomo.nix
-│       └── tailscale.nix
+│   └── home-manager.nix         # 加载用户 Home Manager role 并应用主机级 custom.home.users.* 默认值
+├── user/                        # 可复用用户定义，按用户同时放 NixOS 和 Home Manager 侧配置
+│   └── asen/
+│       ├── nixos.nix
+│       └── home.nix
 └── home-manager/
-    ├── common/                  # CLI、shell、Helix、Git、Zellij 等
-    ├── desktop/                 # DMS/Hyprland 用户配置和默认应用、MIME、壁纸等用户侧 defaults
-    ├── users/                   # 可复用 Home Manager 用户 profile
-    └── llm-agents-package.nix
+    ├── server/                  # server 用户环境，CLI、shell、Helix、Git、Zellij、LLM agents 等
+    ├── desktop/                 # desktop 用户环境，继承 server
+    │   ├── dms/                 # DMS 和 Hyprland 会话配置
+    │   ├── browser.nix          # 默认应用、用户应用配置和 XDG MIME 关联等平铺模块
+    │   └── ...
 ```
 
-每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。可复用系统能力通过主机入口中的 `custom.features.*` 声明，系统用户通过 `custom.users.enabled` 声明。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
+每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。主机入口导入 `modules/nixos/core`、`server` 或 `desktop` 表达机器角色；可复用系统能力通过主机入口中的 `custom.core.*`、`custom.server.*` 和 `custom.desktop.*` 声明。core profile 是无个人用户的最小主机层，并默认启用 Tailscale；server profile 在 core 上增加系统用户和通用服务选项；desktop profile 在 server 上默认启用图形、音频和蓝牙能力。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
 
 ## `custom` 配置
 
@@ -98,17 +102,18 @@ modules/
 当前主要命名空间：
 
 - `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
-- `custom.features.*`：可复用系统能力。当前包括 `audio`、`bluetooth`、`graphics`、`kernel.cachyos`、`nvidia.compute`、`nvidia.driver`、`power` 和 `virtualization`。
-- `custom.features.graphics.*`：通用图形栈能力。`enable` 启用硬件加速图形环境，`compat32.enable` 为 Wine、Steam 和 Proton 启用 32 位图形驱动。
-- `custom.features.nvidia.driver.enable`：本仓库的 NVIDIA 驱动默认策略，包括 DRM framebuffer、open module、settings、latest driver、modesetting 和基础电源管理。
-- `custom.features.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
-- `custom.features.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
-- `custom.features.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
+- `custom.core.*`：所有主机共享的基础能力。当前包括 `power.profile` 和 `kernel.cachyos`。
+- `custom.desktop.graphics.*`：通用图形栈能力。`enable` 启用硬件加速图形环境，`compat32.enable` 为 Wine、Steam 和 Proton 启用 32 位图形驱动。
+- `custom.desktop.nvidia.driver.enable`：本仓库的 NVIDIA 驱动默认策略，包括 DRM framebuffer、open module、settings、latest driver、modesetting 和基础电源管理。
+- `custom.desktop.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
+- `custom.core.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
+- `custom.server.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
+- `custom.server.*`：服务器侧通用能力。当前包括 `virtualization`、`agenix`、`fhs`、`mihomo` 和 `cli-proxy-api`。
+- `custom.server.llm-agents.enable`：Home Manager server role 中的 LLM agent CLI 包集合，默认启用。
 - `custom.users.*`：系统用户 profile。主机通过 `custom.users.enabled` 启用用户，并通过对应用户子选项追加主机专属 groups 或 SSH authorized keys。
-- `custom.home.users.*`：主机级 Home Manager 默认值。用于声明某台主机上某个用户的额外用户包、Hyprland 输出规则和 Firefox 代理等覆盖项。
-- `custom.service.*`：系统服务 profile。当前包括 `agenix`、`fhs`、`jellyfin`、`mihomo` 和 `tailscale`。
-- `custom.desktop.*`：桌面 profile 和桌面体验中的可选图形能力。NixOS 侧 `enable` 启用桌面基础配置，子项包括 `shell` 和 `components`；Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
-- `custom.tools.*`：系统级 CLI 工具集合。当前包括 `audio` 和 `network`。
+- `custom.home.users.*`：主机级 Home Manager 默认值。用于声明某台主机上某个用户的 Home Manager role（`server` 或 `desktop`）、额外用户包、Hyprland 输出规则和 Firefox 代理等覆盖项。
+- `custom.core.tailscale.*`：所有主机默认启用的 Tailscale 基础网络能力，可按主机覆盖 exit node 和 DNS 行为。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选能力。NixOS 侧 `enable` 启用桌面基础配置，子项包括 `audio`、`bluetooth`、`amd`、`shell`、`components` 和 `tools`；Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 
 ## 主机说明
@@ -116,14 +121,14 @@ modules/
 | Flake 输出 | 配置目录 | 用户 | 主要用途 |
 | --- | --- | --- | --- |
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面、开发、游戏和本地服务 |
-| `home-server` | `hosts/home-server/` | `wanglei` | 家用服务器、局域网网关和容器宿主机 |
+| `home-server` | `hosts/home-server/` | 无 | 家用服务器、局域网网关和容器宿主机 |
 | `blue-10700` | `hosts/blue-10700/` | `asen` | 固定地址的额外服务节点 |
 | `rainyun` | `hosts/rain-cloud/` | `root` | 远程 Tailscale DERP 节点 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的 Home Manager 配置 |
 
 ### `brain-holder`
 
-日常使用的桌面主机，导入完整的 `modules/nixos/service/` 服务集合。
+日常使用的桌面主机，导入 `modules/nixos/desktop/`，并按需启用 server 层服务。
 
 主要功能：
 
@@ -154,7 +159,8 @@ just deploy-brain
 - Docker 容器运行环境。
 - Tailscale 与 nftables 防火墙。
 - Mihomo 透明代理，订阅地址通过 agenix 解密后生成运行时配置。
-- `wanglei` 用户的公共 Home Manager 环境。
+- 无个人 Home Manager 用户。
+- 通过共享 SSH 公钥进行 root key-only 登录。
 
 部署命令：
 

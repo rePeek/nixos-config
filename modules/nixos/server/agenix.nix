@@ -7,14 +7,14 @@
 }:
 
 let
-  cfg = config.custom.service.agenix;
+  cfg = config.custom.server.agenix;
 in
 {
   imports = [
     inputs.agenix.nixosModules.default
   ];
 
-  options.custom.service.agenix = {
+  options.custom.server.agenix = {
     enable = lib.mkEnableOption "agenix support";
   };
 

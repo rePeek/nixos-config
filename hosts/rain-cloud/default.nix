@@ -17,13 +17,11 @@
     ./derper.nix
     ./my-derper.nix
 
-    ../../modules/nixos
+    ../../modules/nixos/core
   ];
 
   custom = {
     boot.mode = "bios";
-
-    features.power.profile = "performance";
   };
 
   time.timeZone = "Asia/Shanghai";

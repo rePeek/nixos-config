@@ -154,6 +154,7 @@ in
 {
   imports = [
     inputs.dms.homeModules.dank-material-shell
+    ./hyprland.nix
   ];
 
   home = {

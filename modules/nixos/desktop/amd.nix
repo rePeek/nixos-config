@@ -7,10 +7,10 @@
 }:
 
 let
-  cfg = config.custom.features.amd;
+  cfg = config.custom.desktop.amd;
 in
 {
-  options.custom.features.amd = {
+  options.custom.desktop.amd = {
     enable = lib.mkEnableOption "AMD graphics inspection tools";
   };
 

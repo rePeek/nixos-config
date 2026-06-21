@@ -1,11 +1,10 @@
 { ... }:
 let
-  base16Schemes = import ../../modules/theme/base16-schemes.nix;
+  base16Schemes = import ../../theme/base16-schemes.nix;
 in
 {
   imports = [
-    ../../modules/home-manager/common
-    ../../modules/home-manager/llm-agents-package.nix
+    ../../modules/home-manager/server
   ];
 
   home.username = "root";

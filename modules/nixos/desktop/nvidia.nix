@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.features.nvidia;
+  cfg = config.custom.desktop.nvidia;
 in
 {
-  options.custom.features.nvidia = {
+  options.custom.desktop.nvidia = {
     driver.enable = lib.mkEnableOption "NVIDIA driver defaults";
 
     compute.enable = lib.mkEnableOption "NVIDIA compute and container integration";

@@ -87,7 +87,7 @@
         home-server = myLib.mkHost {
           hostPath = ./hosts/home-server;
           hostName = "home-server";
-          usernames = [ "asen" ];
+          enableHomeManager = false;
         };
 
         rainyun = myLib.mkHost {

@@ -29,7 +29,7 @@ in
 
     # Games installed by Steam works fine on NixOS, no other configuration needed.
     # https://github.com/NixOS/nixpkgs/blob/master/doc/packages/steam.section.md
-    custom.features.graphics.compat32.enable = lib.mkDefault true;
+    custom.desktop.graphics.compat32.enable = lib.mkDefault true;
 
     programs.steam = {
       # Some location that should be persistent:

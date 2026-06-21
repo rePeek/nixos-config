@@ -7,20 +7,20 @@
 }:
 with lib;
 let
-  cfg = config.custom.service.mihomo;
+  cfg = config.custom.server.mihomo;
   runtimeConfig = "/run/mihomo/config.yaml";
 in
 {
 
-  options.custom.service.mihomo = {
+  options.custom.server.mihomo = {
     enable = mkEnableOption "Mihomo client service.";
   };
 
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.custom.service.agenix.enable;
-        message = "custom.service.mihomo.enable requires custom.service.agenix.enable = true;";
+        assertion = config.custom.server.agenix.enable;
+        message = "custom.server.mihomo.enable requires custom.server.agenix.enable = true;";
       }
     ];
 

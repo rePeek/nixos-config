@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.service.fhs;
+  cfg = config.custom.server.fhs;
 in
 {
-  options.custom.service.fhs.enable = lib.mkEnableOption "FHS and nix-ld compatibility layer";
+  options.custom.server.fhs.enable = lib.mkEnableOption "FHS and nix-ld compatibility layer";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [

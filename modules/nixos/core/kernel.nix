@@ -1,5 +1,4 @@
-# cachyos.nix
-# Configure CachyOS kernel packages for hosts that explicitly enable them.
+# Configure kernel package choices for hosts that explicitly enable them.
 {
   config,
   inputs,
@@ -8,10 +7,10 @@
 }:
 
 let
-  cfg = config.custom.features.kernel.cachyos;
+  cfg = config.custom.core.kernel.cachyos;
 in
 {
-  options.custom.features.kernel.cachyos = {
+  options.custom.core.kernel.cachyos = {
     enable = lib.mkEnableOption "CachyOS kernel support";
 
     package = lib.mkOption {

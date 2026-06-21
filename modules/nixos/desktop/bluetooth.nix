@@ -3,10 +3,10 @@
 { config, lib, ... }:
 
 let
-  cfg = config.custom.features.bluetooth;
+  cfg = config.custom.desktop.bluetooth;
 in
 {
-  options.custom.features.bluetooth.enable = lib.mkEnableOption "Bluetooth support";
+  options.custom.desktop.bluetooth.enable = lib.mkEnableOption "Bluetooth support";
 
   config = lib.mkIf cfg.enable {
     hardware.bluetooth.enable = true;

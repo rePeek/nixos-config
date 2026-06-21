@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./asen.nix
+    ./asen/nixos.nix
   ];
 
   options.custom.users.enabled = lib.mkOption {

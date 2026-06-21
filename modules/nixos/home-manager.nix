@@ -45,6 +45,17 @@ let
 
   userType = lib.types.submodule {
     options = {
+      role = lib.mkOption {
+        type = lib.types.nullOr (
+          lib.types.enum [
+            "server"
+            "desktop"
+          ]
+        );
+        default = null;
+        description = "Home Manager role for this user on this host. Defaults to desktop on desktop hosts, otherwise server.";
+      };
+
       extraPackages = lib.mkOption {
         type = lib.types.listOf lib.types.package;
         default = [ ];
@@ -104,19 +115,24 @@ let
     let
       userCfg = config.custom.home.users.${username};
       userDesktopEnabled = desktopEnabled && lib.elem username desktopUsers;
+      homeRole =
+        if userCfg.role != null then
+          userCfg.role
+        else if userDesktopEnabled then
+          "desktop"
+        else
+          "server";
+      userDesktopRole = homeRole == "desktop";
     in
     {
       imports = [
-        ../home-manager/users/${username}.nix
-      ]
-      ++ lib.optionals userDesktopEnabled [
-        ../home-manager/desktop
-        ../home-manager/llm-agents-package.nix
+        ../home-manager/${homeRole}
+        ../user/${username}/home.nix
       ];
 
       home.packages = userCfg.extraPackages;
     }
-    // lib.optionalAttrs userDesktopEnabled {
+    // lib.optionalAttrs userDesktopRole {
       custom.desktop.hyprland.outputRules = userCfg.desktop.hyprland.outputRules;
       custom.desktop.defaults.browser.proxy = userCfg.browser.proxy;
     };

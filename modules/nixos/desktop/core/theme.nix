@@ -9,7 +9,7 @@
 
 let
   cfg = config.custom.desktop.theme;
-  customSchemes = import ../../../theme/base16-schemes.nix;
+  customSchemes = import ../../../../theme/base16-schemes.nix;
 
   scheme = customSchemes.${cfg.scheme} or "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
 in

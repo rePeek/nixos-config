@@ -1,3 +1,6 @@
+# Core NixOS profile shared by every managed host.
+{ lib, ... }:
+
 {
   imports = [
     ./boot.nix
@@ -5,15 +8,15 @@
     ./i18n.nix
     ./nix.nix
     ./packages.nix
+    ./power.nix
     ./security.nix
     ./ssh.nix
     ./system.nix
-    ./users
-
-    ./features
-    ./service
-    ./tools.nix
+    ./tailscale.nix
+    ./kernel.nix
   ];
+
+  custom.core.tailscale.enable = lib.mkDefault true;
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }

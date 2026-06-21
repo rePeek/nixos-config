@@ -8,6 +8,7 @@
     ./helix
     ./btop.nix
     ./git.nix
+    ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
     # 系统监控与性能

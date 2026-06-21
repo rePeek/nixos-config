@@ -8,7 +8,6 @@
     ./hardware
     ./network.nix
 
-    ../../modules/nixos
     ../../modules/nixos/desktop
   ];
 
@@ -23,54 +22,25 @@
       ];
     };
 
-    features = {
-      amd.enable = true;
-      audio.enable = true;
-      bluetooth.enable = true;
-      graphics = {
-        enable = true;
-        compat32.enable = true;
-      };
+    core = {
       kernel.cachyos = {
         enable = true;
         package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
       };
-      power.profile = "performance";
     };
 
     desktop = {
-      components = {
-        avatar = {
-          enable = true;
-          users.asen = ../../assets/avatars/asen.jpg;
-        };
-        gaming.enable = true;
-        wallpaper = {
-          enable = true;
-          directory = ../../assets/wallpapers;
-          initialStrategy = "random";
-        };
-      };
-      enable = true;
-      shell = {
-        enable = true;
-        backend = "dank-material-shell";
-        compositor = "hyprland";
-      };
-      theme = {
-        enable = true;
-        image = ../../assets/wallpapers/a_woman_with_long_hair_wearing_sunglasses.png;
+      amd.enable = true;
+      graphics.compat32.enable = true;
+      components.gaming.enable = true;
+      tools = {
+        audio.enable = true;
+        network.enable = true;
       };
     };
 
-    service = {
+    server = {
       fhs.enable = true;
-      tailscale.enable = true;
-    };
-
-    tools = {
-      audio.enable = true;
-      network.enable = true;
     };
   };
 

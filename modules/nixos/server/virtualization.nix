@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.features.virtualization;
+  cfg = config.custom.server.virtualization;
 in
 {
-  options.custom.features.virtualization = {
+  options.custom.server.virtualization = {
     docker = lib.mkEnableOption "Docker container support";
     qemuUserAarch64 = lib.mkEnableOption "QEMU user-mode AArch64 emulation support";
 

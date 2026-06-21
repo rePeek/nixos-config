@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.custom.features.graphics;
+  cfg = config.custom.desktop.graphics;
 in
 {
-  options.custom.features.graphics = {
+  options.custom.desktop.graphics = {
     enable = lib.mkEnableOption "hardware accelerated graphics stack";
 
     compat32.enable = lib.mkEnableOption "32-bit graphics drivers for Wine, Steam, and Proton";

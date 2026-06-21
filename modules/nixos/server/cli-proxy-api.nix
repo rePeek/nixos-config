@@ -1,11 +1,11 @@
-# modules/services/cli-proxy-api.nix
+# Docker-backed CLI proxy API service.
 { config, lib, ... }:
 
 let
-  cfg = config.custom.service.cli-proxy-api;
+  cfg = config.custom.server.cli-proxy-api;
 in
 {
-  options.custom.service.cli-proxy-api = {
+  options.custom.server.cli-proxy-api = {
     enable = lib.mkEnableOption "CLIProxyAPI OCI container";
 
     dataDir = lib.mkOption {
@@ -65,7 +65,7 @@ in
         "--pull=always"
         "--add-host=host.docker.internal:host-gateway"
       ];
-      
+
       environment = {
         HTTP_PROXY = "http://host.docker.internal:7890";
         HTTPS_PROXY = "http://host.docker.internal:7890";
