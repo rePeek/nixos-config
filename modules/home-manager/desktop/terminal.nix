@@ -18,7 +18,7 @@ let
         desktopFile = "kitty.desktop";
       }
     else
-      osConfig.custom.desktop.components.terminal;
+      osConfig.custom.desktop.terminal;
   cfg = config.custom.desktop.defaults.terminal;
   theme =
     if osConfig == null then

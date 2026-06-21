@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.custom.desktop.components.avatar;
+  cfg = config.custom.desktop.avatar;
   desktopUsers = config.custom.desktop.users;
   configuredUsers = lib.attrNames cfg.users;
   invalidUsers = lib.filter (username: !(lib.elem username desktopUsers)) configuredUsers;
@@ -86,7 +86,7 @@ let
   );
 in
 {
-  options.custom.desktop.components.avatar = {
+  options.custom.desktop.avatar = {
     enable = lib.mkEnableOption "desktop user avatars";
 
     users = lib.mkOption {
@@ -118,7 +118,7 @@ in
       {
         assertion = invalidUsers == [ ];
         message =
-          "custom.desktop.components.avatar.users contains users not listed in custom.desktop.users: "
+          "custom.desktop.avatar.users contains users not listed in custom.desktop.users: "
           + lib.concatStringsSep ", " invalidUsers;
       }
     ];

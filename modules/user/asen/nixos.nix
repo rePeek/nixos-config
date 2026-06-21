@@ -12,7 +12,6 @@ let
   hasDesktopAvatar = lib.hasAttrByPath [
     "custom"
     "desktop"
-    "components"
     "avatar"
     "users"
   ] options;
@@ -50,7 +49,7 @@ in
       };
     }
     // lib.optionalAttrs hasDesktopAvatar {
-      custom.desktop.components.avatar.users.asen = lib.mkDefault ../../../assets/avatars/asen.jpg;
+      custom.desktop.avatar.users.asen = lib.mkDefault ../../../assets/avatars/asen.jpg;
     }
   );
 }

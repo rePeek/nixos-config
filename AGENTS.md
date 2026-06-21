@@ -89,14 +89,13 @@ modules/nixos/
 │   └── virtualization.nix
 ├── desktop/                     # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
 │   ├── amd.nix
-│   ├── audio.nix
-│   ├── bluetooth.nix
-│   ├── graphics.nix
+│   ├── avatar.nix
+│   ├── gaming.nix
 │   ├── nvidia.nix
-│   ├── components/              # 输入法、终端、头像和 gaming 的系统侧 profile
-│   ├── core/                    # 图形基础服务、字体和 Wayland portal
+│   ├── terminal.nix
+│   ├── theme.nix
+│   ├── core/                    # 图形、音频、蓝牙、输入法、字体、基础工具和 Wayland portal
 │   ├── shell/                   # DMS shell、Hyprland session 和 greeter
-│   └── tools.nix                # 桌面相关 CLI 工具选项
 └── home-manager.nix             # 加载用户 Home Manager role 并应用主机级 custom.home.users.* 默认值
 ```
 
@@ -158,7 +157,7 @@ modules/user/
 ### 3.1 修改位置
 
 - 所有主机共享的无用户最小系统配置放入 `modules/nixos/core/`。
-- 需要主机显式选择的系统能力按适用范围放入 `modules/nixos/core/`、`server/` 或 `desktop/`，并分别通过 `custom.core.*`、`custom.server.*` 或 `custom.desktop.*` 选项开启。
+- 需要主机显式选择的系统能力按适用范围放入 `modules/nixos/core/`、`server/` 或 `desktop/`，并分别通过 `custom.core.*`、`custom.server.*` 或 `custom.desktop.*` 选项开启；desktop 的 `core/` 只放无自定义选项的桌面基础能力。
 - 可选通用系统服务放入 `modules/nixos/server/`，优先定义 `options` 并使用 `lib.mkIf` 按需启用。
 - 桌面系统服务放入 `modules/nixos/desktop/`。
 - NixOS 主机角色聚合入口直接放入 `modules/nixos/core/`、`modules/nixos/server/` 和 `modules/nixos/desktop/`。
@@ -166,7 +165,7 @@ modules/user/
 - 桌面系统 profile 放入 `modules/nixos/desktop/`；桌面用户默认值放入 `modules/home-manager/desktop/`。
 - Home Manager 用户环境聚合入口直接放入 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；没有 `core` 用户环境，因为 NixOS `core` 是无个人用户的最小主机层。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；图形栈、NVIDIA、音频、蓝牙和桌面图形检查工具放入 `modules/nixos/desktop/`。
+- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；桌面基础图形、音频、蓝牙、输入法和工具放入 `modules/nixos/desktop/core/`，NVIDIA、AMD、gaming、shell、theme、terminal 和 avatar 等可选能力放入 `modules/nixos/desktop/`。
 - 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
@@ -192,7 +191,7 @@ modules/user/
 ### 3.4 命名
 
 - 新文件和自定义属性优先使用小写字母与短横线组成的 kebab-case。
-- 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`custom.desktop.components.gaming.enable`、`custom.desktop.defaults.browser.enable` 和 `myModule.agenix.enable`。
+- 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`custom.desktop.gaming.enable`、`custom.home.users.<name>.*` 和 `myModule.agenix.enable`。
 - 新增自定义选项时，优先使用清晰、统一的命名空间；不要为了一致性顺手重命名已有公开选项。
 
 ## 4. 常用工作流

@@ -2,21 +2,11 @@
 {
   config,
   lib,
-  osConfig ? null,
   pkgs,
   ...
 }:
 
 let
-  osCfg =
-    if osConfig == null then
-      {
-        enable = false;
-        manageUserDefaults = false;
-      }
-    else
-      osConfig.custom.desktop.components.fcitx5;
-
   fcitx5ChineseAddons = pkgs.qt6Packages.fcitx5-chinese-addons.overrideAttrs (oldAttrs: {
     postInstall = (oldAttrs.postInstall or "") + ''
       papirus_icons="${pkgs.papirus-icon-theme}/share/icons/Papirus"
@@ -87,7 +77,7 @@ let
   ];
 in
 {
-  config = lib.mkIf (config.custom.desktop.enable && osCfg.enable && osCfg.manageUserDefaults) {
+  config = lib.mkIf config.custom.desktop.enable {
     home.sessionVariables = {
       GLFW_IM_MODULE = lib.mkDefault "ibus";
       QT_IM_MODULE = lib.mkDefault "fcitx";

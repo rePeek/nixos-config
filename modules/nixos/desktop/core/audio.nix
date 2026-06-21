@@ -1,16 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
-let
-  cfg = config.custom.desktop.audio;
-in
 {
-  options.custom.desktop.audio.enable = lib.mkEnableOption "audio stack (PipeWire + WirePlumber)";
-
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.custom.desktop.enable {
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -22,5 +18,10 @@ in
 
     security.rtkit.enable = true;
     services.pulseaudio.enable = false;
+
+    environment.systemPackages = with pkgs; [
+      pulseaudio
+      wireplumber
+    ];
   };
 }

@@ -9,31 +9,25 @@
   imports = [
     ../server
     ./amd.nix
-    ./audio.nix
-    ./bluetooth.nix
+    ./avatar.nix
     ./core
-    ./components
-    ./graphics.nix
+    ./gaming.nix
     ./nvidia.nix
     ./shell
-    ./tools.nix
+    ./terminal.nix
+    ./theme.nix
   ];
 
   config = {
     custom = {
       desktop = {
         enable = lib.mkDefault true;
-        audio.enable = lib.mkDefault true;
-        bluetooth.enable = lib.mkDefault true;
-        graphics.enable = lib.mkDefault true;
         shell.enable = lib.mkDefault true;
         theme = {
           enable = lib.mkDefault true;
           image = lib.mkDefault ../../../assets/wallpapers/a_woman_with_long_hair_wearing_sunglasses.png;
         };
-        components = {
-          avatar.enable = lib.mkDefault true;
-        };
+        avatar.enable = lib.mkDefault true;
       };
     };
   };

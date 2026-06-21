@@ -5,7 +5,6 @@
   ...
 }:
 let
-  cfg = config.custom.desktop.components.fcitx5;
   fcitx5ChineseAddons = pkgs.qt6Packages.fcitx5-chinese-addons.overrideAttrs (oldAttrs: {
     postInstall = (oldAttrs.postInstall or "") + ''
       papirus_icons="${pkgs.papirus-icon-theme}/share/icons/Papirus"
@@ -41,21 +40,7 @@ let
   '';
 in
 {
-  options.custom.desktop.components.fcitx5 = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable the default fcitx5 input method profile for desktop users.";
-    };
-
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Apply fcitx5 profile defaults in desktop Home Manager users.";
-    };
-  };
-
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
+  config = lib.mkIf config.custom.desktop.enable {
     i18n.inputMethod = {
       enable = lib.mkDefault true;
       type = lib.mkDefault "fcitx5";

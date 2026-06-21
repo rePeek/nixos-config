@@ -74,14 +74,9 @@
     };
 
     desktop = {
-      graphics.compat32.enable = true;
       nvidia.compute.enable = true;
       nvidia.driver.enable = true;
-      components.gaming.enable = true;
-      tools = {
-        audio.enable = true;
-        network.enable = true;
-      };
+      gaming.enable = true;
     };
 
   };

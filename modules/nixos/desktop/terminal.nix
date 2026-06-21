@@ -1,4 +1,4 @@
-# Terminal component defaults shared with desktop user profiles.
+# Terminal defaults shared with desktop user profiles.
 {
   config,
   lib,
@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.custom.desktop.components.terminal;
+  cfg = config.custom.desktop.terminal;
 in
 {
-  options.custom.desktop.components.terminal = {
-    enable = lib.mkEnableOption "terminal component" // {
+  options.custom.desktop.terminal = {
+    enable = lib.mkEnableOption "terminal defaults" // {
       default = true;
     };
 

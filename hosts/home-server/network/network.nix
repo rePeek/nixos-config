@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 let
   wanIf = "enp3s0";
   lanIf = "enp1s0";
@@ -6,7 +6,7 @@ let
 in
 {
   networking = {
-    networkmanager.enable = true;
+    networkmanager.enable = lib.mkForce false;
     nameservers = [
       "8.8.8.8"
       "8.8.4.4"

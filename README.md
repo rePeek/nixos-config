@@ -70,14 +70,13 @@ modules/
 │   │   └── virtualization.nix
 │   ├── desktop/                 # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
 │   │   ├── amd.nix
-│   │   ├── audio.nix
-│   │   ├── bluetooth.nix
-│   │   ├── graphics.nix
+│   │   ├── avatar.nix
+│   │   ├── gaming.nix
 │   │   ├── nvidia.nix
-│   │   ├── components/          # 输入法、终端、头像和 gaming 的系统侧 profile
-│   │   ├── core/                # 图形基础服务、字体和 Wayland portal
+│   │   ├── core/                # 图形、音频、蓝牙、输入法、字体、基础工具和 Wayland portal
 │   │   ├── shell/               # DMS shell、Hyprland session 和 greeter
-│   │   ├── tools.nix            # 桌面相关 CLI 工具选项
+│   │   ├── terminal.nix
+│   │   ├── theme.nix
 │   │   ├── default.nix
 │   │   └── README.md
 │   └── home-manager.nix         # 加载用户 Home Manager role 并应用主机级 custom.home.users.* 默认值
@@ -93,7 +92,7 @@ modules/
     │   └── ...
 ```
 
-每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。主机入口导入 `modules/nixos/core`、`server` 或 `desktop` 表达机器角色；可复用系统能力通过主机入口中的 `custom.core.*`、`custom.server.*` 和 `custom.desktop.*` 声明。core profile 是无个人用户的最小主机层，并默认启用 Tailscale；server profile 在 core 上增加系统用户和通用服务选项；desktop profile 在 server 上默认启用图形、音频和蓝牙能力。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
+每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。主机入口导入 `modules/nixos/core`、`server` 或 `desktop` 表达机器角色；可复用系统能力通过主机入口中的 `custom.core.*`、`custom.server.*` 和 `custom.desktop.*` 声明。core profile 是无个人用户的最小主机层，并默认启用 Tailscale；server profile 在 core 上增加系统用户和通用服务选项；desktop profile 在 server 上默认启用图形、音频、蓝牙、输入法和基础桌面工具。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
 
 ## `custom` 配置
 
@@ -103,7 +102,6 @@ modules/
 
 - `custom.boot.*`：主机启动 profile。当前包括 `custom.boot.mode = "uefi" | "bios"` 和 BIOS 模式下可选的 `custom.boot.grubDevice`。
 - `custom.core.*`：所有主机共享的基础能力。当前包括 `power.profile` 和 `kernel.cachyos`。
-- `custom.desktop.graphics.*`：通用图形栈能力。`enable` 启用硬件加速图形环境，`compat32.enable` 为 Wine、Steam 和 Proton 启用 32 位图形驱动。
 - `custom.desktop.nvidia.driver.enable`：本仓库的 NVIDIA 驱动默认策略，包括 DRM framebuffer、open module、settings、latest driver、modesetting 和基础电源管理。
 - `custom.desktop.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
 - `custom.core.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
@@ -113,7 +111,7 @@ modules/
 - `custom.users.*`：系统用户 profile。主机通过 `custom.users.enabled` 启用用户，并通过对应用户子选项追加主机专属 groups 或 SSH authorized keys。
 - `custom.home.users.*`：主机级 Home Manager 默认值。用于声明某台主机上某个用户的 Home Manager role（`server` 或 `desktop`）、额外用户包、Hyprland 输出规则和 Firefox 代理等覆盖项。
 - `custom.core.tailscale.*`：所有主机默认启用的 Tailscale 基础网络能力，可按主机覆盖 exit node 和 DNS 行为。
-- `custom.desktop.*`：桌面 profile 和桌面体验中的可选能力。NixOS 侧 `enable` 启用桌面基础配置，子项包括 `audio`、`bluetooth`、`amd`、`shell`、`components` 和 `tools`；Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选能力。NixOS 侧 `enable` 启用桌面基础配置，基础图形、音频、蓝牙、输入法和桌面工具由 `modules/nixos/desktop/core/` 固定提供；子项保留 `amd`、`nvidia`、`gaming`、`shell`、`theme`、`terminal` 和 `avatar` 等需要主机或用户选择的能力。Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 
 ## 主机说明

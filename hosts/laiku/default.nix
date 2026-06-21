@@ -31,12 +31,7 @@
 
     desktop = {
       amd.enable = true;
-      graphics.compat32.enable = true;
-      components.gaming.enable = true;
-      tools = {
-        audio.enable = true;
-        network.enable = true;
-      };
+      gaming.enable = true;
     };
 
     server = {
