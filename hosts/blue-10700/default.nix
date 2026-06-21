@@ -27,10 +27,6 @@
           "wheel"
           "docker"
         ];
-        extraAuthorizedKeys = [
-          # Windows game PC
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
-        ];
       };
     };
 
