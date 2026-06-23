@@ -133,7 +133,7 @@ in
           jms_sub:
             type: http
             url: "$JMS_URL"
-            interval: 14400
+            interval: 3600
             health-check:
               enable: true
               url: "https://www.gstatic.com/generate_204"
