@@ -1,8 +1,7 @@
 {
-  programs.zoxide = {
+  programs.carapace = {
     enable = true;
     enableFishIntegration = true;
     enableNushellIntegration = true;
-    options = [ "--cmd cd" ];
   };
 }

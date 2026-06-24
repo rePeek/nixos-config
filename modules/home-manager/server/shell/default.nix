@@ -1,8 +1,11 @@
 {
   imports = [
+    ./carapace.nix
     ./eza.nix
+    ./fish.nix
     ./nushell.nix
     ./fzf.nix
+    ./starship.nix
     ./yazi.nix
     ./zoxide.nix
   ];

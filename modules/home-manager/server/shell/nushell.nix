@@ -1,15 +1,12 @@
-{ pkgs, ... }:
 {
-  # Generate the devenv auto-activation hook declaratively so Nushell does not
-  # recreate it on every startup.
-  xdg.configFile."nushell/autoload/devenv-hook.nu".source = pkgs.runCommand "devenv-hook.nu" { } ''
-    ${pkgs.devenv}/bin/devenv hook nu > $out
-  '';
+  home.sessionVariables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
 
   programs = {
     nushell = {
       enable = true;
-      configFile.source = ./utils/just.nu;
       extraConfig = ''
         let carapace_completer = {|spans|
         carapace $spans.0 nushell ...$spans | from json
@@ -37,66 +34,7 @@
           hide-env PS1
         }
       '';
-      environmentVariables = {
-        EDITOR = "hx";
-        VISUAL = "hx";
-      };
     };
 
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        set fish_greeting # Disable greeting
-      '';
-
-      plugins = [
-        {
-          name = "plugin-git";
-          src = pkgs.fishPlugins.plugin-git.src;
-        }
-        {
-          name = "bass";
-          src = pkgs.fishPlugins.bass.src;
-        }
-      ];
-    };
-    carapace.enable = true;
-    carapace.enableNushellIntegration = true; # 必须显式设置为 true
-
-    # Prompt theme
-    starship = {
-      enable = true;
-      enableNushellIntegration = true;
-
-      settings = {
-        add_newline = false;
-        format = ''
-          [╭{OwO} ](bold green)$username$directory$battery$all$line_break$character
-        '';
-        right_format = ''
-          $git_branch$git_state$git_status$time$cmd_duration
-        '';
-        character = {
-          success_symbol = "[╰─>](bold green)";
-          error_symbol = "[x─>](bold red)";
-        };
-        git_branch = {
-          format = "[ $symbol$branch]($style) ";
-          style = "cyan";
-        };
-        directory = {
-          format = "[](fg:#a3ca5c bg:none)[$path]($style)[ ](fg:#a3ca5c bg:none)";
-          style = "fg:#000000 bg:#a3ca5c";
-          truncate_to_repo = false;
-        };
-        username.show_always = true;
-        time.disabled = false;
-        cmd_duration = {
-          min_time = 0;
-          disabled = false;
-        };
-        battery.disabled = false;
-      };
-    };
   };
 }

@@ -32,9 +32,11 @@ in
         description = "asen";
         home = "/home/asen";
         extraGroups = cfg.extraGroups;
-        shell = pkgs.nushell;
+        shell = pkgs.fish;
         openssh.authorizedKeys.keys = config.custom.ssh.sharedAuthorizedKeys;
       };
+
+      programs.fish.enable = true;
 
       # Allow the user's flakes and command-line invocations to opt into extra substituters.
       nix.settings = {
