@@ -197,6 +197,9 @@ in
         cursorSettings = dmsCursorSettings;
 
         customPowerActionLogout = "uwsm stop";
+        lockScreenPowerOffMonitorsOnLock = true;
+        acLockTimeout = 300;
+        batteryLockTimeout = 300;
       }
       (lib.mkDefault (
         {
