@@ -31,6 +31,7 @@ let
         ''
           -- DMS_STARTUP_BEGIN
           hl.env("GLFW_IM_MODULE", "ibus")
+          hl.env("GTK_IM_MODULE", "fcitx")
           hl.env("QT_IM_MODULE", "fcitx")
           hl.env("SDL_IM_MODULE", "fcitx")
           hl.env("TERMINAL", ${builtins.toJSON terminalCommand})
@@ -40,9 +41,9 @@ let
           hl.env("XMODIFIERS", "@im=fcitx")
 
           hl.on("hyprland.start", function()
-          	hl.exec_cmd("uwsm finalize GLFW_IM_MODULE QT_IM_MODULE SDL_IM_MODULE TERMINAL QT_QPA_PLATFORM XMODIFIERS XCURSOR_SIZE HYPRCURSOR_SIZE")
-          	hl.exec_cmd("fcitx5 -d --replace")
-          	hl.exec_cmd(${builtins.toJSON dmsCommand})
+            hl.exec_cmd("uwsm finalize GLFW_IM_MODULE GTK_IM_MODULE QT_IM_MODULE SDL_IM_MODULE TERMINAL QT_QPA_PLATFORM XMODIFIERS XCURSOR_SIZE HYPRCURSOR_SIZE")
+            hl.exec_cmd("fcitx5 -d --replace")
+            hl.exec_cmd(${builtins.toJSON dmsCommand})
           end)
           -- DMS_STARTUP_END
         ''

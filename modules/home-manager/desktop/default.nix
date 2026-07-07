@@ -7,6 +7,39 @@
 }:
 let
   osDesktopEnabled = osConfig != null && osConfig.custom.desktop.enable;
+  wechatAppimageTools = pkgs.appimageTools // {
+    wrapAppImage =
+      args:
+      pkgs.appimageTools.wrapAppImage (
+        args
+        // {
+          extraPkgs =
+            appPkgs:
+            (args.extraPkgs or (_: [ ])) appPkgs
+            ++ [
+              appPkgs.fcitx5-gtk
+              appPkgs.libsForQt5.fcitx5-qt
+              appPkgs.qt6Packages.fcitx5-qt
+            ];
+          profile = (args.profile or "") + ''
+            export GTK_IM_MODULE=fcitx
+            export QT_IM_MODULE=fcitx
+            export SDL_IM_MODULE=fcitx
+            export XMODIFIERS=@im=fcitx
+          '';
+        }
+      );
+  };
+  wechat = pkgs.callPackage "${pkgs.path}/pkgs/by-name/we/wechat/package.nix" {
+    callPackage =
+      path: args:
+      pkgs.callPackage path (
+        args
+        // lib.optionalAttrs (builtins.baseNameOf (toString path) == "linux.nix") {
+          appimageTools = wechatAppimageTools;
+        }
+      );
+  };
 in
 {
   options.custom.desktop.enable = lib.mkEnableOption "desktop Home Manager role" // {
@@ -29,7 +62,7 @@ in
   config = lib.mkIf config.custom.desktop.enable {
     home = {
       packages = [
-        pkgs.wechat
+        wechat
       ];
 
       activation.migrateKvantumBase16Theme = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''

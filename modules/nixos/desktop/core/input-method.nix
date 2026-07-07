@@ -62,6 +62,7 @@ in
 
       sessionVariables = {
         GLFW_IM_MODULE = lib.mkDefault "ibus";
+        GTK_IM_MODULE = lib.mkDefault "fcitx";
         QT_IM_MODULE = lib.mkDefault "fcitx";
         SDL_IM_MODULE = lib.mkDefault "fcitx";
         XMODIFIERS = lib.mkDefault "@im=fcitx";
