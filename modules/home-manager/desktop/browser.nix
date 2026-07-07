@@ -78,16 +78,26 @@ let
       enable = lib.mkDefault true;
       configPath = lib.mkDefault ".mozilla/firefox";
       languagePacks = lib.mkDefault [ "zh-CN" ];
-      policies = lib.mkIf proxyCfg.enable {
-        Proxy = {
-          Mode = "manual";
-          HTTPProxy = proxyCfg.httpProxy;
-          SSLProxy = proxyCfg.sslProxy;
-          SOCKSProxy = proxyCfg.socksProxy;
-          SOCKSVersion = proxyCfg.socksVersion;
-          Passthrough = proxyCfg.passthrough;
-        };
-      };
+      policies = lib.mkMerge [
+        {
+          ExtensionSettings = {
+            "{fb25c100-22ce-4d5a-be7e-75f3d6f0fc13}" = {
+              installation_mode = "force_installed";
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/kiss-translator/latest.xpi";
+            };
+          };
+        }
+        (lib.mkIf proxyCfg.enable {
+          Proxy = {
+            Mode = "manual";
+            HTTPProxy = proxyCfg.httpProxy;
+            SSLProxy = proxyCfg.sslProxy;
+            SOCKSProxy = proxyCfg.socksProxy;
+            SOCKSVersion = proxyCfg.socksVersion;
+            Passthrough = proxyCfg.passthrough;
+          };
+        })
+      ];
     };
 
     stylix.targets.firefox = lib.mkIf (cfg.package == "firefox") (
