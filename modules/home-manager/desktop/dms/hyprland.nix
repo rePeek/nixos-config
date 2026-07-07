@@ -54,6 +54,9 @@ let
 
       -- Keep applications launched by the DMS shell on the currently active workspace.
       hl.config({
+        binds = {
+          disable_keybind_grabbing = true,
+        },
       	misc = {
       		initial_workspace_tracking = 0,
       	},
