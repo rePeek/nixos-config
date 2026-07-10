@@ -77,6 +77,7 @@ in
     home.packages = with pkgs; [
       imv
       mpv
+      obs-studio
       webp-pixbuf-loader
     ];
 
