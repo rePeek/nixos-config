@@ -60,6 +60,8 @@ in
 
   config = lib.mkIf config.custom.desktop.enable {
     home = {
+      pointerCursor.enable = lib.mkDefault true;
+
       packages = [
         wechat
       ];
