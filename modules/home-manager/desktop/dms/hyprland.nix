@@ -65,12 +65,13 @@ let
       	},
       })
 
-      -- Telegram opens media previews as separate Wayland toplevels. Keep those
-      -- auxiliary windows floating while leaving the main chat window tiled.
+      -- Telegram uses its app id on Wayland and WM_CLASS on XWayland. Keep media
+      -- previews floating with either backend while leaving the main window tiled.
       hl.window_rule({
-      	match = { class = "^(org\\.telegram\\.desktop)$", title = "^(Media viewer|媒体查看器)$" },
-      	float = true,
-      	size = "1600 1000",
+        match = { class = "^(org\\.telegram\\.desktop|TelegramDesktop|telegram-desktop)$", title = "^(Media viewer|媒体查看器)$" },
+        float = true,
+        size = "1600 1000",
+        center = true,
       })
     '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;

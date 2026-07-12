@@ -1,4 +1,17 @@
 { pkgs, ... }:
+let
+  telegramDesktopX11 = pkgs.symlinkJoin {
+    name = "telegram-desktop-x11";
+    paths = [ pkgs.telegram-desktop ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram "$out/bin/Telegram" \
+        --set QT_QPA_PLATFORM xcb \
+        --set QT_IM_MODULE fcitx \
+        --set XMODIFIERS '@im=fcitx'
+    '';
+  };
+in
 {
   networking.hostName = "brain-holder";
 
@@ -32,7 +45,7 @@
         qbittorrent-enhanced
         scrot
         thunar
-        telegram-desktop
+        telegramDesktopX11
       ];
 
       desktop.hyprland.outputRules = [
