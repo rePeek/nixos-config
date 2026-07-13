@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -63,10 +68,17 @@
       self,
       nixpkgs,
       home-manager,
+      git-hooks,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+
+      preCommitCheck = git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks.nixfmt.enable = true;
+      };
 
       myLib = import ./lib.nix {
         inherit nixpkgs;
@@ -76,6 +88,20 @@
       };
     in
     {
+      checks.${system}.pre-commit-check = preCommitCheck;
+
+      devShells.${system}.default = pkgs.mkShell {
+        inherit (preCommitCheck) shellHook;
+
+        packages = with pkgs; [
+          git
+          just
+          nixfmt
+        ];
+
+        buildInputs = preCommitCheck.enabledPackages;
+      };
+
       nixosConfigurations = {
         # daily use
         brain-holder = myLib.mkHost {
@@ -110,7 +136,7 @@
 
       # None nixos systerm
       homeConfigurations."root" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
         modules = [
           inputs.stylix.homeModules.stylix
           ./hosts/nixos-in-docker/root.nix

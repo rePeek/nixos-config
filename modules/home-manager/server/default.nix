@@ -31,8 +31,6 @@
 
     # 开发与代码工具
     bat
-    just # should config in devenv
-    devenv
     difftastic
     repomix
 

@@ -3,10 +3,7 @@
 .dolt/
 *.db
 
-# Devenv
-.devenv*
-devenv.local.nix
-devenv.local.yaml
+# Local development artifacts
 result
 
 # Local tool caches

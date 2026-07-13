@@ -27,12 +27,6 @@
            }
          }
         }
-
-        # devenv sets a bash-style PS1 prefix like "(devenv)"; hide it so
-        # Starship remains the single source of prompt rendering in Nushell.
-        if "PS1" in $env {
-          hide-env PS1
-        }
       '';
     };
 

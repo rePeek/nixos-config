@@ -14,13 +14,10 @@
 
 ```text
 .
-├── flake.nix          # Flake 入口：inputs、NixOS 主机和独立 Home Manager 配置
+├── flake.nix          # Flake 入口：开发环境、inputs、NixOS 主机和独立 Home Manager 配置
 ├── flake.lock         # Flake 输入锁文件
 ├── lib.nix            # mkHost：统一组装 NixOS 主机、disko 和 Home Manager
 ├── justfile           # 常用部署、更新、清理和密钥管理命令
-├── devenv.nix         # 开发环境与 nixfmt-rfc-style git hook
-├── devenv.yaml
-├── devenv.lock
 ├── hosts/             # 主机级配置
 ├── modules/           # 可复用 NixOS 和 Home Manager 模块
 └── secrets/           # agenix 密钥声明与加密后的 .age 文件
@@ -198,13 +195,13 @@ modules/user/
 
 ### 4.1 开发环境
 
-开发工具由 devenv 提供：
+开发工具由 Flake 默认 dev shell 提供：
 
 ```bash
-devenv shell
+nix develop
 ```
 
-`devenv.nix` 启用了 `nixfmt-rfc-style` 和对应 git hook。无需每次修改后手动格式化；提交时 pre-commit 会自动处理。需要提前整理格式时使用：
+`flake.nix` 的默认 dev shell 提供 `git`、`just`、`nixfmt`，并启用对应的 pre-commit hook。无需每次修改后手动格式化；提交时 pre-commit 会自动处理。需要提前整理格式时使用：
 
 ```bash
 nixfmt <files...>

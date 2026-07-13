@@ -10,20 +10,17 @@
 - Home Manager
 - Disko
 - agenix
-- devenv
+- Nix development shell
 - `nixos-unstable`
 
 ## 仓库结构
 
 ```text
 .
-├── flake.nix          # Flake 入口：inputs、NixOS 主机和 Home Manager 配置
+├── flake.nix          # Flake 入口：开发环境、inputs、NixOS 主机和 Home Manager 配置
 ├── flake.lock         # Flake 输入锁文件
 ├── lib.nix            # mkHost：统一组装主机、disko 和 Home Manager
 ├── justfile           # 部署、更新、清理和密钥管理命令
-├── devenv.nix         # 开发工具与 nixfmt-rfc-style git hook
-├── devenv.yaml
-├── devenv.lock
 ├── hosts/             # 各主机的硬件、网络、用户和专用服务配置
 ├── modules/           # 可复用的 NixOS 与 Home Manager 模块
 └── secrets/           # agenix 密钥声明与加密后的 .age 文件
@@ -221,13 +218,13 @@ just deploy-docker
 
 ## 开发环境
 
-进入 devenv 环境：
+进入 Flake 开发环境：
 
 ```bash
-devenv shell
+nix develop
 ```
 
-`devenv.nix` 提供 `nixfmt-rfc-style` 和对应 git hook。格式化 Nix 文件：
+`flake.nix` 的默认 dev shell 提供 `git`、`just`、`nixfmt` 和对应的 pre-commit hook。格式化 Nix 文件：
 
 ```bash
 nixfmt <files...>
