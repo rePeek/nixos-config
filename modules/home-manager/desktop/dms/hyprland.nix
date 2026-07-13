@@ -57,6 +57,9 @@ let
         binds = {
           disable_keybind_grabbing = true,
         },
+        input = {
+          follow_mouse = 1,
+        },
       	misc = {
       		initial_workspace_tracking = 0,
       	},
