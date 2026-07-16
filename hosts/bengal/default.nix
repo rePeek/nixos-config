@@ -7,6 +7,7 @@
   networking.hostName = "bengal";
 
   imports = [
+    ./clipboard-bridge.nix
     ./hardware
     ./network.nix
 

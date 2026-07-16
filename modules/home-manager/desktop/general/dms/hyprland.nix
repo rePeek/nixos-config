@@ -17,6 +17,22 @@ let
     exec ${lib.getExe config.programs.dank-material-shell.package} run "$@"
   '';
   dmsCommand = "${dmsLauncher}/bin/dms-run-with-wayland-input";
+  welinkClipboardBridge = pkgs.writeShellApplication {
+    name = "welink-clipboard-bridge";
+    runtimeInputs = with pkgs; [
+      coreutils
+      wl-clipboard
+      xclip
+    ];
+    text = ''
+      # Let WeLink process the non-consuming Ctrl+C binding first.
+      sleep 0.2
+
+      if clipboard_text="$(timeout 2 xclip -selection clipboard -out -target UTF8_STRING 2>/dev/null)"; then
+        printf '%s' "$clipboard_text" | wl-copy --type 'text/plain;charset=utf-8'
+      fi
+    '';
+  };
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
   hyprlandLua =
     (builtins.replaceStrings
@@ -63,7 +79,7 @@ let
           disable_keybind_grabbing = true,
         },
         input = {
-          follow_mouse = 1,
+          follow_mouse = 0,
         },
       	misc = {
       		initial_workspace_tracking = 0,
@@ -83,6 +99,52 @@ let
         size = "1600 1000",
         center = true,
       })
+
+      -- Keep every WeLink auxiliary window centered and floating, including
+      -- views introduced by future client updates.
+      hl.window_rule({
+        match = { class = "^welink\\.exe$" },
+        float = true,
+        size = "1600 1000",
+        center = true,
+      })
+
+      -- The main chat window shares the same XWayland class. This later,
+      -- more-specific rule keeps only that window in the tiling layout.
+      hl.window_rule({
+        match = { class = "^welink\\.exe$", initial_title = "^WeLink$" },
+        tile = true,
+        suppress_event = "maximize",
+      })
+
+      -- WeLink starts its meeting helper even when only chat is used. Keep its
+      -- otherwise-visible blank XWayland windows out of the active workspace.
+      hl.window_rule({
+        match = { class = "^hwwebniar\\.exe$" },
+        workspace = "special:welink-helper silent",
+        no_focus = true,
+        no_initial_focus = true,
+      })
+
+      -- Wine exposes a tiny, untitled explorer.exe shell window for WeLink.
+      -- Hide only that shell surface without affecting real Explorer windows.
+      hl.window_rule({
+        match = { class = "^explorer\\.exe$", initial_title = "^$" },
+        workspace = "special:welink-helper silent",
+        no_focus = true,
+        no_initial_focus = true,
+      })
+
+      ${lib.optionalString cfg.welinkClipboardBridge.enable ''
+        -- Let Ctrl+C reach WeLink, then copy its X11 text selection to Wayland.
+        -- This deliberately does not handle context-menu or other mouse copies.
+        hl.bind("CTRL + C", function()
+          local active_window = hl.get_active_window()
+          if active_window ~= nil and active_window.class == "welink.exe" then
+            hl.dispatch(hl.dsp.exec_cmd(${builtins.toJSON "${welinkClipboardBridge}/bin/welink-clipboard-bridge"}))
+          end
+        end, { non_consuming = true, description = "Bridge WeLink clipboard to Wayland" })
+      ''}
     '';
   hyprlandLuaFile = pkgs.writeText "dms-hyprland.lua" hyprlandLua;
   luaLiteral = value: builtins.toJSON value;
@@ -165,6 +227,8 @@ in
   };
 
   config.home.sessionVariables.DMS_SCREENSHOT_DIR = screenshotDirectory;
+  options.custom.desktop.hyprland.welinkClipboardBridge.enable =
+    lib.mkEnableOption "WeLink Ctrl+C text clipboard bridge from XWayland to Wayland";
 
   config.home.activation.installDmsHyprlandConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     hypr_dir="${config.xdg.configHome}/hypr"
