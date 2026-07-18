@@ -21,6 +21,6 @@ in
 {
   "dream-subscription.age" = mkSecret groups.all;
   "jms-subscription.age" = mkSecret groups.all;
-  "ydy-subscription.age" = mkSecret groups.all;
+  "yuetong-subscription.age" = mkSecret groups.all;
   "rc115-conf-pass.age" = mkSecret groups.all;
 }

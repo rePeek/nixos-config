@@ -24,8 +24,8 @@ in
       }
     ];
 
-    age.secrets.ydy-subscription = {
-      file = inputs.self + /secrets/ydy-subscription.age;
+    age.secrets.yuetong-subscription = {
+      file = inputs.self + /secrets/yuetong-subscription.age;
       owner = "root";
       group = "root";
       mode = "0400";
@@ -53,7 +53,7 @@ in
       };
       script = ''
               install -d -m 0755 /run/mihomo
-              YDY_URL="$(cat ${config.age.secrets.ydy-subscription.path})"
+              YDY_URL="$(cat ${config.age.secrets.yuetong-subscription.path})"
               DREAM_URL="$(cat ${config.age.secrets.dream-subscription.path})"
               JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
 
@@ -145,6 +145,7 @@ in
             use:
               - jms_sub
               - dream_sub
+              - ydy_sub
             interval: 300
             timeout: 3000
             tolerance: 50
@@ -166,6 +167,7 @@ in
             use:
               - jms_sub
               - dream_sub
+              - ydy_sub
             filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
@@ -313,6 +315,10 @@ in
         rules:
           - RULE-SET,reject,REJECT
 
+          - DOMAIN-SUFFIX,yuetoto.com,DIRECT
+          - DOMAIN-SUFFIX,jmssub.net,DIRECT
+          - DOMAIN-SUFFIX,dreamcl.xyz,DIRECT
+          - DOMAIN-SUFFIX,yue.to,DIRECT
           - RULE-SET,private,DIRECT
           - RULE-SET,direct,DIRECT
           - RULE-SET,lancidr,DIRECT
