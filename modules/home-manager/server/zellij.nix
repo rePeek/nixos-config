@@ -41,7 +41,7 @@ in
         simplified_ui = true;
         default_layout = "zjstatus";
         # misc
-        default_shell = "nu";
+        default_shell = "fish";
         # keybind
         keybinds =
           with builtins;
