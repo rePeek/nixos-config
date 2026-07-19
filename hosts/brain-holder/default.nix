@@ -69,7 +69,7 @@ in
     core = {
       kernel.cachyos = {
         enable = true;
-        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v3;
+        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
       };
     };
 
@@ -81,7 +81,7 @@ in
         docker = true;
         libvirtd = {
           enable = true;
-          kvm.cpu = "intel";
+          kvm.cpu = "amd";
         };
       };
     };
