@@ -50,7 +50,7 @@ in
 
       desktop.hyprland.outputRules = [
         {
-          output = "DP-3";
+          output = "desc:Microstep MAG 271QPX E2";
           mode = "2560x1440@239.99";
           position = "auto";
           scale = "1";
