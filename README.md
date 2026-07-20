@@ -139,7 +139,7 @@ modules/
 部署命令：
 
 ```bash
-just deploy-brain
+just deploy-local
 ```
 
 ### `home-server`
@@ -160,7 +160,7 @@ just deploy-brain
 部署命令：
 
 ```bash
-just deploy-server
+just deploy-local
 ```
 
 ### `blue-10700`
@@ -179,7 +179,7 @@ just deploy-server
 部署命令：
 
 ```bash
-just deploy-blue-10700
+just deploy-local
 ```
 
 ### `rainyun`
@@ -261,9 +261,7 @@ nixConfig = {
 
 | 命令 | 说明 |
 | --- | --- |
-| `just deploy-brain` | 部署 `brain-holder` |
-| `just deploy-server` | 部署 `home-server` |
-| `just deploy-blue-10700` | 部署 `blue-10700` |
+| `just deploy-local` | 根据当前 hostname 部署对应的本地 NixOS 主机 |
 | `just deploy-remote` | 远程部署 `rainyun` |
 | `just deploy-docker` | 应用独立 `root` Home Manager 配置 |
 | `just up [input]` | 更新全部或指定 Flake 输入 |

@@ -6,17 +6,8 @@
 #
 ############################################################################
 
-deploy-brain:
-  nixos-rebuild switch --flake .#brain-holder --sudo
-
-deploy-laiku:
-  nixos-rebuild switch --flake .#laiku --sudo
-
-deploy-server:
-  nixos-rebuild switch --flake .#home-server --sudo
-
-deploy-blue-10700:
-  nixos-rebuild switch --flake .#blue-10700 --sudo
+deploy-local:
+  nixos-rebuild switch --flake ".#$(hostname -s)" --sudo
 
 deploy-docker:
   home-manager switch --flake .#root

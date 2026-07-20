@@ -38,7 +38,7 @@
 注意：
 
 - `rainyun` 的 Flake 输出名与目录名 `rain-cloud` 不同。
-- 某些机器的 `networking.hostName` 使用了不同大小写，例如 `Blue-10700` 和 `RainYun`。修改时区分 Flake 输出名、目录名和系统 hostname。
+- `rainyun` 的系统 hostname 为 `RainYun`。修改时区分 Flake 输出名、目录名和系统 hostname。
 - NixOS 主机入口统一使用 `hosts/<dir>/default.nix`。
 
 ### 2.3 主机目录
@@ -271,9 +271,7 @@ just secret-rekey
 
 | 命令 | 目标 |
 | --- | --- |
-| `just deploy-brain` | 本机部署 `brain-holder` |
-| `just deploy-server` | 本机部署 `home-server` |
-| `just deploy-blue-10700` | 本机部署 `blue-10700` |
+| `just deploy-local` | 根据当前 hostname 部署对应的本地 NixOS 主机 |
 | `just deploy-remote` | 远程部署 `rainyun` |
 | `just deploy-docker` | 应用独立 `root` Home Manager 配置 |
 | `just up [input]` | 更新全部或指定 Flake 输入 |

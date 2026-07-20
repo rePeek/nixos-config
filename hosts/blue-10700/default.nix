@@ -7,7 +7,7 @@
 }:
 
 {
-  networking.hostName = "Blue-10700";
+  networking.hostName = "blue-10700";
 
   imports = [
     ./hardware
