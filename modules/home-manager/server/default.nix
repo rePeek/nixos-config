@@ -8,6 +8,7 @@
     ./helix
     ./btop.nix
     ./git.nix
+    ./pi.nix
     ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
