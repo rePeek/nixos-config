@@ -24,6 +24,7 @@ in
         theme = "stylix";
       }
       // {
+        support_kitty_keyboard_protocol = false;
         pane_frames = true;
         ui.pane_frames.rounded_corners = true;
         simplified_ui = true;
