@@ -19,7 +19,7 @@ in
   imports = [
     ./hardware
 
-    ../brain-holder/network.nix
+    ./network.nix
 
     ../../modules/nixos/desktop
   ];
@@ -56,14 +56,6 @@ in
           scale = "1";
         }
       ];
-
-      browser.proxy = {
-        enable = true;
-        httpProxy = "home-server:7890";
-        sslProxy = "home-server:7890";
-        socksProxy = "home-server:7890";
-        passthrough = "localhost,127.0.0.1,::1,home-server,*.local";
-      };
     };
 
     core.kernel.cachyos = {
