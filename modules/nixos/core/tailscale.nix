@@ -54,6 +54,10 @@ in
         "laiku"
         "laiku.tailfd7184.ts.net"
       ];
+      "100.71.17.17" = [
+        "amur"
+        "amur.tailfd7184.ts.net"
+      ];
     };
     networking.firewall = {
       enable = true;
