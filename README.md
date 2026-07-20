@@ -116,6 +116,7 @@ modules/
 | Flake 输出 | 配置目录 | 用户 | 主要用途 |
 | --- | --- | --- | --- |
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面、开发、游戏和本地服务 |
+| `amur` | `hosts/amur/` | `asen` | 新桌面系统和旧系统数据迁移 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器、局域网网关和容器宿主机 |
 | `blue-10700` | `hosts/blue-10700/` | `asen` | 固定地址的额外服务节点 |
 | `rainyun` | `hosts/rain-cloud/` | `root` | 远程 Tailscale DERP 节点 |
@@ -140,6 +141,39 @@ modules/
 
 ```bash
 just deploy-local
+```
+
+### `amur`
+
+`amur` 是安装在新 2 TB SSD 上的桌面系统。当前主机的 UEFI 启动项 `0001` 对应 `amur`。如需让下一次启动进入 `amur`，可以临时使用 Nixpkgs 中的 `efibootmgr`：
+
+```bash
+nix shell nixpkgs#efibootmgr -c sudo efibootmgr -n 0001
+```
+
+`-n 0001` 设置的是 UEFI `BootNext`，只影响下一次启动，不会永久修改启动顺序。
+
+新 `amur` 启动后，旧 250 GB 系统盘仍完整保留。旧系统根分区 UUID 为 `d6ff9f6e-1153-48f1-9abc-955e2bc1ddd4`，可以只读挂载后取回数据：
+
+```bash
+sudo mkdir -p /mnt/old-system
+
+sudo mount -o ro \
+  /dev/disk/by-uuid/d6ff9f6e-1153-48f1-9abc-955e2bc1ddd4 \
+  /mnt/old-system
+```
+
+旧用户数据位于 `/mnt/old-system/home/asen`。例如查看文件并复制 `Documents`：
+
+```bash
+ls /mnt/old-system/home/asen
+cp -a /mnt/old-system/home/asen/Documents ~/
+```
+
+使用完后卸载旧系统盘：
+
+```bash
+sudo umount /mnt/old-system
 ```
 
 ### `home-server`
