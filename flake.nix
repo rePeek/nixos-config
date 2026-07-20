@@ -105,6 +105,12 @@
           usernames = [ "asen" ];
         };
 
+        amur = myLib.mkHost {
+          hostPath = ./hosts/amur;
+          hostName = "amur";
+          usernames = [ "asen" ];
+        };
+
         home-server = myLib.mkHost {
           hostPath = ./hosts/home-server;
           hostName = "home-server";

@@ -1,3 +1,4 @@
+# NixOS configuration for amur.
 { pkgs, ... }:
 let
   telegramDesktopX11 = pkgs.symlinkJoin {
@@ -13,12 +14,12 @@ let
   };
 in
 {
-  networking.hostName = "brain-holder";
+  networking.hostName = "amur";
 
   imports = [
     ./hardware
 
-    ./network.nix
+    ../brain-holder/network.nix
 
     ../../modules/nixos/desktop
   ];
@@ -65,11 +66,9 @@ in
       };
     };
 
-    core = {
-      kernel.cachyos = {
-        enable = true;
-        package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
-      };
+    core.kernel.cachyos = {
+      enable = true;
+      package = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
     };
 
     server = {
@@ -90,6 +89,5 @@ in
       nvidia.driver.enable = true;
       gaming.enable = true;
     };
-
   };
 }
