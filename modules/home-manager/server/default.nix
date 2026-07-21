@@ -33,6 +33,7 @@
     # 开发与代码工具
     bat
     difftastic
+    nodejs
     repomix
 
     # misc
