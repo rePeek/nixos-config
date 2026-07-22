@@ -39,8 +39,8 @@ in
         "home-server.tailfd7184.ts.net"
       ];
       "100.71.185.73" = [
-        "blue-10700"
-        "blue-10700.tailfd7184.ts.net"
+        "bengal"
+        "bengal.tailfd7184.ts.net"
       ];
       "100.73.141.90" = [
         "brain-holder"

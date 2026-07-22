@@ -31,7 +31,7 @@
 | --- | --- | --- | --- |
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面主机 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器 |
-| `blue-10700` | `hosts/blue-10700/` | `asen` | 额外 NixOS 主机 |
+| `bengal` | `hosts/bengal/` | `asen` | 额外 NixOS 主机 |
 | `rainyun` | `hosts/rain-cloud/` | 无 | 远程云主机 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的独立 Home Manager 配置 |
 
@@ -319,7 +319,7 @@ nix-instantiate --parse <file>
 ```bash
 nixos-rebuild dry-build --flake .#brain-holder
 nixos-rebuild dry-build --flake .#home-server
-nixos-rebuild dry-build --flake .#blue-10700
+nixos-rebuild dry-build --flake .#bengal
 nixos-rebuild dry-build --flake .#rainyun
 ```
 
