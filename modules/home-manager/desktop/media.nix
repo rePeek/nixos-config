@@ -79,6 +79,7 @@ in
       mpv
       obs-studio
       webp-pixbuf-loader
+      wiliwili
     ];
 
     xdg.configFile."mimeapps.list".force = lib.mkDefault true;
