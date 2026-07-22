@@ -118,7 +118,7 @@ modules/
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面、开发、游戏和本地服务 |
 | `amur` | `hosts/amur/` | `asen` | 新桌面系统和旧系统数据迁移 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器、局域网网关和容器宿主机 |
-| `blue-10700` | `hosts/blue-10700/` | `asen` | 固定地址的额外服务节点 |
+| `bengal` | `hosts/bengal/` | `asen` | 固定地址的额外服务节点 |
 | `rainyun` | `hosts/rain-cloud/` | `root` | 远程 Tailscale DERP 节点 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的 Home Manager 配置 |
 
@@ -197,7 +197,7 @@ sudo umount /mnt/old-system
 just deploy-local
 ```
 
-### `blue-10700`
+### `bengal`
 
 额外的 NixOS 服务节点，使用固定局域网地址。
 

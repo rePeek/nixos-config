@@ -14,8 +14,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJfEGaOVh0XWCou3GPcsB9mfwTyow9RftRs8Q+SAaPiH senxlin@gmail.com"
       # Temporary key
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIyqrlxQC9ZaNsziknJtA83WjVLvXZnyZXgBtH7h/dE wsy@tmp"
-      # Blue-10700 key
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGS7bt2yZBmHILyHkt0VVvaCnuAe9Luc4bK7TnJMuu8y asen@Blue-10700"
+      # bengal
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGS7bt2yZBmHILyHkt0VVvaCnuAe9Luc4bK7TnJMuu8y asen@bengal"
       # Windows game PC
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
       # Workstation key

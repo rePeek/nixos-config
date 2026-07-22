@@ -122,9 +122,9 @@
           enableHomeManager = false;
         };
 
-        blue-10700 = myLib.mkHost {
-          hostPath = ./hosts/blue-10700;
-          hostName = "blue-10700";
+        bengal = myLib.mkHost {
+          hostPath = ./hosts/bengal;
+          hostName = "bengal";
           usernames = [ "asen" ];
         };
 
