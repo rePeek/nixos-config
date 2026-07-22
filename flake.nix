@@ -56,6 +56,8 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     agenix.url = "github:ryantm/agenix";
+
+    leigod.url = "github:rePeek/leigod-plugin-linux";
   };
 
   outputs =
@@ -109,6 +111,7 @@
           hostPath = ./hosts/amur;
           hostName = "amur";
           usernames = [ "asen" ];
+          extraModules = [ inputs.leigod.nixosModules.default ];
         };
 
         home-server = myLib.mkHost {

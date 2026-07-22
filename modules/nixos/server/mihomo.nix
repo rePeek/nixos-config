@@ -91,6 +91,9 @@ in
             - 'raw.githubusercontent.com'
             - 'objects.githubusercontent.com'
             - 'release-assets.githubusercontent.com'
+            # Leigod uses resolved addresses directly for UDP/WebSocket traffic.
+            - '*.xxghh.biz'
+            - '*.nn.com'
           nameserver:
             - 223.5.5.5
             - 1.1.1.1
@@ -342,6 +345,9 @@ in
           - DOMAIN-SUFFIX,steamusercontent.com,HK
           - DOMAIN-SUFFIX,steamserver.net,HK
           - RULE-SET,steam,HK
+
+          - DOMAIN-SUFFIX,xxghh.biz,DIRECT
+          - DOMAIN-SUFFIX,nn.com,DIRECT
           
           - RULE-SET,github,PROXY
 

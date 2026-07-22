@@ -82,4 +82,9 @@ in
       gaming.enable = true;
     };
   };
+
+  services.leigod-plugin = {
+    enable = true;
+    physicalInterface = "wlp11s0";
+  };
 }
