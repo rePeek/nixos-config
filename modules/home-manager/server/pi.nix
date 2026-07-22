@@ -109,30 +109,6 @@ in
     // lib.optionalAttrs stylixEnabled {
       theme = "stylix";
     };
-
-    models.providers.deepseek = {
-      baseUrl = "https://api.deepseek.com";
-      api = "openai-completions";
-
-      models = [
-        {
-          id = "deepseek-v4-pro";
-
-          reasoning = true;
-          contextWindow = 1000000;
-          maxTokens = 65536;
-
-          thinkingLevelMap = {
-            minimal = null;
-            low = null;
-            medium = null;
-            high = "high";
-            xhigh = null;
-            max = "max";
-          };
-        }
-      ];
-    };
   };
 
   # Write a pi theme file derived from Stylix base16 colors.
