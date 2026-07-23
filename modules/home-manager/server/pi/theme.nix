@@ -1,10 +1,10 @@
+# Pi theme derived from Stylix base16 colors.
+# pi discovers themes in ~/.pi/agent/themes/*.json and matches by name.
 {
   config,
   lib,
-  pkgs,
   ...
 }:
-
 let
   stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
   stylixEnabled = stylixColors != null;
@@ -95,25 +95,13 @@ let
   };
 in
 {
-  programs.pi-coding-agent = {
-    enable = true;
-
-    settings = {
-      defaultProvider = "deepseek";
-      defaultModel = "deepseek-v4-pro";
-      defaultThinkingLevel = "high";
-
-      # 做缓存实验时保留
-      showCacheMissNotices = true;
-    }
-    // lib.optionalAttrs stylixEnabled {
-      theme = "stylix";
-    };
+  # Only apply the stylix theme when Stylix is active on the host.
+  programs.pi-coding-agent.settings = lib.optionalAttrs stylixEnabled {
+    theme = "stylix";
   };
 
   # Write a pi theme file derived from Stylix base16 colors.
-  # pi discovers themes in ~/.pi/agent/themes/*.json and matches by name.
-  home.file = lib.mkIf stylixEnabled {
+  home.file = lib.optionalAttrs stylixEnabled {
     ".pi/agent/themes/stylix.json".text = builtins.toJSON piStylixTheme;
   };
 }
