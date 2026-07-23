@@ -18,8 +18,8 @@
     enable = true;
 
     settings = {
-      defaultProvider = "deepseek";
-      defaultModel = "deepseek-v4-pro";
+      defaultProvider = "csi-provider";
+      defaultModel = "Qwen3.7-Max";
       defaultThinkingLevel = "high";
 
       enableInstallTelemetry = false;
@@ -27,6 +27,66 @@
 
       # 做缓存实验时保留
       showCacheMissNotices = true;
+    };
+
+    models.providers = {
+      csi-provider = {
+        baseUrl = "http://113.46.219.251:8080/v1";
+        api = "openai-completions";
+        authHeader = true;
+
+        models = [
+          {
+            id = "GLM-5.2";
+            name = "GLM-5.2 (CSI)";
+
+            reasoning = true;
+            contextWindow = 1000000;
+            maxTokens = 131072;
+
+            thinkingLevelMap = {
+              minimal = null;
+              low = null;
+              medium = null;
+              high = "high";
+              xhigh = null;
+              max = "max";
+            };
+
+            compat = {
+              thinkingFormat = "zai";
+              supportsReasoningEffort = true;
+              supportsDeveloperRole = false;
+              maxTokensField = "max_tokens";
+              zaiToolStream = true;
+            };
+          }
+          {
+            id = "Qwen3.7-Max";
+            name = "Qwen3.7-Max (CSI)";
+
+            reasoning = true;
+            contextWindow = 1000000;
+            maxTokens = 65536;
+
+            thinkingLevelMap = {
+              minimal = null;
+              low = null;
+              medium = null;
+              high = "high";
+              xhigh = null;
+              max = null;
+            };
+
+            compat = {
+              thinkingFormat = "qwen";
+              supportsReasoningEffort = false;
+              supportsDeveloperRole = false;
+              maxTokensField = "max_tokens";
+            };
+          }
+        ];
+      };
     };
   };
 
