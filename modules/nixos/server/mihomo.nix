@@ -318,10 +318,7 @@ in
         rules:
           - RULE-SET,reject,REJECT
 
-          - DOMAIN-SUFFIX,yuetoto.com,DIRECT
           - DOMAIN-SUFFIX,jmssub.net,DIRECT
-          - DOMAIN-SUFFIX,dreamcl.xyz,DIRECT
-          - DOMAIN-SUFFIX,yue.to,DIRECT
           - RULE-SET,private,DIRECT
           - RULE-SET,direct,DIRECT
           - RULE-SET,lancidr,DIRECT
