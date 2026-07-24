@@ -99,6 +99,24 @@ in
             - 1.1.1.1
             - 8.8.8.8
 
+        sniffer:
+          enable: true
+          parse-pure-ip: true
+          sniff:
+            HTTP:
+              ports:
+                - 80
+                - 8080-8880
+              override-destination: true
+            TLS:
+              ports:
+                - 443
+                - 8443
+            QUIC:
+              ports:
+                - 443
+                - 8443
+
         tun:
           enable: true
           stack: system

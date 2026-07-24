@@ -66,6 +66,7 @@ in
     server = {
       fhs.enable = true;
       agenix.enable = true;
+      mihomo.enable = true;
 
       virtualization = {
         docker = true;
@@ -85,7 +86,7 @@ in
   };
 
   services.leigod-plugin = {
-    enable = true;
-    physicalInterface = "wlp11s0";
+    enable = false;
+    physicalInterface = "wlp14s0";
   };
 }
