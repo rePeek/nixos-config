@@ -155,11 +155,12 @@ in
             tolerance: 50
             lazy: false
 
-          - name: HK
+          - name: JP
             type: url-test
             use:
+              - jms_sub
               - ydy_sub
-            filter: "(?i)香港|Hong Kong|HK"
+            filter: "(?i)日本|Japan|JP|东京|Tokyo|大阪|Osaka|c2s4"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
             timeout: 3000
@@ -335,20 +336,20 @@ in
           - DOMAIN-SUFFIX,steamcontent.com,DIRECT
           - DOMAIN-SUFFIX,steamstatic.com,DIRECT
           - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
-          - DOMAIN-SUFFIX,steamcommunity.com,HK
-          - DOMAIN-SUFFIX,steampowered.com,HK
-          - DOMAIN-SUFFIX,steamgames.com,HK
-          - DOMAIN-SUFFIX,steamusercontent.com,HK
-          - DOMAIN-SUFFIX,steamserver.net,HK
-          - RULE-SET,steam,HK
+          - DOMAIN-SUFFIX,steamcommunity.com,DIRECT
+          - DOMAIN-SUFFIX,steampowered.com,DIRECT
+          - DOMAIN-SUFFIX,steamgames.com,DIRECT
+          - DOMAIN-SUFFIX,steamusercontent.com,DIRECT
+          - DOMAIN-SUFFIX,steamserver.net,DIRECT
+          - RULE-SET,steam,DIRECT
 
           - DOMAIN-SUFFIX,xxghh.biz,DIRECT
           - DOMAIN-SUFFIX,nn.com,DIRECT
           
           - RULE-SET,github,PROXY
 
-          - RULE-SET,telegram-domain,HK
-          - RULE-SET,telegram-ip,HK
+          - RULE-SET,telegram-domain,JP
+          - RULE-SET,telegram-ip,JP
 
           - RULE-SET,grok,US
           - RULE-SET,openai,US
