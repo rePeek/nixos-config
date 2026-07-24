@@ -30,12 +30,6 @@ in
       group = "root";
       mode = "0400";
     };
-    age.secrets.dream-subscription = {
-      file = inputs.self + /secrets/dream-subscription.age;
-      owner = "root";
-      group = "root";
-      mode = "0400";
-    };
     age.secrets.jms-subscription = {
       file = inputs.self + /secrets/jms-subscription.age;
       owner = "root";
@@ -54,7 +48,6 @@ in
       script = ''
               install -d -m 0755 /run/mihomo
               YDY_URL="$(cat ${config.age.secrets.yuetong-subscription.path})"
-              DREAM_URL="$(cat ${config.age.secrets.dream-subscription.path})"
               JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
 
               cat > ${runtimeConfig} <<EOF
@@ -142,15 +135,6 @@ in
               url: "https://www.gstatic.com/generate_204"
               interval: 300
 
-          dream_sub:
-            type: http
-            url: "$DREAM_URL"
-            interval: 14400
-            health-check:
-              enable: true
-              url: "https://www.gstatic.com/generate_204"
-              interval: 300
-              
           jms_sub:
             type: http
             url: "$JMS_URL"
@@ -165,7 +149,6 @@ in
             type: url-test
             use:
               - jms_sub
-              - dream_sub
               - ydy_sub
             interval: 300
             timeout: 3000
@@ -176,7 +159,6 @@ in
             type: url-test
             use:
               - ydy_sub
-              - dream_sub
             filter: "(?i)香港|Hong Kong|HK"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
@@ -187,7 +169,6 @@ in
             type: url-test
             use:
               - jms_sub
-              - dream_sub
               - ydy_sub
             filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
