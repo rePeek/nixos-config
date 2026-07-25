@@ -59,13 +59,6 @@ in
       systemPackages = [
         fcitx5KeyboardIconLinks
       ];
-
-      sessionVariables = {
-        GLFW_IM_MODULE = lib.mkDefault "ibus";
-        QT_IM_MODULE = lib.mkDefault "fcitx";
-        SDL_IM_MODULE = lib.mkDefault "fcitx";
-        XMODIFIERS = lib.mkDefault "@im=fcitx";
-      };
     };
   };
 }
