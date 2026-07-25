@@ -81,7 +81,10 @@ in
       amd.enable = true;
       nvidia.compute.enable = true;
       nvidia.driver.enable = true;
-      gaming.enable = true;
+      gaming = {
+        enable = true;
+        cs2.enable = true;
+      };
     };
   };
 

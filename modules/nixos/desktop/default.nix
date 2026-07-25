@@ -11,6 +11,7 @@
     ./amd.nix
     ./avatar.nix
     ./core
+    ./cs2.nix
     ./gaming.nix
     ./nvidia.nix
     ./shell
