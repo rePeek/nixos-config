@@ -26,12 +26,7 @@
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      cli-proxy-api = {
-        enable = true;
-        listenAddress = "0.0.0.0";
-        port = 8317;
-        openFirewall = true;
-      };
+      cpa.enable = true;
 
       virtualization = {
         docker = true;

@@ -51,7 +51,7 @@
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-
+      cpa.enable = true;
       virtualization = {
         docker = true;
         qemuUserAarch64 = true;

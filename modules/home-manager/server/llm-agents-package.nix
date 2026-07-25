@@ -17,7 +17,6 @@
       hermes-agent
       claude-code
       codex
-      cli-proxy-api
       vibe-kanban
       code-review-graph
     ]

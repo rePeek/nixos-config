@@ -3,7 +3,7 @@
   imports = [
     ../core
     ./agenix.nix
-    ./cli-proxy-api.nix
+    ./cpa
     ./fhs.nix
     ./mihomo.nix
     ../../user
