@@ -1,18 +1,5 @@
 # NixOS configuration for amur.
 { pkgs, ... }:
-let
-  telegramDesktopX11 = pkgs.symlinkJoin {
-    name = "telegram-desktop-x11";
-    paths = [ pkgs.telegram-desktop ];
-    buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram "$out/bin/Telegram" \
-        --set QT_QPA_PLATFORM xcb \
-        --set QT_IM_MODULE fcitx \
-        --set XMODIFIERS '@im=fcitx'
-    '';
-  };
-in
 {
   networking.hostName = "amur";
 
@@ -39,17 +26,12 @@ in
 
     home.users.asen = {
       extraPackages = with pkgs; [
-        calibre
-        discord
-        koodo-reader
-        qbittorrent-enhanced
-        scrot
-        thunar
-        telegramDesktopX11
         libva-utils
         mesa-demos
         vulkan-tools
       ];
+
+      desktop.extra.enable = true;
 
       desktop.hyprland.outputRules = [
         {

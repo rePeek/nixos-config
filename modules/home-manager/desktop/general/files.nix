@@ -1,4 +1,4 @@
-# File manager user defaults for the desktop profile.
+# General file manager defaults for the desktop profile.
 {
   config,
   lib,

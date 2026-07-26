@@ -1,4 +1,4 @@
-# Fcitx5 user profile defaults for desktop sessions.
+# General Fcitx5 user defaults for desktop sessions.
 {
   config,
   lib,

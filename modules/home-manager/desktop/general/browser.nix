@@ -1,4 +1,4 @@
-# Browser user defaults for the desktop profile.
+# General browser defaults for the desktop profile.
 {
   config,
   lib,

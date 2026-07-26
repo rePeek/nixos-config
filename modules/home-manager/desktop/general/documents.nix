@@ -1,4 +1,4 @@
-# Document utility user defaults for the desktop profile.
+# General document utility defaults for the desktop profile.
 {
   config,
   lib,

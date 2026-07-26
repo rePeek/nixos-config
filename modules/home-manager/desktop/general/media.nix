@@ -1,4 +1,4 @@
-# Media application user defaults for the desktop profile.
+# General media application defaults for the desktop profile.
 {
   config,
   lib,
@@ -77,9 +77,7 @@ in
     home.packages = with pkgs; [
       imv
       mpv
-      obs-studio
       webp-pixbuf-loader
-      wiliwili
     ];
 
     xdg.configFile."mimeapps.list".force = lib.mkDefault true;

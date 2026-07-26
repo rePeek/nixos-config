@@ -1,4 +1,4 @@
-# Wallpaper collection and DMS session defaults for desktop users.
+# General wallpaper collection and DMS session defaults for desktop users.
 {
   config,
   lib,

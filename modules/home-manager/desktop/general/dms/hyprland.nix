@@ -1,3 +1,4 @@
+# General Hyprland integration for DMS desktop sessions.
 {
   config,
   inputs,

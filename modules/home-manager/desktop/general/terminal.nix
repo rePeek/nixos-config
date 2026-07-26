@@ -1,4 +1,4 @@
-# Terminal user defaults for the desktop profile.
+# General terminal defaults for the desktop profile.
 {
   config,
   lib,

@@ -68,6 +68,8 @@ let
         description = "Host-specific Hyprland monitor rules for this user.";
       };
 
+      desktop.extra.enable = lib.mkEnableOption "extra desktop applications for this user";
+
       browser.proxy = {
         enable = lib.mkEnableOption "Firefox proxy policy for this user on this host";
 
@@ -134,6 +136,7 @@ let
     }
     // lib.optionalAttrs userDesktopRole {
       custom.desktop.hyprland.outputRules = userCfg.desktop.hyprland.outputRules;
+      custom.desktop.extra.enable = userCfg.desktop.extra.enable;
       custom.desktop.defaults.browser.proxy = userCfg.browser.proxy;
     };
 in

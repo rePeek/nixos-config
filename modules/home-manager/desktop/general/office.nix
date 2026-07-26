@@ -1,4 +1,4 @@
-# Office application user defaults for the desktop profile.
+# General office application defaults for the desktop profile.
 {
   config,
   lib,

@@ -1,3 +1,4 @@
+# General DMS shell defaults for desktop users.
 {
   config,
   inputs,

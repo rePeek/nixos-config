@@ -1,4 +1,4 @@
--- User Hyprland keybind overrides loaded after DMS defaults.
+-- General Hyprland keybind overrides loaded after DMS defaults.
 
 local terminal = os.getenv("TERMINAL") or "kitty"
 local floating_terminal = { float = true, size = { 1111, 700 }, center = true }
