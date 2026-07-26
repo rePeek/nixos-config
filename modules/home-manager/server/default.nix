@@ -39,5 +39,6 @@
     # misc
     xclip
     fastfetch
+    nvme-cli
   ];
 }
