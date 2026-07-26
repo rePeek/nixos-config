@@ -28,6 +28,7 @@ let
           end)
           -- DMS_STARTUP_END
         ''
+        ''require("dms.binds-user")''
       ]
       [
         ''
@@ -48,6 +49,7 @@ let
           end)
           -- DMS_STARTUP_END
         ''
+        "-- User keybind overrides are appended to dms.binds."
       ]
       (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua")
     )
@@ -97,7 +99,7 @@ let
   outputsLuaFile = pkgs.writeText "dms-hypr-outputs.lua" outputsLua;
   dmsHyprlandFragments = {
     "binds.lua" = pkgs.writeText "dms-hypr-binds.lua" (
-      builtins.replaceStrings
+      (builtins.replaceStrings
         [
           "{{TERMINAL_COMMAND}}"
           ''hl.bind("SUPER + SHIFT + E", hl.dsp.exit())''
@@ -107,8 +109,10 @@ let
           ''hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("uwsm stop"))''
         ]
         (builtins.readFile "${dmsHyprlandConfig}/hypr-binds.lua")
+      )
+      + "\n"
+      + builtins.readFile ./hyprland-binds-user.lua
     );
-    "binds-user.lua" = ./hyprland-binds-user.lua;
     "colors.lua" = "${dmsHyprlandConfig}/hypr-colors.lua";
     "cursor.lua" = "${dmsHyprlandConfig}/hypr-cursor.lua";
     "layout.lua" = "${dmsHyprlandConfig}/hypr-layout.lua";
@@ -199,7 +203,6 @@ in
             if
               lib.elem name [
                 "binds.lua"
-                "binds-user.lua"
               ]
               || (name == "outputs.lua" && cfg.outputRules != [ ])
             then
