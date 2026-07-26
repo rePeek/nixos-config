@@ -1,5 +1,9 @@
 # NixOS configuration for amur.
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   networking.hostName = "amur";
 
@@ -73,7 +77,18 @@
   };
 
   services.leigod-plugin = {
-    enable = false;
+    enable = true;
     physicalInterface = "wlp14s0";
+  };
+
+  systemd.services = {
+    # Keep Mihomo as the default network mode and start Leigod only on demand.
+    leigod-plugin = {
+      wantedBy = lib.mkForce [ ];
+      conflicts = [ "mihomo.service" ];
+      after = [ "mihomo.service" ];
+    };
+
+    mihomo.conflicts = [ "leigod-plugin.service" ];
   };
 }
