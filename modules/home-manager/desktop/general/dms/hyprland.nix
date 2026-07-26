@@ -9,6 +9,7 @@
 let
   cfg = config.custom.desktop.hyprland;
   terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
+  screenshotDirectory = "/tmp";
   dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-wayland-input" ''
     unset GTK_IM_MODULE
     unset QT_IM_MODULE
@@ -34,6 +35,7 @@ let
         ''
           -- DMS_STARTUP_BEGIN
           hl.env("GLFW_IM_MODULE", "ibus")
+          hl.env("DMS_SCREENSHOT_DIR", ${builtins.toJSON screenshotDirectory})
           hl.env("QT_IM_MODULE", "fcitx")
           hl.env("SDL_IM_MODULE", "fcitx")
           hl.env("TERMINAL", ${builtins.toJSON terminalCommand})
@@ -43,7 +45,7 @@ let
           hl.env("XMODIFIERS", "@im=fcitx")
 
           hl.on("hyprland.start", function()
-            hl.exec_cmd("uwsm finalize GLFW_IM_MODULE QT_IM_MODULE SDL_IM_MODULE TERMINAL QT_QPA_PLATFORM XMODIFIERS XCURSOR_SIZE HYPRCURSOR_SIZE")
+            hl.exec_cmd("uwsm finalize DMS_SCREENSHOT_DIR GLFW_IM_MODULE QT_IM_MODULE SDL_IM_MODULE TERMINAL QT_QPA_PLATFORM XMODIFIERS XCURSOR_SIZE HYPRCURSOR_SIZE")
             hl.exec_cmd("fcitx5 -d --replace")
             hl.exec_cmd(${builtins.toJSON dmsCommand})
           end)
@@ -161,6 +163,8 @@ in
     default = [ ];
     description = "Host-specific Hyprland monitor rules appended after the DMS default monitor rule.";
   };
+
+  config.home.sessionVariables.DMS_SCREENSHOT_DIR = screenshotDirectory;
 
   config.home.activation.installDmsHyprlandConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     hypr_dir="${config.xdg.configHome}/hypr"
