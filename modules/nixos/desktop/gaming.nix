@@ -65,10 +65,6 @@ in
       game-devices-udev-rules
     ];
     programs.steam.platformOptimizations.enable = true;
-    environment.systemPackages = [
-      pkgs.mangohud
-    ];
-
     # Optimise Linux system performance on demand
     # https://github.com/FeralInteractive/GameMode
     # https://wiki.archlinux.org/title/Gamemode

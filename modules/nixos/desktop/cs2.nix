@@ -84,6 +84,5 @@ in
     lib.mkIf (config.custom.desktop.enable && config.custom.desktop.gaming.enable && cfg.enable)
       {
         programs.steam.extraPackages = [ cs2-launcher ];
-        environment.systemPackages = [ cs2-launcher ];
       };
 }

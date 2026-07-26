@@ -47,7 +47,6 @@ in
       fcitx5 = {
         waylandFrontend = lib.mkDefault true;
         addons = [
-          pkgs.qt6Packages.fcitx5-configtool
           fcitx5ChineseAddons
           pkgs.fcitx5-gtk
           pkgs.qt6Packages.fcitx5-qt

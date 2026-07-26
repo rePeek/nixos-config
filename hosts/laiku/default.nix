@@ -23,6 +23,12 @@
       ];
     };
 
+    home.users.asen.extraPackages = with pkgs; [
+      libva-utils
+      mesa-demos
+      vulkan-tools
+    ];
+
     core = {
       kernel.cachyos = {
         enable = true;
@@ -31,7 +37,6 @@
     };
 
     desktop = {
-      amd.enable = true;
       gaming.enable = true;
     };
 

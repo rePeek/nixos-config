@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 {
   config = lib.mkIf config.custom.desktop.enable {
@@ -19,9 +14,5 @@
     security.rtkit.enable = true;
     services.pulseaudio.enable = false;
 
-    environment.systemPackages = with pkgs; [
-      pulseaudio
-      wireplumber
-    ];
   };
 }

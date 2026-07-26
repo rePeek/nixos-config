@@ -42,6 +42,8 @@ let
 in
 {
   config = lib.mkIf config.custom.desktop.enable {
+    home.packages = [ pkgs.qt6Packages.fcitx5-configtool ];
+
     home.sessionVariables = {
       GLFW_IM_MODULE = lib.mkDefault "ibus";
       QT_IM_MODULE = lib.mkDefault "fcitx";

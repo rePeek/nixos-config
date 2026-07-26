@@ -8,7 +8,6 @@
 
   imports = [
     ../server
-    ./amd.nix
     ./avatar.nix
     ./core
     ./cs2.nix

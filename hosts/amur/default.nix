@@ -46,6 +46,9 @@ in
         scrot
         thunar
         telegramDesktopX11
+        libva-utils
+        mesa-demos
+        vulkan-tools
       ];
 
       desktop.hyprland.outputRules = [
@@ -78,7 +81,6 @@ in
     };
 
     desktop = {
-      amd.enable = true;
       nvidia.compute.enable = true;
       nvidia.driver.enable = true;
       gaming = {
