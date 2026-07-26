@@ -159,8 +159,6 @@ in
   ];
 
   home = {
-    packages = [ ];
-
     sessionVariables.WINEDLLOVERRIDES = lib.mkDefault "winemenubuilder.exe=d";
 
     activation.migrateDmsSessionState = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
@@ -177,8 +175,6 @@ in
       fi
     '';
   };
-
-  programs.home-manager.enable = lib.mkDefault true;
 
   xdg.configFile = lib.mkIf stylixThemeEnabled {
     "DankMaterialShell/themes/stylix/theme.json".text = builtins.toJSON dmsStylixTheme + "\n";

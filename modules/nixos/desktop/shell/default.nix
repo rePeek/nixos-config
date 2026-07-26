@@ -18,18 +18,6 @@
 
     shell = {
       enable = lib.mkEnableOption "desktop shell profile";
-
-      backend = lib.mkOption {
-        type = lib.types.enum [ "dank-material-shell" ];
-        default = "dank-material-shell";
-        description = "Desktop shell implementation managed by the system profile.";
-      };
-
-      compositor = lib.mkOption {
-        type = lib.types.enum [ "hyprland" ];
-        default = "hyprland";
-        description = "Wayland compositor used with the desktop shell.";
-      };
     };
   };
 }

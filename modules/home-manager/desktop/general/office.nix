@@ -27,31 +27,20 @@ let
 in
 {
   options.custom.desktop.defaults.office = {
-    enable = lib.mkEnableOption "office application defaults" // {
-      default = true;
-    };
-
     desktopFile = lib.mkOption {
       type = lib.types.str;
       default = "libreoffice.desktop";
       description = "Desktop file used for office document MIME associations.";
     };
 
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Apply office defaults for this desktop user.";
-    };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
+  config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       libreoffice
     ];
 
-    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
     xdg.mimeApps = {
-      enable = lib.mkDefault true;
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
     };

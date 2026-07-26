@@ -35,10 +35,6 @@ let
 in
 {
   options.custom.desktop.defaults.documents = {
-    enable = lib.mkEnableOption "document utility defaults" // {
-      default = true;
-    };
-
     textDesktopFile = lib.mkOption {
       type = lib.types.str;
       default = "org.gnome.TextEditor.desktop";
@@ -57,14 +53,9 @@ in
       description = "Desktop file used for archive MIME associations.";
     };
 
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Apply document utility defaults for this desktop user.";
-    };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
+  config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       evince
       file-roller
@@ -86,9 +77,7 @@ in
       wrap-text = false;
     };
 
-    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
     xdg.mimeApps = {
-      enable = lib.mkDefault true;
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
     };

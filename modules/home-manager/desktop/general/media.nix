@@ -50,10 +50,6 @@ let
 in
 {
   options.custom.desktop.defaults.media = {
-    enable = lib.mkEnableOption "media application defaults" // {
-      default = true;
-    };
-
     imageDesktopFile = lib.mkOption {
       type = lib.types.str;
       default = "imv-dir.desktop";
@@ -66,23 +62,16 @@ in
       description = "Desktop file used for audio and video MIME associations.";
     };
 
-    manageUserDefaults = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Apply media defaults for this desktop user.";
-    };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable && cfg.manageUserDefaults) {
+  config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       imv
       mpv
       webp-pixbuf-loader
     ];
 
-    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
     xdg.mimeApps = {
-      enable = lib.mkDefault true;
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
     };

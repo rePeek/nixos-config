@@ -28,11 +28,6 @@
       url = "github:xddxdd/nix-cachyos-kernel/release";
     };
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     dms = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,6 +53,7 @@
     agenix.url = "github:ryantm/agenix";
 
     leigod.url = "github:rePeek/leigod-plugin-linux";
+
   };
 
   outputs =
@@ -103,20 +99,17 @@
         # daily use
         brain-holder = myLib.mkHost {
           hostPath = ./hosts/brain-holder;
-          hostName = "brain-holder";
           usernames = [ "asen" ];
         };
 
         amur = myLib.mkHost {
           hostPath = ./hosts/amur;
-          hostName = "amur";
           usernames = [ "asen" ];
           extraModules = [ inputs.leigod.nixosModules.default ];
         };
 
         home-server = myLib.mkHost {
           hostPath = ./hosts/home-server;
-          hostName = "home-server";
           enableHomeManager = false;
         };
 
@@ -127,7 +120,6 @@
 
         bengal = myLib.mkHost {
           hostPath = ./hosts/bengal;
-          hostName = "bengal";
           usernames = [ "asen" ];
         };
 

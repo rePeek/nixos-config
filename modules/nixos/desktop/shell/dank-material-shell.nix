@@ -7,9 +7,8 @@
 }:
 let
   cfg = config.custom.desktop.shell;
-  terminal = config.custom.desktop.terminal;
 
-  dmsEnabled = config.custom.desktop.enable && cfg.enable && cfg.backend == "dank-material-shell";
+  dmsEnabled = config.custom.desktop.enable && cfg.enable;
   desktopUsers = config.custom.desktop.users;
   primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
   quickshellPackage = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -32,14 +31,6 @@ in
 
   config = lib.mkIf dmsEnabled {
     assertions = [
-      {
-        assertion = cfg.compositor == "hyprland";
-        message = "custom.desktop.shell.compositor currently only supports hyprland.";
-      }
-      {
-        assertion = terminal.enable;
-        message = "custom.desktop.shell requires custom.desktop.terminal.enable.";
-      }
       {
         assertion = primaryDesktopUser != null;
         message = "custom.desktop.shell requires at least one custom.desktop.users entry.";

@@ -8,9 +8,9 @@
 
 - `core/`：图形、音频、蓝牙、输入法、字体、基础桌面工具和 Wayland portal。
 - `shell/`：DMS shell、Hyprland session 和 DMS greeter。
-- `avatar.nix`、`gaming.nix`、`theme.nix`、`terminal.nix`：需要系统集成或需要用户默认值的桌面能力。
+- `avatar.nix`、`gaming.nix`、`cs2.nix`、`nvidia.nix` 和 `theme.nix`：需要系统或硬件集成的桌面能力。
 
-默认应用、用户应用配置、Firefox 代理、壁纸和 XDG MIME 关联在 `modules/home-manager/desktop/` 中应用。系统侧桌面模块只保留确实需要 NixOS 集成的部分，例如 AccountsService 头像、fcitx5 系统输入法和 Steam/GameMode。主机级用户差异通过 `custom.home.users.<username>` 传给 Home Manager。
+默认应用、用户应用配置、Firefox 代理、壁纸和 XDG MIME 关联在 `modules/home-manager/desktop/general/` 中应用；额外 GUI 软件由 `modules/home-manager/desktop/extra/` 提供。系统侧桌面模块只保留确实需要 NixOS 集成的部分，例如 AccountsService 头像、fcitx5 系统输入法和 Steam/GameMode。主机级用户差异通过 `custom.home.users.<username>` 传给 Home Manager。
 
 底层硬件或系统能力按适用范围放置：
 

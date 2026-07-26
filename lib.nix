@@ -11,7 +11,6 @@ in
   mkHost =
     {
       hostPath,
-      hostName ? null,
       usernames ? [ ],
       enableHomeManager ? true,
       extraModules ? [ ],
@@ -29,7 +28,7 @@ in
       ++ nixpkgs.lib.optionals enableHomeManager [
         home-manager.nixosModules.home-manager
         (import (nixosModulesPath + "/home-manager.nix") {
-          inherit hostName usernames;
+          inherit usernames;
         })
       ]
       ++ extraModules;

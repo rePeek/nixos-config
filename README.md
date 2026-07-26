@@ -61,13 +61,13 @@ modules/
 │   ├── server/                  # 服务器 NixOS profile 入口，包含系统用户和通用服务
 │   │   ├── default.nix
 │   │   ├── agenix.nix
-│   │   ├── cli-proxy-api.nix
+│   │   ├── cpa/                 # CLIProxyAPI 模块、配置生成和 systemd 服务
 │   │   ├── fhs.nix
 │   │   ├── mihomo.nix
 │   │   └── virtualization.nix
 │   ├── desktop/                 # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
-│   │   ├── amd.nix
 │   │   ├── avatar.nix
+│   │   ├── cs2.nix
 │   │   ├── gaming.nix
 │   │   ├── nvidia.nix
 │   │   ├── core/                # 图形、音频、蓝牙、输入法、字体、基础工具和 Wayland portal
@@ -84,9 +84,8 @@ modules/
 └── home-manager/
     ├── server/                  # server 用户环境，CLI、shell、Helix、Git、Zellij、LLM agents 等
     ├── desktop/                 # desktop 用户环境，继承 server
-    │   ├── dms/                 # DMS 和 Hyprland 会话配置
-    │   ├── browser.nix          # 默认应用、用户应用配置和 XDG MIME 关联等平铺模块
-    │   └── ...
+    │   ├── general/             # 固定启用的 GUI 软件、默认应用、DMS 和 Hyprland 配置
+    │   └── extra/               # 通过 custom.desktop.extra.enable 启用的额外 GUI 软件
 ```
 
 每台 NixOS 主机的 `hosts/<host>/hardware/` 保存机器事实，例如自动生成的硬件配置、磁盘布局、UUID、initrd 驱动、固件开关，以及按需导入的 `nixos-hardware` 机型或通用硬件模块。主机入口导入 `modules/nixos/core`、`server` 或 `desktop` 表达机器角色；可复用系统能力通过主机入口中的 `custom.core.*`、`custom.server.*` 和 `custom.desktop.*` 声明。core profile 是无个人用户的最小主机层，并默认启用 Tailscale；server profile 在 core 上增加系统用户和通用服务选项；desktop profile 在 server 上默认启用图形、音频、蓝牙、输入法和基础桌面工具。启动模式使用 `custom.boot.mode = "uefi"` 或 `"bios"`；公共 boot 模块负责生成对应的 systemd-boot 或 GRUB 配置。
@@ -103,12 +102,12 @@ modules/
 - `custom.desktop.nvidia.compute.enable`：NVIDIA 计算和容器集成能力，主机硬件层仍负责 `nixos-hardware` 导入、显示拓扑和 Bus ID 等机器事实。
 - `custom.core.power.profile`：主机电源策略，当前包括 `"performance"` 和 `"efficiency"`。
 - `custom.server.virtualization.*`：虚拟化能力，当前包括 `docker`、`libvirtd`、`qemuUserAarch64` 和 `kvm.cpu = null | "intel" | "amd"`。
-- `custom.server.*`：服务器侧通用能力。当前包括 `virtualization`、`agenix`、`fhs`、`mihomo` 和 `cli-proxy-api`。
+- `custom.server.*`：服务器侧通用能力。当前包括 `virtualization`、`agenix`、`fhs`、`mihomo` 和 `cpa`。
 - `custom.server.llm-agents.enable`：Home Manager server role 中的 LLM agent CLI 包集合，默认启用。
 - `custom.users.*`：系统用户 profile。主机通过 `custom.users.enabled` 启用用户，并通过对应用户子选项追加主机专属 groups 或 SSH authorized keys。
 - `custom.home.users.*`：主机级 Home Manager 默认值。用于声明某台主机上某个用户的 Home Manager role（`server` 或 `desktop`）、额外用户包、Hyprland 输出规则和 Firefox 代理等覆盖项。
 - `custom.core.tailscale.*`：所有主机默认启用的 Tailscale 基础网络能力，可按主机覆盖 exit node 和 DNS 行为。
-- `custom.desktop.*`：桌面 profile 和桌面体验中的可选能力。NixOS 侧 `enable` 启用桌面基础配置，基础图形、音频、蓝牙、输入法和桌面工具由 `modules/nixos/desktop/core/` 固定提供；子项保留 `amd`、`nvidia`、`gaming`、`shell`、`theme`、`terminal` 和 `avatar` 等需要主机或用户选择的能力。Home Manager 侧 `custom.desktop.defaults.*` 应用默认应用、用户应用配置和 XDG MIME 关联。
+- `custom.desktop.*`：桌面 profile 和桌面体验中的可选能力。NixOS 侧 `enable` 启用桌面基础配置，`nvidia`、`gaming`、`shell`、`theme` 和 `avatar` 等子项负责需要系统集成的能力。Home Manager 的 `general/` 固定提供默认 GUI 环境，`custom.desktop.extra.enable` 控制额外 GUI 软件。
 - `custom.ssh.sharedAuthorizedKeys`：共享 SSH 公钥集合，供主机用户配置复用。
 
 ## 主机说明
@@ -128,13 +127,12 @@ modules/
 
 主要功能：
 
-- CachyOS LTS 内核。
+- CachyOS latest Zen 4 内核。
 - 桌面环境、PipeWire、字体、蓝牙、Wayland 和 dconf。
-- Home Manager 图形环境：Hyprland、Waybar、SwayNC、输入法、Ghostty 和常用脚本。
+- Home Manager 图形环境：Hyprland、DankMaterialShell、Fcitx5、Kitty 和通用 GUI 软件。
 - Steam、Gamescope、Protontricks、GameMode 和低延迟 PipeWire 游戏优化。
 - Docker、libvirt、QEMU、virt-manager、SPICE 和虚拟 TPM。
 - Tailscale 与 nftables 防火墙。
-- NTFS 文件系统支持。
 - agenix 密钥解密支持。
 
 部署命令：
@@ -199,16 +197,17 @@ just deploy-local
 
 ### `bengal`
 
-额外的 NixOS 服务节点，使用固定局域网地址。
+使用固定局域网地址的额外 NixOS 桌面节点。
 
 主要功能：
 
-- CachyOS Server LTO 内核。
+- CachyOS latest x86-64-v3 内核。
 - 固定地址 `192.168.137.16/24`，默认网关为 `192.168.137.1`。
 - Docker 容器运行环境。
 - Tailscale 与 nftables 防火墙。
 - Mihomo 透明代理，订阅地址通过 agenix 管理。
-- `asen` 用户的公共 Home Manager 与 LLM agent 软件包环境。
+- Hyprland、DankMaterialShell 和 Home Manager general GUI 环境。
+- `asen` 用户的公共 CLI 与 LLM agent 软件包环境。
 
 部署命令：
 

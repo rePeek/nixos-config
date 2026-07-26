@@ -14,7 +14,6 @@
     ./gaming.nix
     ./nvidia.nix
     ./shell
-    ./terminal.nix
     ./theme.nix
   ];
 

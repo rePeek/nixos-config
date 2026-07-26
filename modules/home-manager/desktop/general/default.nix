@@ -1,5 +1,6 @@
 # General GUI defaults installed for every desktop Home Manager role.
 {
+  config,
   lib,
   pkgs,
   ...
@@ -51,5 +52,16 @@ in
     ./dms
   ];
 
-  home.packages = [ wechat ];
+  config = lib.mkIf config.custom.desktop.enable {
+    custom.desktop.defaults.wallpaper = {
+      enable = true;
+      directory = ../../../../assets/wallpapers;
+      initialStrategy = "random";
+    };
+
+    home.packages = [ wechat ];
+
+    xdg.configFile."mimeapps.list".force = lib.mkDefault true;
+    xdg.mimeApps.enable = lib.mkDefault true;
+  };
 }

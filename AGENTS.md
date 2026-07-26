@@ -30,6 +30,7 @@
 | Flake 输出 | 主机目录 | Home Manager 用户 | 用途 |
 | --- | --- | --- | --- |
 | `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面主机 |
+| `amur` | `hosts/amur/` | `asen` | 额外桌面主机 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器 |
 | `bengal` | `hosts/bengal/` | `asen` | 额外 NixOS 主机 |
 | `rainyun` | `hosts/rain-cloud/` | 无 | 远程云主机 |
@@ -57,7 +58,7 @@ hosts/<host>/
 
 `home-server` 的网络配置拆分在 `hosts/home-server/network/` 下，由 `default.nix` 聚合。
 
-`rain-cloud` 是轻量远程主机，在公共 core 的基础上直接导入目录内的 `tailscale.nix`、`derper.nix` 和 `my-derper.nix`。
+`rain-cloud` 是轻量远程主机，在公共 core 提供的 Tailscale 基础上直接导入目录内的 `derper.nix` 和 `my-derper.nix`。
 
 ### 2.4 可复用模块
 
@@ -80,16 +81,15 @@ modules/nixos/
 │   └── tailscale.nix
 ├── server/                      # 服务器 NixOS profile 入口，包含系统用户和通用服务
 │   ├── agenix.nix
-│   ├── cli-proxy-api.nix
+│   ├── cpa/                     # CLIProxyAPI 模块、配置生成和 systemd 服务
 │   ├── fhs.nix
 │   ├── mihomo.nix
 │   └── virtualization.nix
 ├── desktop/                     # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
-│   ├── amd.nix
 │   ├── avatar.nix
+│   ├── cs2.nix
 │   ├── gaming.nix
 │   ├── nvidia.nix
-│   ├── terminal.nix
 │   ├── theme.nix
 │   ├── core/                    # 图形、音频、蓝牙、输入法、字体、基础工具和 Wayland portal
 │   ├── shell/                   # DMS shell、Hyprland session 和 greeter
@@ -102,9 +102,8 @@ modules/nixos/
 modules/home-manager/
 ├── server/                      # server 用户环境，基础 CLI、shell、Helix、Git、Zellij、LLM agents 等
 ├── desktop/                     # desktop 用户环境，继承 server
-│   ├── dms/                     # DMS 和 Hyprland 会话配置
-│   ├── browser.nix              # 默认应用、用户应用配置和 XDG MIME 关联等平铺模块
-│   └── ...
+│   ├── general/                 # 所有 desktop 用户固定启用的 GUI 软件、默认应用、DMS 和 Hyprland 配置
+│   └── extra/                   # 通过 custom.desktop.extra.enable 启用的额外 GUI 软件
 ```
 
 可复用用户定义位于 `modules/user/`，按用户同时保存系统侧和 Home Manager 侧配置：
@@ -160,9 +159,10 @@ modules/user/
 - NixOS 主机角色聚合入口直接放入 `modules/nixos/core/`、`modules/nixos/server/` 和 `modules/nixos/desktop/`。
 - CLI 和显示无关的 Home Manager 用户环境放入 `modules/home-manager/server/`。
 - 桌面系统 profile 放入 `modules/nixos/desktop/`；桌面用户默认值放入 `modules/home-manager/desktop/`。
+- 所有 desktop 用户固定安装的 GUI 软件放入 `modules/home-manager/desktop/general/`，不再为每个通用应用增加 `enable`；可选 GUI 软件放入 `modules/home-manager/desktop/extra/`，由 `custom.desktop.extra.enable` 统一控制。
 - Home Manager 用户环境聚合入口直接放入 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；没有 `core` 用户环境，因为 NixOS `core` 是无个人用户的最小主机层。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；桌面基础图形、音频、蓝牙、输入法和工具放入 `modules/nixos/desktop/core/`，NVIDIA、AMD、gaming、shell、theme、terminal 和 avatar 等可选能力放入 `modules/nixos/desktop/`。
+- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；桌面基础图形、音频、蓝牙、输入法和工具放入 `modules/nixos/desktop/core/`，NVIDIA、gaming、CS2、shell、theme 和 avatar 等需要系统集成的能力放入 `modules/nixos/desktop/`。
 - 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式
@@ -188,7 +188,7 @@ modules/user/
 ### 3.4 命名
 
 - 新文件和自定义属性优先使用小写字母与短横线组成的 kebab-case。
-- 自定义模块选项沿用现有命名空间，例如 `modules.virtualization.custom.*`、`modules.network.clash.enable`、`custom.desktop.gaming.enable`、`custom.home.users.<name>.*` 和 `myModule.agenix.enable`。
+- 自定义模块选项沿用现有命名空间，例如 `custom.server.virtualization.*`、`custom.server.mihomo.enable`、`custom.server.cpa.enable`、`custom.desktop.gaming.enable` 和 `custom.home.users.<name>.*`。
 - 新增自定义选项时，优先使用清晰、统一的命名空间；不要为了一致性顺手重命名已有公开选项。
 
 ## 4. 常用工作流
@@ -212,8 +212,8 @@ nixfmt <files...>
 1. 判断软件包是系统级、公共用户级还是单主机专用。
 2. 系统级软件包优先加入 `modules/nixos/core/packages.nix` 或对应服务模块。
 3. 公共用户级软件包优先加入 `modules/home-manager/server/` 下合适模块。
-4. 图形软件优先加入 `modules/nixos/desktop/` 下合适 profile。
-5. 仅单个用户或主机需要时，优先放入对应主机入口的 `custom.home.users.<username>.extraPackages`；多个主机共享时再放入 `modules/user/<username>/home.nix` 或 `modules/home-manager/server/`。
+4. 所有桌面用户固定安装的图形软件加入 `modules/home-manager/desktop/general/`；由主机选择的额外图形软件加入 `modules/home-manager/desktop/extra/`。
+5. 需要 NixOS 系统集成的图形能力放入 `modules/nixos/desktop/`；仅单个用户或主机需要的软件放入对应主机入口的 `custom.home.users.<username>.extraPackages`。
 6. 使用 `nix search nixpkgs <package>` 确认包名。
 
 ### 4.3 添加或修改系统服务
@@ -318,6 +318,7 @@ nix-instantiate --parse <file>
 
 ```bash
 nixos-rebuild dry-build --flake .#brain-holder
+nixos-rebuild dry-build --flake .#amur
 nixos-rebuild dry-build --flake .#home-server
 nixos-rebuild dry-build --flake .#bengal
 nixos-rebuild dry-build --flake .#rainyun
