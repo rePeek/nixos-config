@@ -76,6 +76,8 @@ let
       hl.window_rule({
         match = { class = "^(org\\.telegram\\.desktop|TelegramDesktop|telegram-desktop)$", title = "^(Media viewer|媒体查看器)$" },
         float = true,
+        fullscreen = false,
+        suppress_event = "fullscreen maximize fullscreenoutput",
         size = "1600 1000",
         center = true,
       })
