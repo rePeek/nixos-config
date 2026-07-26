@@ -50,10 +50,6 @@ in
         "rainyun"
         "rainyun.tailfd7184.ts.net"
       ];
-      "100.86.97.62" = [
-        "laiku"
-        "laiku.tailfd7184.ts.net"
-      ];
       "100.71.17.17" = [
         "amur"
         "amur.tailfd7184.ts.net"

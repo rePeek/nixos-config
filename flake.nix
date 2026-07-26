@@ -131,11 +131,6 @@
           usernames = [ "asen" ];
         };
 
-        laiku = myLib.mkHost {
-          hostPath = ./hosts/laiku;
-          hostName = "laiku";
-          usernames = [ "asen" ];
-        };
       };
 
       # None nixos systerm
