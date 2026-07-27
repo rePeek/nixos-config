@@ -23,12 +23,10 @@ let
     username: avatar:
     let
       source = lib.escapeShellArg (toString avatar);
-      iconPath = "${cfg.iconsDirectory}/${username}";
-      userFile = "${cfg.usersDirectory}/${username}";
     in
     ''
-      icon_path=${lib.escapeShellArg iconPath}
-      user_file=${lib.escapeShellArg userFile}
+      icon_path=${lib.escapeShellArg "/var/lib/AccountsService/icons/${username}"}
+      user_file=${lib.escapeShellArg "/var/lib/AccountsService/users/${username}"}
 
       ${pkgs.coreutils}/bin/install -Dm0644 ${source} "$icon_path"
 
@@ -98,18 +96,6 @@ in
           asen = ../../assets/avatars/asen.png;
         }
       '';
-    };
-
-    iconsDirectory = lib.mkOption {
-      type = lib.types.str;
-      default = "/var/lib/AccountsService/icons";
-      description = "AccountsService icon directory.";
-    };
-
-    usersDirectory = lib.mkOption {
-      type = lib.types.str;
-      default = "/var/lib/AccountsService/users";
-      description = "AccountsService user metadata directory.";
     };
   };
 
