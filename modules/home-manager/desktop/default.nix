@@ -1,15 +1,12 @@
 {
   config,
   lib,
-  osConfig ? null,
   ...
 }:
-let
-  osDesktopEnabled = osConfig != null && osConfig.custom.desktop.enable;
-in
+
 {
   options.custom.desktop.enable = lib.mkEnableOption "desktop Home Manager role" // {
-    default = osDesktopEnabled;
+    default = true;
   };
 
   imports = [
