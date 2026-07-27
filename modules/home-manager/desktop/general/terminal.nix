@@ -2,13 +2,13 @@
 {
   config,
   lib,
-  osConfig ? null,
   pkgs,
   ...
 }:
 
 let
-  themeEnabled = osConfig != null && osConfig.custom.desktop.theme.enable;
+  stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
+  stylixEnabled = stylixColors != null;
 in
 {
   config = lib.mkIf config.custom.desktop.enable {
@@ -20,7 +20,7 @@ in
     programs.kitty = {
       enable = lib.mkDefault true;
     }
-    // lib.optionalAttrs (!themeEnabled) {
+    // lib.optionalAttrs (!stylixEnabled) {
       themeFile = lib.mkDefault "GitHub_Light";
     };
 

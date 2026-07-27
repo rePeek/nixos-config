@@ -2,21 +2,13 @@
 {
   config,
   lib,
-  osConfig ? null,
   pkgs,
   ...
 }:
 
 let
-  theme =
-    if osConfig == null then
-      {
-        enable = false;
-        polarity = "either";
-      }
-    else
-      osConfig.custom.desktop.theme;
-  textEditorStyleVariant = if theme.polarity == "either" then "follow" else theme.polarity;
+  stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
+  stylixEnabled = stylixColors != null;
 
   archiveMimeTypes = [
     "application/zip"
@@ -47,8 +39,8 @@ in
       show-grid = false;
       show-line-numbers = true;
       show-right-margin = false;
-      style-scheme = lib.mkDefault (if theme.enable then "stylix" else "Adwaita");
-      style-variant = lib.mkDefault textEditorStyleVariant;
+      style-scheme = lib.mkDefault (if stylixEnabled then "stylix" else "Adwaita");
+      style-variant = lib.mkDefault (if stylixEnabled then config.stylix.polarity else "follow");
       tab-width = "uint32 4";
       use-system-font = lib.mkDefault false;
       wrap-text = false;
