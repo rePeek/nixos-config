@@ -29,7 +29,6 @@
 
 | Flake 输出 | 主机目录 | Home Manager 用户 | 用途 |
 | --- | --- | --- | --- |
-| `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面主机 |
 | `amur` | `hosts/amur/` | `asen` | 额外桌面主机 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器 |
 | `bengal` | `hosts/bengal/` | `asen` | 额外 NixOS 主机 |
@@ -317,7 +316,6 @@ nix-instantiate --parse <file>
 对每个受影响的 Flake 输出执行 dry build：
 
 ```bash
-nixos-rebuild dry-build --flake .#brain-holder
 nixos-rebuild dry-build --flake .#amur
 nixos-rebuild dry-build --flake .#home-server
 nixos-rebuild dry-build --flake .#bengal

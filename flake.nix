@@ -96,12 +96,6 @@
       };
 
       nixosConfigurations = {
-        # daily use
-        brain-holder = myLib.mkHost {
-          hostPath = ./hosts/brain-holder;
-          usernames = [ "asen" ];
-        };
-
         amur = myLib.mkHost {
           hostPath = ./hosts/amur;
           usernames = [ "asen" ];

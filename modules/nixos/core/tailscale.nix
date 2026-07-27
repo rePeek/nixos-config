@@ -42,10 +42,6 @@ in
         "bengal"
         "bengal.tailfd7184.ts.net"
       ];
-      "100.73.141.90" = [
-        "brain-holder"
-        "brain-holder.tailfd7184.ts.net"
-      ];
       "100.82.124.57" = [
         "rainyun"
         "rainyun.tailfd7184.ts.net"

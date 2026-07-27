@@ -114,32 +114,11 @@ modules/
 
 | Flake 输出 | 配置目录 | 用户 | 主要用途 |
 | --- | --- | --- | --- |
-| `brain-holder` | `hosts/brain-holder/` | `asen` | 日常桌面、开发、游戏和本地服务 |
 | `amur` | `hosts/amur/` | `asen` | 新桌面系统和旧系统数据迁移 |
 | `home-server` | `hosts/home-server/` | 无 | 家用服务器、局域网网关和容器宿主机 |
 | `bengal` | `hosts/bengal/` | `asen` | 固定地址的额外服务节点 |
 | `rainyun` | `hosts/rain-cloud/` | `root` | 远程 Tailscale DERP 节点 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的 Home Manager 配置 |
-
-### `brain-holder`
-
-日常使用的桌面主机，导入 `modules/nixos/desktop/`，并按需启用 server 层服务。
-
-主要功能：
-
-- CachyOS latest Zen 4 内核。
-- 桌面环境、PipeWire、字体、蓝牙、Wayland 和 dconf。
-- Home Manager 图形环境：Hyprland、DankMaterialShell、Fcitx5、Kitty 和通用 GUI 软件。
-- Steam、Gamescope、Protontricks、GameMode 和低延迟 PipeWire 游戏优化。
-- Docker、libvirt、QEMU、virt-manager、SPICE 和虚拟 TPM。
-- Tailscale 与 nftables 防火墙。
-- agenix 密钥解密支持。
-
-部署命令：
-
-```bash
-just deploy-local
-```
 
 ### `amur`
 
