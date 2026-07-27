@@ -6,24 +6,7 @@
   ...
 }:
 
-let
-  cfg = config.custom.desktop.defaults.files;
-
-  mimeDefaults = {
-    "inode/directory" = [ cfg.desktopFile ];
-  };
-
-in
 {
-  options.custom.desktop.defaults.files = {
-    desktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "nemo.desktop";
-      description = "Desktop file used for directory MIME associations.";
-    };
-
-  };
-
   config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       nemo
@@ -68,8 +51,8 @@ in
     };
 
     xdg.mimeApps = {
-      associations.added = mimeDefaults;
-      defaultApplications = mimeDefaults;
+      associations.added."inode/directory" = [ "nemo.desktop" ];
+      defaultApplications."inode/directory" = [ "nemo.desktop" ];
     };
   };
 }

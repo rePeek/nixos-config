@@ -7,8 +7,6 @@
 }:
 
 let
-  cfg = config.custom.desktop.defaults.media;
-
   imageMimeTypes = [
     "image/bmp"
     "image/gif"
@@ -43,27 +41,11 @@ let
   ];
 
   mimeDefaults =
-    lib.genAttrs imageMimeTypes (_mimeType: [ cfg.imageDesktopFile ])
-    // lib.genAttrs audioMimeTypes (_mimeType: [ cfg.mediaDesktopFile ])
-    // lib.genAttrs videoMimeTypes (_mimeType: [ cfg.mediaDesktopFile ]);
-
+    lib.genAttrs imageMimeTypes (_mimeType: [ "imv-dir.desktop" ])
+    // lib.genAttrs audioMimeTypes (_mimeType: [ "mpv.desktop" ])
+    // lib.genAttrs videoMimeTypes (_mimeType: [ "mpv.desktop" ]);
 in
 {
-  options.custom.desktop.defaults.media = {
-    imageDesktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "imv-dir.desktop";
-      description = "Desktop file used for image MIME associations.";
-    };
-
-    mediaDesktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "mpv.desktop";
-      description = "Desktop file used for audio and video MIME associations.";
-    };
-
-  };
-
   config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       imv

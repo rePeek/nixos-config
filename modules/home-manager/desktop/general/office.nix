@@ -7,8 +7,6 @@
 }:
 
 let
-  cfg = config.custom.desktop.defaults.office;
-
   mimeTypes = [
     "application/vnd.oasis.opendocument.text"
     "application/vnd.oasis.opendocument.spreadsheet"
@@ -22,19 +20,9 @@ let
     "application/rtf"
   ];
 
-  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ cfg.desktopFile ]);
-
+  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "libreoffice.desktop" ]);
 in
 {
-  options.custom.desktop.defaults.office = {
-    desktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "libreoffice.desktop";
-      description = "Desktop file used for office document MIME associations.";
-    };
-
-  };
-
   config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       libreoffice

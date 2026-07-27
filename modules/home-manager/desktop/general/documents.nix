@@ -8,7 +8,6 @@
 }:
 
 let
-  cfg = config.custom.desktop.defaults.documents;
   theme =
     if osConfig == null then
       {
@@ -27,34 +26,12 @@ let
   ];
 
   mimeDefaults = {
-    "text/plain" = [ cfg.textDesktopFile ];
-    "application/pdf" = [ cfg.pdfDesktopFile ];
+    "text/plain" = [ "org.gnome.TextEditor.desktop" ];
+    "application/pdf" = [ "org.gnome.Evince.desktop" ];
   }
-  // lib.genAttrs archiveMimeTypes (_mimeType: [ cfg.archiveDesktopFile ]);
-
+  // lib.genAttrs archiveMimeTypes (_mimeType: [ "org.gnome.FileRoller.desktop" ]);
 in
 {
-  options.custom.desktop.defaults.documents = {
-    textDesktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "org.gnome.TextEditor.desktop";
-      description = "Desktop file used for plain text MIME associations.";
-    };
-
-    pdfDesktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "org.gnome.Evince.desktop";
-      description = "Desktop file used for PDF MIME associations.";
-    };
-
-    archiveDesktopFile = lib.mkOption {
-      type = lib.types.str;
-      default = "org.gnome.FileRoller.desktop";
-      description = "Desktop file used for archive MIME associations.";
-    };
-
-  };
-
   config = lib.mkIf config.custom.desktop.enable {
     home.packages = with pkgs; [
       evince
