@@ -9,31 +9,28 @@
 
 let
   themeEnabled = osConfig != null && osConfig.custom.desktop.theme.enable;
-  terminalCommand = "kitty";
-  terminalDesktopFile = "kitty.desktop";
 in
 {
   config = lib.mkIf config.custom.desktop.enable {
     home = {
       packages = [ pkgs.kitty ];
-      sessionVariables.TERMINAL = lib.mkDefault terminalCommand;
+      sessionVariables.TERMINAL = lib.mkDefault "kitty";
     };
 
     programs.kitty = {
       enable = lib.mkDefault true;
-      package = lib.mkDefault null;
     }
     // lib.optionalAttrs (!themeEnabled) {
       themeFile = lib.mkDefault "GitHub_Light";
     };
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
-      ${terminalDesktopFile}
+      kitty.desktop
     '';
 
     xdg.mimeApps = {
-      associations.added.terminal = [ terminalDesktopFile ];
-      defaultApplications.terminal = [ terminalDesktopFile ];
+      associations.added.terminal = [ "kitty.desktop" ];
+      defaultApplications.terminal = [ "kitty.desktop" ];
     };
   };
 }

@@ -17,7 +17,7 @@ let
     "x-scheme-handler/unknown"
   ];
 
-  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ cfg.desktopFile ]);
+  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "firefox.desktop" ]);
 
   userModule = {
     programs.firefox = {
@@ -81,15 +81,7 @@ let
       ];
     };
 
-    stylix.targets.firefox =
-      if cfg.firefoxProfileNames == [ ] then
-        {
-          enable = lib.mkDefault false;
-        }
-      else
-        {
-          profileNames = cfg.firefoxProfileNames;
-        };
+    stylix.targets.firefox.enable = lib.mkDefault false;
 
     xdg.mimeApps = {
       associations.added = mimeDefaults;
@@ -98,58 +90,43 @@ let
   };
 in
 {
-  options.custom.desktop.defaults.browser = {
-    desktopFile = lib.mkOption {
+  options.custom.desktop.defaults.browser.proxy = {
+    enable = lib.mkEnableOption "Firefox proxy policy";
+
+    httpProxy = lib.mkOption {
       type = lib.types.str;
-      default = "firefox.desktop";
-      description = "Desktop file used for browser MIME associations.";
+      default = "";
+      description = "Firefox HTTP proxy in host:port form.";
+      example = "home-server:7890";
     };
 
-    firefoxProfileNames = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = "Firefox profile names that Stylix should theme. Leave empty when Firefox profiles are not managed declaratively.";
-      example = [ "default" ];
+    sslProxy = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Firefox HTTPS proxy in host:port form.";
+      example = "home-server:7890";
     };
 
-    proxy = {
-      enable = lib.mkEnableOption "Firefox proxy policy";
+    socksProxy = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Firefox SOCKS proxy in host:port form.";
+      example = "home-server:7890";
+    };
 
-      httpProxy = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Firefox HTTP proxy in host:port form.";
-        example = "home-server:7890";
-      };
+    socksVersion = lib.mkOption {
+      type = lib.types.enum [
+        4
+        5
+      ];
+      default = 5;
+      description = "Firefox SOCKS proxy protocol version.";
+    };
 
-      sslProxy = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Firefox HTTPS proxy in host:port form.";
-        example = "home-server:7890";
-      };
-
-      socksProxy = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Firefox SOCKS proxy in host:port form.";
-        example = "home-server:7890";
-      };
-
-      socksVersion = lib.mkOption {
-        type = lib.types.enum [
-          4
-          5
-        ];
-        default = 5;
-        description = "Firefox SOCKS proxy protocol version.";
-      };
-
-      passthrough = lib.mkOption {
-        type = lib.types.str;
-        default = "localhost,127.0.0.1,::1";
-        description = "Comma-separated Firefox proxy bypass list.";
-      };
+    passthrough = lib.mkOption {
+      type = lib.types.str;
+      default = "localhost,127.0.0.1,::1";
+      description = "Comma-separated Firefox proxy bypass list.";
     };
   };
 
