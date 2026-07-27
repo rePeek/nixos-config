@@ -45,17 +45,6 @@ let
 
   userType = lib.types.submodule {
     options = {
-      role = lib.mkOption {
-        type = lib.types.nullOr (
-          lib.types.enum [
-            "server"
-            "desktop"
-          ]
-        );
-        default = null;
-        description = "Home Manager role for this user on this host. Defaults to desktop on desktop hosts, otherwise server.";
-      };
-
       extraPackages = lib.mkOption {
         type = lib.types.listOf lib.types.package;
         default = [ ];
@@ -69,46 +58,6 @@ let
       };
 
       desktop.extra.enable = lib.mkEnableOption "extra desktop applications for this user";
-
-      browser.proxy = {
-        enable = lib.mkEnableOption "Firefox proxy policy for this user on this host";
-
-        httpProxy = lib.mkOption {
-          type = lib.types.str;
-          default = "";
-          description = "Firefox HTTP proxy in host:port form.";
-          example = "home-server:7890";
-        };
-
-        sslProxy = lib.mkOption {
-          type = lib.types.str;
-          default = "";
-          description = "Firefox HTTPS proxy in host:port form.";
-          example = "home-server:7890";
-        };
-
-        socksProxy = lib.mkOption {
-          type = lib.types.str;
-          default = "";
-          description = "Firefox SOCKS proxy in host:port form.";
-          example = "home-server:7890";
-        };
-
-        socksVersion = lib.mkOption {
-          type = lib.types.enum [
-            4
-            5
-          ];
-          default = 5;
-          description = "Firefox SOCKS proxy protocol version.";
-        };
-
-        passthrough = lib.mkOption {
-          type = lib.types.str;
-          default = "localhost,127.0.0.1,::1";
-          description = "Comma-separated Firefox proxy bypass list.";
-        };
-      };
     };
   };
 
@@ -117,13 +66,7 @@ let
     let
       userCfg = config.custom.home.users.${username};
       userDesktopEnabled = desktopEnabled && lib.elem username desktopUsers;
-      homeRole =
-        if userCfg.role != null then
-          userCfg.role
-        else if userDesktopEnabled then
-          "desktop"
-        else
-          "server";
+      homeRole = if userDesktopEnabled then "desktop" else "server";
       userDesktopRole = homeRole == "desktop";
     in
     {
@@ -137,7 +80,6 @@ let
     // lib.optionalAttrs userDesktopRole {
       custom.desktop.hyprland.outputRules = userCfg.desktop.hyprland.outputRules;
       custom.desktop.extra.enable = userCfg.desktop.extra.enable;
-      custom.desktop.defaults.browser.proxy = userCfg.browser.proxy;
     };
 in
 {

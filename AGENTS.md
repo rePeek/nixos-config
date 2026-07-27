@@ -171,7 +171,7 @@ modules/user/
 - 启动模式通过 `custom.boot.mode` 声明为 `"uefi"` 或 `"bios"`。
 - `core` profile 不创建个人用户，默认启用 Tailscale；`server` profile 在 core 上增加系统用户和通用服务选项；`desktop` profile 在 server 上默认启用图形、音频和蓝牙能力。
 - 其他主机按需导入具体服务文件，避免无意启用桌面或 Jellyfin 等服务。
-- 用户定义位于 `modules/user/<username>/`，其中 `nixos.nix` 是系统账号 profile，`home.nix` 是 Home Manager 用户身份 profile；由 `modules/nixos/server/default.nix` 和 `modules/nixos/home-manager.nix` 自动加载。用户环境默认采用 `desktop` 或 `server` HM role，也可在主机入口通过 `custom.home.users.<username>.role` 覆盖。主机专属用户默认值放在主机入口的 `custom.home.users.<username>`。
+- 用户定义位于 `modules/user/<username>/`，其中 `nixos.nix` 是系统账号 profile，`home.nix` 是 Home Manager 用户身份 profile；由 `modules/nixos/server/default.nix` 和 `modules/nixos/home-manager.nix` 自动加载。桌面主机上的用户默认采用 `desktop` role，其他主机采用 `server` role。主机专属用户默认值放在主机入口的 `custom.home.users.<username>`。
 - 外部 Flake 输入通过 `inputs` 参数使用；Nixpkgs 软件包统一通过 `pkgs` 使用。
 - 不要直接引用 `<nixpkgs>` 全局路径。
 
@@ -182,7 +182,7 @@ modules/user/
 - 模块内部负责把 `custom.*` profile 展开为具体的 `hardware.*`、`services.*`、`programs.*`、`virtualisation.*` 等原生配置；主机文件只保留 profile 选择和无法抽象的机器事实，例如 PCI Bus ID、UUID、hostname、用户名和端口。
 - 可复用模块应提供保守默认值，避免启用只有特定硬件、特定角色或特定部署场景才需要的能力；这类能力应通过明确的 role、mode 或子 profile 开启。
 - 系统用户账号定义放在 `modules/user/<username>/nixos.nix`，server 和 desktop 主机通过 `custom.users.enabled` 声明启用哪些用户；主机专属 groups 或 SSH authorized keys 通过对应用户子选项追加，不再为每台主机维护重复的 `user.nix`。
-- Home Manager 用户身份差异放在 `modules/user/<username>/home.nix`；用户环境 role 放在 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；主机只通过 `custom.home.users.<username>` 声明 role 覆盖、额外用户包、Hyprland 输出规则、Firefox 代理等主机差异，不再为每台主机维护重复的 `users/<username>.nix`。
+- Home Manager 用户身份差异放在 `modules/user/<username>/home.nix`；用户环境 role 放在 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；主机只通过 `custom.home.users.<username>` 声明额外用户包、Hyprland 输出规则等主机差异，不再为每台主机维护重复的 `users/<username>.nix`。
 
 ### 3.4 命名
 

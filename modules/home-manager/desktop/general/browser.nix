@@ -6,9 +6,6 @@
 }:
 
 let
-  cfg = config.custom.desktop.defaults.browser;
-  proxyCfg = cfg.proxy;
-
   mimeTypes = [
     "text/html"
     "x-scheme-handler/about"
@@ -18,8 +15,9 @@ let
   ];
 
   mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "firefox.desktop" ]);
-
-  userModule = {
+in
+{
+  config = lib.mkIf config.custom.desktop.enable {
     programs.firefox = {
       enable = lib.mkDefault true;
       configPath = lib.mkDefault ".mozilla/firefox";
@@ -59,26 +57,12 @@ let
         };
       };
 
-      policies = lib.mkMerge [
-        {
-          ExtensionSettings = {
-            "{fb25c100-22ce-4d5a-be7e-75f3d6f0fc13}" = {
-              installation_mode = "force_installed";
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/kiss-translator/latest.xpi";
-            };
-          };
-        }
-        (lib.mkIf proxyCfg.enable {
-          Proxy = {
-            Mode = "manual";
-            HTTPProxy = proxyCfg.httpProxy;
-            SSLProxy = proxyCfg.sslProxy;
-            SOCKSProxy = proxyCfg.socksProxy;
-            SOCKSVersion = proxyCfg.socksVersion;
-            Passthrough = proxyCfg.passthrough;
-          };
-        })
-      ];
+      policies.ExtensionSettings = {
+        "{fb25c100-22ce-4d5a-be7e-75f3d6f0fc13}" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/kiss-translator/latest.xpi";
+        };
+      };
     };
 
     stylix.targets.firefox.enable = lib.mkDefault false;
@@ -88,47 +72,4 @@ let
       defaultApplications = mimeDefaults;
     };
   };
-in
-{
-  options.custom.desktop.defaults.browser.proxy = {
-    enable = lib.mkEnableOption "Firefox proxy policy";
-
-    httpProxy = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "Firefox HTTP proxy in host:port form.";
-      example = "home-server:7890";
-    };
-
-    sslProxy = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "Firefox HTTPS proxy in host:port form.";
-      example = "home-server:7890";
-    };
-
-    socksProxy = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "Firefox SOCKS proxy in host:port form.";
-      example = "home-server:7890";
-    };
-
-    socksVersion = lib.mkOption {
-      type = lib.types.enum [
-        4
-        5
-      ];
-      default = 5;
-      description = "Firefox SOCKS proxy protocol version.";
-    };
-
-    passthrough = lib.mkOption {
-      type = lib.types.str;
-      default = "localhost,127.0.0.1,::1";
-      description = "Comma-separated Firefox proxy bypass list.";
-    };
-  };
-
-  config = lib.mkIf config.custom.desktop.enable userModule;
 }
