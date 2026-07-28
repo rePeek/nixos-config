@@ -1,4 +1,7 @@
-# Destructive layout for the replacement 2 TB SSD.
+# Disk layout for amur's 2 TB SSD.
+let
+  systemDisk = "/dev/disk/by-id/nvme-Fanxiang_S500PRO_2TB_FXS500PRO232144791";
+in
 {
   fileSystems."/home/asen/data" = {
     device = "/dev/disk/by-uuid/a46aeb71-e82e-40c3-aade-b5e6edb7033c";
@@ -7,12 +10,13 @@
 
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/disk/by-id/nvme-Fanxiang_S500PRO_2TB_FXS500PRO232144791";
+    device = systemDisk;
     content = {
       type = "gpt";
       partitions = {
         ESP = {
           priority = 1;
+          device = "${systemDisk}-part1";
           type = "EF00";
           size = "1G";
           content = {
@@ -24,6 +28,7 @@
         };
 
         swap = {
+          device = "${systemDisk}-part2";
           size = "32G";
           content = {
             type = "swap";
@@ -32,6 +37,7 @@
         };
 
         root = {
+          device = "${systemDisk}-part3";
           size = "100%";
           content = {
             type = "btrfs";
