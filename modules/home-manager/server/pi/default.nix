@@ -11,6 +11,7 @@
     ./pi-fff.nix
     ./pi-web-access.nix
     ./pi-codex-search.nix
+    ./pi-tool-display.nix
   ];
 
   programs.pi-coding-agent = {
@@ -22,6 +23,7 @@
       defaultThinkingLevel = "high";
 
       enableInstallTelemetry = false;
+      hideThinkingBlock = true;
 
       # 做缓存实验时保留
       showCacheMissNotices = true;
