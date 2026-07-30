@@ -1,7 +1,8 @@
+{ lib, ... }:
 {
   home.sessionVariables = {
-    EDITOR = "hx";
-    VISUAL = "hx";
+    EDITOR = lib.mkForce "nvim";
+    VISUAL = lib.mkForce "nvim";
   };
 
   programs = {
