@@ -61,6 +61,13 @@ in
 
     home.packages = [ wechat ];
 
+    xdg.userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = config.home.homeDirectory;
+      download = config.home.homeDirectory + "/Downloads";
+    };
+
     xdg.configFile."mimeapps.list".force = lib.mkDefault true;
     xdg.mimeApps.enable = lib.mkDefault true;
   };
