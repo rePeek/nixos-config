@@ -37,26 +37,6 @@
   };
 
   # ══════════════════════════════════════════════
-  #  Bufferline — Tab bar
-  # ══════════════════════════════════════════════
-  plugins.bufferline = {
-    enable = true;
-    settings = {
-      options = {
-        diagnostics = "nvim_lsp";
-        offsets = [
-          {
-            filetype = "oil";
-            text = "File Explorer";
-            highlight = "Directory";
-            separator = true;
-          }
-        ];
-      };
-    };
-  };
-
-  # ══════════════════════════════════════════════
   #  Web Devicons
   # ══════════════════════════════════════════════
   plugins.web-devicons.enable = true;
