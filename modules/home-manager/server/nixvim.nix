@@ -13,6 +13,7 @@
       ./nixvim/dap.nix
       ./nixvim/git.nix
       ./nixvim/ui.nix
+      ./nixvim/extras.nix
     ];
   };
 }
