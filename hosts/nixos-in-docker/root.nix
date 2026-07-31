@@ -1,9 +1,10 @@
-{ ... }:
+{ inputs, ... }:
 let
   base16Schemes = import ../../theme/base16-schemes.nix;
 in
 {
   imports = [
+    inputs.nixvim.homeModules.nixvim
     ../../modules/home-manager/server
   ];
 

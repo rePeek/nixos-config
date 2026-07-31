@@ -98,6 +98,9 @@ in
       # Install packages into the user environment.
       useUserPackages = true;
       backupFileExtension = "bkp";
+      sharedModules = [
+        inputs.nixvim.homeModules.nixvim
+      ];
       extraSpecialArgs = {
         inherit inputs;
       };

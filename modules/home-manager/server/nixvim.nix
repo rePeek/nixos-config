@@ -1,8 +1,18 @@
-# Nixvim 编辑器，直接使用 github:rePeek/nvim 的构建产物
-{ inputs, pkgs, ... }:
-
+# Nixvim 编辑器配置（内联模式，替代原 github:rePeek/nvim standalone 包）
 {
-  home.packages = [
-    inputs.nvim.packages.${pkgs.system}.default
-  ];
+  programs.nixvim = {
+    enable = true;
+    defaultEditor = true;
+
+    imports = [
+      ./nixvim/options.nix
+      ./nixvim/theme.nix
+      ./nixvim/plugins.nix
+      ./nixvim/lsp.nix
+      ./nixvim/treesitter.nix
+      ./nixvim/dap.nix
+      ./nixvim/git.nix
+      ./nixvim/ui.nix
+    ];
+  };
 }
