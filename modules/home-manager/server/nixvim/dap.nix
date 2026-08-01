@@ -145,4 +145,13 @@
       dapui.close()
     end
   '';
+
+  # ── Which-Key groups ──
+  plugins.which-key.settings.spec = [
+    {
+      __unkeyed-1 = "<leader>d";
+      group = "Debug (DAP)";
+      mode = "n";
+    }
+  ];
 }

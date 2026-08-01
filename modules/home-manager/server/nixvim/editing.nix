@@ -1,4 +1,3 @@
-# 补充插件：flash、mini.pairs、mini.surround、mini.comment、trouble
 {
   # ══════════════════════════════════════════════
   #  Flash — 快速跳转 (s + 两字符定位)
@@ -80,8 +79,13 @@
   };
 
   # ══════════════════════════════════════════════
-  #  Keymaps for extras
+  #  Multi-cursor — multicursors.nvim (Helix-style)
   # ══════════════════════════════════════════════
+  plugins.multicursors = {
+    enable = true;
+  };
+
+  # ── Keymaps ──
   keymaps = [
     # ── Flash: s 跳转, S 反向跳转 ──
     {
@@ -135,7 +139,6 @@
         desc = "Flash treesitter";
       };
     }
-    # surround 使用 gs* 前缀（gsa/gsd/gsr/gsh 等），不与 flash 的 s/S 冲突
 
     # ── Trouble: diagnostics panel ──
     {
@@ -186,9 +189,117 @@
         desc = "Toggle LSP references";
       };
     }
+
+    # ── Selection enhancements ──
+    {
+      key = "<leader>ss";
+      mode = "n";
+      action = "viw";
+      options = {
+        desc = "Select word";
+      };
+    }
+    {
+      key = "<leader>sl";
+      mode = "n";
+      action = "V";
+      options = {
+        desc = "Select line";
+      };
+    }
+    {
+      key = "<leader>s%";
+      mode = "n";
+      action = "ggVG";
+      options = {
+        desc = "Select all";
+      };
+    }
+    {
+      key = "<leader>si";
+      mode = "n";
+      action = "vi(";
+      options = {
+        desc = "Select inside parens";
+      };
+    }
+    {
+      key = "<leader>sa";
+      mode = "n";
+      action = "va(";
+      options = {
+        desc = "Select around parens";
+      };
+    }
+    {
+      key = "<leader>si\"";
+      mode = "n";
+      action = "vi\"";
+      options = {
+        desc = "Select inside quotes";
+      };
+    }
+
+    # ── Move Lines (Helix-style) ──
+    {
+      key = "<A-j>";
+      mode = [
+        "n"
+        "v"
+      ];
+      action = "<cmd>m .+1<CR>==";
+      options = {
+        desc = "Move line down";
+      };
+    }
+    {
+      key = "<A-k>";
+      mode = [
+        "n"
+        "v"
+      ];
+      action = "<cmd>m .-2<CR>==";
+      options = {
+        desc = "Move line up";
+      };
+    }
+
+    # ── Visual mode enhancements ──
+    {
+      key = "<";
+      mode = "v";
+      action = "<gv";
+      options = {
+        desc = "Indent left & reselect";
+      };
+    }
+    {
+      key = ">";
+      mode = "v";
+      action = ">gv";
+      options = {
+        desc = "Indent right & reselect";
+      };
+    }
+    {
+      key = "J";
+      mode = "v";
+      action = ":m '>+1<CR>gv=gv";
+      options = {
+        desc = "Move selection down";
+      };
+    }
+    {
+      key = "K";
+      mode = "v";
+      action = ":m '<-2<CR>gv=gv";
+      options = {
+        desc = "Move selection up";
+      };
+    }
   ];
 
-  # ── Which-Key groups for extras ──
+  # ── Which-Key groups ──
   plugins.which-key.settings.spec = [
     {
       __unkeyed-1 = "<leader>x";
@@ -198,6 +309,11 @@
     {
       __unkeyed-1 = "gs";
       group = "Surround";
+      mode = "n";
+    }
+    {
+      __unkeyed-1 = "<leader>s";
+      group = "Selection";
       mode = "n";
     }
   ];

@@ -59,4 +59,13 @@
 
   # ── LSP UI tweaks ──
   plugins.lsp-format.enable = true;
+
+  # ── Which-Key groups ──
+  plugins.which-key.settings.spec = [
+    {
+      __unkeyed-1 = "<leader>l";
+      group = "LSP";
+      mode = "n";
+    }
+  ];
 }

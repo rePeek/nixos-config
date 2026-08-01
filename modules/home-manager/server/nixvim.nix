@@ -5,15 +5,16 @@
     defaultEditor = true;
 
     imports = [
-      ./nixvim/options.nix
+      ./nixvim/default.nix
       ./nixvim/theme.nix
-      ./nixvim/plugins.nix
+      ./nixvim/completion.nix
+      ./nixvim/finder.nix
+      ./nixvim/editing.nix
       ./nixvim/lsp.nix
       ./nixvim/treesitter.nix
       ./nixvim/dap.nix
       ./nixvim/git.nix
       ./nixvim/ui.nix
-      ./nixvim/extras.nix
     ];
   };
 }
