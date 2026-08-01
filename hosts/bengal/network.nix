@@ -3,20 +3,15 @@
     networkmanager = {
       enable = true;
 
-      ensureProfiles.profiles.wired-gateway = {
+      ensureProfiles.profiles.ethernet = {
         connection = {
-          id = "wired-gateway";
+          id = "ethernet";
           type = "ethernet";
           interface-name = "eno1";
           autoconnect = true;
         };
 
-        ipv4 = {
-          method = "manual";
-          addresses = "192.168.137.16/24";
-          gateway = "192.168.137.1";
-          dns = "1.1.1.1;8.8.8.8;";
-        };
+        ipv4.method = "auto";
 
         ipv6.method = "ignore";
       };
