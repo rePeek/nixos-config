@@ -35,13 +35,6 @@
         };
       };
 
-      # ── Rust ──
-      rust_analyzer = {
-        enable = true;
-        installCargo = false;
-        installRustc = false;
-      };
-
       # ── Nix ──
       nil_ls = {
         enable = true;

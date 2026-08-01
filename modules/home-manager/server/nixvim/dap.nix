@@ -21,16 +21,6 @@
           stopOnEntry = false;
         }
       ];
-      rust = [
-        {
-          name = "Rust: Launch file";
-          type = "codelldb";
-          request = "launch";
-          program = "\${fileDirname}/\${fileBasenameNoExtension}";
-          cwd = "\${workspaceFolder}";
-          stopOnEntry = false;
-        }
-      ];
       python = [
         {
           name = "Python: Launch file";

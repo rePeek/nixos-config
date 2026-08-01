@@ -15,7 +15,6 @@
     grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
       cpp
       c
-      rust
       nix
       bash
       python
