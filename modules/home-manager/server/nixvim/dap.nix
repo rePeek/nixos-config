@@ -9,29 +9,6 @@
         };
       };
     };
-
-    configurations = {
-      cpp = [
-        {
-          name = "C/C++: Launch file";
-          type = "codelldb";
-          request = "launch";
-          program = "\${fileDirname}/\${fileBasenameNoExtension}";
-          cwd = "\${workspaceFolder}";
-          stopOnEntry = false;
-        }
-      ];
-      python = [
-        {
-          name = "Python: Launch file";
-          type = "codelldb";
-          request = "launch";
-          program = "\${file}";
-          cwd = "\${workspaceFolder}";
-          stopOnEntry = false;
-        }
-      ];
-    };
   };
 
   plugins.dap-ui = {

@@ -14,6 +14,7 @@
       ./lsp.nix
       ./treesitter.nix
       ./dap.nix
+      ./lang
       ./git.nix
       ./ui.nix
     ];
