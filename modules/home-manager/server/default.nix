@@ -9,7 +9,7 @@
     ./btop.nix
     ./git.nix
     ./pi
-    ./nixvim.nix
+    ./nixvim
     ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
