@@ -75,7 +75,7 @@
     enable = true;
     settings = {
       auto_close = true;
-      auto_open = true;
+      auto_open = false;
     };
   };
 

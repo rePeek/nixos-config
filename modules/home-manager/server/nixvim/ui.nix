@@ -56,12 +56,33 @@
       presets = {
         bottom_search = true;
         command_palette = true;
-        long_message_to_split = true;
+        long_message_to_split = false;
         lsp_doc_border = true;
       };
+      routes = [
+        {
+          filter = {
+            event = "msg_show";
+          };
+          view = "mini";
+        }
+        {
+          filter = {
+            event = "notify";
+            kind = "warn";
+          };
+          view = "mini";
+        }
+        {
+          filter = {
+            event = "notify";
+            kind = "error";
+          };
+          view = "mini";
+        }
+      ];
     };
   };
-
   # ══════════════════════════════════════════════
   #  Indent Blankline
   # ══════════════════════════════════════════════

@@ -26,7 +26,7 @@
 
     splitright = true;
     splitbelow = true;
-    wrap = false;
+    wrap = true;
 
     undofile = true;
     swapfile = false;
