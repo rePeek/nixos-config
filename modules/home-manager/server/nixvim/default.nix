@@ -11,9 +11,8 @@
       ./completion.nix
       ./finder.nix
       ./editing.nix
-      ./lsp.nix
+      ./lang.nix
       ./treesitter.nix
-      ./dap.nix
       ./lang
       ./git.nix
       ./ui.nix

@@ -1,4 +1,44 @@
 {
+  # ══════════════════════════════════════════════
+  #  LSP — 语言服务器基础设施
+  # ══════════════════════════════════════════════
+  plugins.lsp = {
+    enable = true;
+
+    keymaps = {
+      lspBuf = {
+        "gd" = "definition";
+        "gD" = "references";
+        "gt" = "type_definition";
+        "gi" = "implementation";
+        "K" = "hover";
+        "<leader>ca" = "code_action";
+        "<leader>rn" = "rename";
+      };
+      diagnostic = {
+        "<leader>cd" = "open_float";
+        "[d" = "goto_prev";
+        "]d" = "goto_next";
+      };
+    };
+  };
+
+  # ══════════════════════════════════════════════
+  #  Conform — 格式化基础设施
+  # ══════════════════════════════════════════════
+  plugins.conform-nvim = {
+    enable = true;
+    settings = {
+      default_format_opts = {
+        lsp_format = "fallback";
+        async = true;
+      };
+    };
+  };
+
+  # ══════════════════════════════════════════════
+  #  DAP — 调试器基础设施
+  # ══════════════════════════════════════════════
   plugins.dap = {
     enable = true;
 
@@ -115,6 +155,11 @@
 
   # ── Which-Key groups ──
   plugins.which-key.settings.spec = [
+    {
+      __unkeyed-1 = "<leader>l";
+      group = "LSP";
+      mode = "n";
+    }
     {
       __unkeyed-1 = "<leader>d";
       group = "Debug (DAP)";
