@@ -60,6 +60,20 @@
         desc = "Window right";
       };
     }
+    # ── Format ──
+    {
+      key = "<leader>f";
+      mode = [
+        "n"
+        "v"
+      ];
+      action = {
+        __raw = "function() require('conform').format({ lsp_format = 'fallback' }) end";
+      };
+      options = {
+        desc = "Format buffer";
+      };
+    }
 
     # ── Clear Search Highlight ──
     {

@@ -63,4 +63,24 @@
       };
     }
   ];
+
+  # ── Auto-save ──
+  plugins.auto-save = {
+    enable = true;
+    settings = {
+      enabled = true;
+      trigger_events = {
+        immediate_save = [
+          "BufLeave"
+          "FocusLost"
+        ];
+        defer_save = [
+          "InsertLeave"
+        ];
+        cancel_deferred_save = [
+          "InsertEnter"
+        ];
+      };
+    };
+  };
 }

@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   plugins.lsp = {
     enable = true;
@@ -57,8 +59,20 @@
     };
   };
 
-  # ── LSP UI tweaks ──
-  plugins.lsp-format.enable = true;
+  # ── Conform (Formatter) ──
+  plugins.conform-nvim = {
+    enable = true;
+    settings = {
+      default_format_opts = {
+        lsp_format = "fallback";
+        async = true;
+      };
+      formatters_by_ft = {
+        c = [ "clang_format" ];
+        cpp = [ "clang_format" ];
+      };
+    };
+  };
 
   # ── Which-Key groups ──
   plugins.which-key.settings.spec = [
