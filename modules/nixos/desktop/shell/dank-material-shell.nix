@@ -11,7 +11,14 @@ let
   dmsEnabled = config.custom.desktop.enable && cfg.enable;
   desktopUsers = config.custom.desktop.users;
   primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
+  dmsCommand = lib.getExe config.programs.dank-material-shell.package;
   quickshellPackage = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  dmsIdleInhibitCommand =
+    state:
+    pkgs.writeShellScript "dms-idle-inhibit-${state}" ''
+      export PATH=${lib.makeBinPath [ quickshellPackage ]}
+      exec ${dmsCommand} ipc call inhibit ${state}
+    '';
   cursorTheme = lib.attrByPath [ "stylix" "cursor" ] {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
@@ -64,6 +71,13 @@ in
       // lib.optionalAttrs (primaryDesktopUser != null) {
         configHome = "/home/${primaryDesktopUser}";
       };
+    };
+
+    # Gamepads do not necessarily reset the compositor's idle timer. Keep the
+    # display awake while at least one GameMode client is active.
+    programs.gamemode.settings.custom = lib.mkIf config.custom.desktop.gaming.enable {
+      start = "${dmsIdleInhibitCommand "enable"}";
+      end = "${dmsIdleInhibitCommand "disable"}";
     };
 
     environment.systemPackages = [
