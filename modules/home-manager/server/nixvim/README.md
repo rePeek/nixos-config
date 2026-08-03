@@ -21,7 +21,7 @@ nixvim/
 │   ├── nix.nix        # Nix：nil_ls + nixfmt
 │   ├── python.nix     # Python：pyright + ruff/isort + codelldb
 │   └── markdown.nix   # Markdown：marksman + prettierd
-├── treesitter.nix     # 语法高亮（所有 grammar 集中管理）
+├── treesitter.nix     # 语法高亮基础设置 + 通用工具 grammar（bash, lua, vim 等）
 ├── git.nix            # Git 集成（gitsigns 等）
 └── ui.nix             # UI 组件（statusline、lualine 等）
 ```
@@ -31,7 +31,7 @@ nixvim/
 - **`lang.nix`** 只放语言工具链的通用基础设施（插件启用、全局 keymaps），不放具体语言的 server/formatter 配置。
 - **`lang/<lang>.nix`** 每个文件集中声明一种语言的全部能力：LSP server、Conform formatter、DAP debug configuration。
 - **`extraPackages` 不使用** — nixvim 不自动拉取外部工具包；formatter 和 LSP server 需在 Home Manager 的 `home.packages` 中显式安装。
-- **Treesitter grammar** 统一放在 `treesitter.nix` 的 `grammarPackages` 列表中，不散到各 `lang/*.nix`。
+- **Treesitter grammar** 语言专属 grammar 放在各 `lang/*.nix` 中，`treesitter.nix` 只保留通用工具 grammar（bash, lua, vim, vimdoc, query）。
 
 ## 快捷键速查
 
@@ -87,6 +87,7 @@ nixvim/
 1. 在 `lang/` 下创建 `<lang>.nix`：
 
 ```nix
+{ pkgs, ... }:
 {
   # LSP
   plugins.lsp.servers.<server_name> = {
@@ -109,9 +110,13 @@ nixvim/
       stopOnEntry = false;
     }
   ];
-};
+
+  # Treesitter grammar
+  plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    <lang>
+  ];
+}
 ```
 
 2. 在 `lang/default.nix` 中添加 `./<lang>.nix`。
-3. 在 `treesitter.nix` 的 `grammarPackages` 中添加对应 grammar。
-4. 确保 LSP server 和 formatter 工具已在 `home.packages` 中安装。
+3. 确保 LSP server 和 formatter 工具已在 `home.packages` 中安装。
