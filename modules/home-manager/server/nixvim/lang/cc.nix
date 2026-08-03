@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   # ── LSP: clangd ──
   plugins.lsp.servers.clangd = {
@@ -28,5 +29,11 @@
       cwd = "\${workspaceFolder}";
       stopOnEntry = false;
     }
+  ];
+
+  # ── Treesitter ──
+  plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    c
+    cpp
   ];
 }

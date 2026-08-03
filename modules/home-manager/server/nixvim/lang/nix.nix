@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   # ── LSP: nil ──
   plugins.lsp.servers.nil_ls = {
@@ -8,4 +9,9 @@
   plugins.conform-nvim.settings.formatters_by_ft = {
     nix = [ "nixfmt" ];
   };
+
+  # ── Treesitter ──
+  plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    nix
+  ];
 }

@@ -12,15 +12,10 @@
       };
     };
 
+    # 通用工具语法；语言专属语法由各 lang/*.nix 声明
     grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-      cpp
-      c
-      nix
       bash
-      python
       lua
-      markdown
-      markdown_inline
       vim
       vimdoc
       query
