@@ -5,7 +5,7 @@
     git = {
       enable = true;
       settings = {
-        core.editor = "hx";
+        core.editor = "nvim";
         pull.rebase = true;
       };
     };

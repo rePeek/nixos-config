@@ -55,8 +55,16 @@
     enable = true;
   };
 
-  # ── DAP Keymaps ──
+  # ── Keymaps (Telescope LSP + DAP) ──
   keymaps = [
+    {
+      key = "grr";
+      mode = "n";
+      action = "<cmd>Telescope lsp_references<CR>";
+      options = {
+        desc = "LSP references (Telescope)";
+      };
+    }
     {
       key = "<leader>db";
       mode = "n";

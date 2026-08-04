@@ -60,6 +60,23 @@
         desc = "Window right";
       };
     }
+    # ── Jump History ──
+    {
+      key = "<C-Left>";
+      mode = "n";
+      action = "<C-o>";
+      options = {
+        desc = "Jump back";
+      };
+    }
+    {
+      key = "<C-Right>";
+      mode = "n";
+      action = "<C-i>";
+      options = {
+        desc = "Jump forward";
+      };
+    }
     # ── Format ──
     {
       key = "<leader>f";
