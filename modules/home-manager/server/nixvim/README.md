@@ -8,7 +8,7 @@
 nixvim/
 ├── default.nix        # 入口，import 所有子模块
 ├── options.nix        # 编辑器选项（缩进、剪贴板、光标等）+ auto-save.nvim
-├── keymaps.nix        # 通用快捷键（保存、退出、窗口、格式化）
+├── keymaps.nix        # 通用快捷键（保存、退出、窗口、跳转历史）
 ├── theme.nix          # 颜色主题
 ├── completion.nix     # 补全（nvim-cmp）
 ├── finder.nix         # 文件查找（Telescope）
@@ -35,43 +35,162 @@ nixvim/
 
 ## 快捷键速查
 
-### 通用
+`<leader>` = 空格。
+
+### 通用（keymaps.nix）
 
 | 快捷键 | 模式 | 说明 |
 |--------|------|------|
 | `<leader>w` | n | 保存 |
 | `<leader>q` | n | 退出 |
 | `<leader>Q` | n | 全部退出 |
-| `<leader>f` | n, v | 手动格式化（conform） |
 | `<C-h/j/k/l>` | n | 窗口切换 |
+| `<C-Left>` | n | 跳回（jumplist back） |
+| `<C-Right>` | n | 跳前（jumplist forward） |
 | `<Esc>` | n | 清除搜索高亮 |
 
-### LSP
+### Telescope / Find（finder.nix）
 
-| 快捷键 | 说明 |
-|--------|------|
-| `gd` | 跳转定义 |
-| `gD` | 跳转引用 |
-| `gt` | 跳转类型定义 |
-| `gi` | 跳转实现 |
-| `K` | Hover 文档 |
-| `<leader>ca` | Code action |
-| `<leader>rn` | 重命名 |
-| `<leader>cd` | 打开诊断浮窗 |
-| `[d` / `]d` | 上/下一个诊断 |
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader> ` | n | Find files（fuzzy） |
+| `<leader>/` | n | Live grep（fuzzy） |
+| `<leader>,` | n | Command palette |
+| `<leader>ff` | n | Find files |
+| `<leader>fg` | n | Live grep |
+| `<leader>fb` | n | Buffers |
+| `<leader>fh` | n | Help tags |
+| `<leader>fr` | n | Recent files |
+| `<leader>fs` | n | Grep cursor 下的字符串 |
+| `<leader>fd` | n | Diagnostics |
+| `<leader>fk` | n | Keymaps |
+| `<leader>gf` | n | Git files |
+| `<leader>gj` | n | Jumplist |
+| `<leader>gm` | n | Marks |
 
-### DAP
+### Buffer（finder.nix）
 
-| 快捷键 | 说明 |
-|--------|------|
-| `<leader>db` | 切换断点 |
-| `<leader>dc` | 继续 |
-| `<leader>dn` | Step over |
-| `<leader>ds` | Step into |
-| `<leader>do` | Step out |
-| `<leader>dr` | 重启 |
-| `<leader>dt` | 终止 |
-| `<leader>du` | 切换 DAP UI |
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<S-h>` | n | 上一个 buffer |
+| `<S-l>` | n | 下一个 buffer |
+| `<leader>bc` | n | 关闭 buffer |
+| `<leader>bx` | n | 强制关闭 buffer |
+| `<leader>bo` | n | 关闭其他所有 buffer |
+| `<leader>bl` | n | 列出 buffers（Telescope） |
+| `<leader>bn` | n | 新建 buffer |
+
+### Explorer（finder.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader>e` | n | Oil 文件浏览器 |
+| `-` | n | Oil（Helix 风格） |
+
+### LSP（lang.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `gd` | n | 跳转定义 |
+| `gD` | n | 跳转引用 |
+| `gt` | n | 跳转类型定义 |
+| `gi` | n | 跳转实现 |
+| `K` | n | Hover 文档 |
+| `grr` | n | LSP references（Telescope） |
+| `<leader>ca` | n | Code action |
+| `<leader>rn` | n | 重命名 |
+| `<leader>cd` | n | 打开诊断浮窗 |
+| `[d` / `]d` | n | 上/下一个诊断 |
+
+### Debug / DAP（lang.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader>db` | n | 切换断点 |
+| `<leader>dc` | n | 继续 |
+| `<leader>dn` | n | Step over |
+| `<leader>ds` | n | Step into |
+| `<leader>do` | n | Step out |
+| `<leader>dr` | n | 重启 |
+| `<leader>dt` | n | 终止 |
+| `<leader>du` | n | 切换 DAP UI |
+
+### Flash 快速跳转（editing.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `s` | n, x, o | Flash 跳转（输入字符定位） |
+| `S` | n, x, o | Flash 反向跳转 |
+| `r` | o | Flash remote |
+| `R` | x, o | Flash treesitter |
+
+### Surround（editing.nix — mini.surround）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `gsa` | n | 添加包裹 |
+| `gsd` | n | 删除包裹 |
+| `gsr` | n | 替换包裹 |
+| `gsf` | n | 查找右侧包裹 |
+| `gsF` | n | 查找左侧包裹 |
+| `gsh` | n | 高亮包裹 |
+| `gsn` | n | 更新行数 |
+
+### Comment（editing.nix — mini.comment）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `gcc` | n | 注释当前行 |
+| `gc` | v | 注释选区 |
+
+### Selection（editing.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader>ss` | n | 选词 |
+| `<leader>sl` | n | 选行 |
+| `<leader>s%` | n | 全选 |
+| `<leader>si` | n | 选括号内 |
+| `<leader>sa` | n | 选括号及周围 |
+| `<leader>si"` | n | 选引号内 |
+
+### Move Lines（editing.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<A-j>` | n, v | 下移当前行 |
+| `<A-k>` | n, v | 上移当前行 |
+
+### Visual Mode（editing.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<` | v | 左缩进并保持选中 |
+| `>` | v | 右缩进并保持选中 |
+| `J` | v | 下移选区 |
+| `K` | v | 上移选区 |
+
+### Trouble / Diagnostics（editing.nix）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader>xx` | n | 切换 diagnostics 面板 |
+| `<leader>xX` | n | 切换当前 buffer 的 diagnostics |
+| `<leader>xl` | n | 切换 location list |
+| `<leader>xq` | n | 切换 quickfix list |
+| `<leader>xs` | n | 切换 symbols |
+| `<leader>xr` | n | 切换 LSP references |
+
+### Git（git.nix — gitsigns + lazygit）
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `<leader>gg` | n | LazyGit |
+| `<leader>gh` | n | Preview hunk |
+| `<leader>gd` | n | Diff this |
+| `<leader>gb` | n | Blame line |
+| `]c` | n | 下一个 hunk |
+| `[c` | n | 上一个 hunk |
 
 ## 自动保存
 
