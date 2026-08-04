@@ -1,46 +1,5 @@
+# Noice — 命令行/消息/通知 UI + Which-Key 基础设施 + Indent Blankline
 {
-  # ══════════════════════════════════════════════
-  #  Lualine — Status line
-  # ══════════════════════════════════════════════
-  plugins.lualine = {
-    enable = true;
-    settings = {
-      options = {
-        theme = "auto";
-        globalstatus = true;
-        component_separators = {
-          left = "";
-          right = "";
-        };
-        section_separators = {
-          left = "";
-          right = "";
-        };
-      };
-      sections = {
-        lualine_a = [ "mode" ];
-        lualine_b = [
-          "branch"
-          "diff"
-          "diagnostics"
-        ];
-        lualine_c = [ "filename" ];
-        lualine_x = [
-          "encoding"
-          "fileformat"
-          "filetype"
-        ];
-        lualine_y = [ "progress" ];
-        lualine_z = [ "location" ];
-      };
-    };
-  };
-
-  # ══════════════════════════════════════════════
-  #  Web Devicons
-  # ══════════════════════════════════════════════
-  plugins.web-devicons.enable = true;
-
   # ══════════════════════════════════════════════
   #  Noice — Better cmdline & messages UI
   # ══════════════════════════════════════════════
@@ -85,7 +44,8 @@
   };
 
   # ══════════════════════════════════════════════
-  #  Which-Key (discoverable keymaps)
+  #  Which-Key (discoverable keymaps) — 基础设施
+  #  各模块通过 spec 追加自己的分组
   # ══════════════════════════════════════════════
   plugins.which-key = {
     enable = true;

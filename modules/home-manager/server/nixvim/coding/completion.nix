@@ -1,7 +1,5 @@
+# Completion — nvim-cmp + LuaSnip（能力层）
 {
-  # ══════════════════════════════════════════════
-  #  Completion — nvim-cmp + LuaSnip
-  # ══════════════════════════════════════════════
   plugins.cmp = {
     enable = true;
     autoEnableSources = true;

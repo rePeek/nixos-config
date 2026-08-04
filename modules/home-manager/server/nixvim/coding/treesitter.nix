@@ -1,3 +1,5 @@
+# Treesitter — 语法高亮 + sticky scope（能力层）
+# 通用工具语法；语言专属语法由各 lang/*.nix 声明
 { pkgs, ... }:
 {
   plugins.treesitter = {
@@ -12,7 +14,6 @@
       };
     };
 
-    # 通用工具语法；语言专属语法由各 lang/*.nix 声明
     grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
       bash
       lua

@@ -1,3 +1,4 @@
+# 编辑器基础配置：leader、vim options、autocmds、auto-save
 {
   # ── Leader ──
   globals = {
