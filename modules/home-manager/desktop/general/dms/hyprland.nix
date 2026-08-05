@@ -219,5 +219,10 @@ in
         ''install_writable_fragment ${builtins.toJSON "${source}"} "$dms_dir/${name}" ${replaceExisting}''
       ) dmsHyprlandFragments
     )}
+
+    # Reload Hyprland to pick up updated config fragments.
+    if [ -d /tmp/hypr ]; then
+      run hyprctl reload 2>/dev/null || true
+    fi
   '';
 }
