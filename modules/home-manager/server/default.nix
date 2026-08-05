@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nvimPkg, ... }:
 
 {
   imports = [
@@ -9,10 +9,11 @@
     ./btop.nix
     ./git.nix
     ./pi
-    ./nixvim
     ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
+    nvimPkg
+
     # 系统监控与性能
     bottom
     sysstat # 提供 iostat、mpstat、sar 等性能工具, 若需收集历史数据，必须在系统侧启用 services.sysstat.enable = true，并配置收集间隔和保留天数。仅使用实时命令则可仅用户侧安装。

@@ -54,7 +54,10 @@
 
     leigod.url = "github:rePeek/leigod-plugin-linux";
 
-    nixvim.url = "github:nix-community/nixvim";
+    nvim = {
+      url = "github:rePeek/nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 

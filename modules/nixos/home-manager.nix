@@ -98,11 +98,9 @@ in
       # Install packages into the user environment.
       useUserPackages = true;
       backupFileExtension = "bkp";
-      sharedModules = [
-        inputs.nixvim.homeModules.nixvim
-      ];
       extraSpecialArgs = {
         inherit inputs;
+        nvimPkg = inputs.nvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
       users = builtins.listToAttrs (
         map (username: {

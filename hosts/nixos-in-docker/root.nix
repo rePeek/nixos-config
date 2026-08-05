@@ -1,12 +1,20 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 let
   base16Schemes = import ../../theme/base16-schemes.nix;
 in
 {
   imports = [
-    inputs.nixvim.homeModules.nixvim
     ../../modules/home-manager/server
   ];
+
+  extraSpecialArgs = {
+    nvimPkg = inputs.nvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
 
   home.username = "root";
   home.homeDirectory = "/root";
