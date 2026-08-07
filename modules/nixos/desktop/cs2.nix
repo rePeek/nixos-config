@@ -28,11 +28,13 @@ let
 
       cs2-args = lib.concatStringsSep " " [
         "-sdlaudiodriver pipewire"
-        "+engine_low_latency_sleep_after_client_tick true"
-        "+fps_max 0"
         "-nojoy"
         "-fullscreen"
         "-perfectworld"
+
+        "+engine_low_latency_sleep_after_client_tick true"
+        "+exec autoexec.cfg"
+        "+fps_max 0"
       ];
 
       # Wrapper chain: gamescope → mangohud → gamemoderun → cs2.sh

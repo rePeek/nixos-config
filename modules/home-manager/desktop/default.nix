@@ -13,6 +13,7 @@
     ../server
     ./general
     ./extra
+    ./cs-config
   ];
 
   config = lib.mkIf config.custom.desktop.enable {
