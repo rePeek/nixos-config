@@ -1,6 +1,5 @@
 # Bottles defaults for every desktop Home Manager role.
 {
-  config,
   lib,
   pkgs,
   ...
@@ -23,7 +22,7 @@ let
   };
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = [ bottles ];
   };
 }

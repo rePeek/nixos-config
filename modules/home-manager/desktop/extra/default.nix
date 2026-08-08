@@ -8,7 +8,7 @@
 {
   options.custom.desktop.extra.enable = lib.mkEnableOption "extra desktop applications";
 
-  config = lib.mkIf (config.custom.desktop.enable && config.custom.desktop.extra.enable) {
+  config = lib.mkIf config.custom.desktop.extra.enable {
     home.packages = [
       pkgs.calibre
       pkgs.discord

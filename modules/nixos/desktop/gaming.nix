@@ -19,7 +19,7 @@ in
     enable = lib.mkEnableOption "Install Game Suite(steam, lutris, etc)";
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
+  config = lib.mkIf cfg.enable {
     # ==========================================================================
     # Gaming on Linux
     #

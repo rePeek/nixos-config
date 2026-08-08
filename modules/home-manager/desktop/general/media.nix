@@ -1,6 +1,5 @@
 # General media application defaults for the desktop profile.
 {
-  config,
   lib,
   pkgs,
   ...
@@ -46,7 +45,7 @@ let
     // lib.genAttrs videoMimeTypes (_mimeType: [ "mpv.desktop" ]);
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = with pkgs; [
       imv
       mpv

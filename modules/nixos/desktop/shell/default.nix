@@ -15,9 +15,5 @@
       defaultText = lib.literalExpression "mkHost usernames";
       description = "Users that receive the system desktop defaults through Home Manager.";
     };
-
-    shell = {
-      enable = lib.mkEnableOption "desktop shell profile";
-    };
   };
 }

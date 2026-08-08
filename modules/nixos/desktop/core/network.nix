@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ lib, ... }:
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     networking.networkmanager.enable = lib.mkDefault true;
   };
 }

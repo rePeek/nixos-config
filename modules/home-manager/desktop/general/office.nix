@@ -1,6 +1,5 @@
 # General office application defaults for the desktop profile.
 {
-  config,
   lib,
   pkgs,
   ...
@@ -23,7 +22,7 @@ let
   mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "libreoffice.desktop" ]);
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = with pkgs; [
       libreoffice
     ];

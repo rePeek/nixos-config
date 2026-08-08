@@ -7,8 +7,7 @@
   ...
 }:
 let
-  desktopEnabled = lib.attrByPath [ "custom" "desktop" "enable" ] false config;
-  desktopUsers = lib.attrByPath [ "custom" "desktop" "users" ] usernames config;
+  desktopUsers = lib.attrByPath [ "custom" "desktop" "users" ] [ ] config;
 
   monitorRuleType = lib.types.submodule {
     options = {
@@ -58,7 +57,6 @@ let
       };
 
       desktop.extra.enable = lib.mkEnableOption "extra desktop applications for this user";
-
     };
   };
 
@@ -66,7 +64,7 @@ let
     username:
     let
       userCfg = config.custom.home.users.${username};
-      userDesktopEnabled = desktopEnabled && lib.elem username desktopUsers;
+      userDesktopEnabled = lib.elem username desktopUsers;
       homeRole = if userDesktopEnabled then "desktop" else "server";
       userDesktopRole = homeRole == "desktop";
     in

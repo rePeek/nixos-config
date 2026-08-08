@@ -6,9 +6,6 @@
   ...
 }:
 let
-  cfg = config.custom.desktop.shell;
-
-  dmsEnabled = config.custom.desktop.enable && cfg.enable;
   desktopUsers = config.custom.desktop.users;
   primaryDesktopUser = if desktopUsers == [ ] then null else builtins.head desktopUsers;
   dmsCommand = lib.getExe config.programs.dank-material-shell.package;
@@ -36,7 +33,7 @@ in
     inputs.dms.nixosModules.greeter
   ];
 
-  config = lib.mkIf dmsEnabled {
+  config = {
     assertions = [
       {
         assertion = primaryDesktopUser != null;

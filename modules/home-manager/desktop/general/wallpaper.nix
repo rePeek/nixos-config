@@ -40,8 +40,6 @@ let
 in
 {
   options.custom.desktop.defaults.wallpaper = {
-    enable = lib.mkEnableOption "desktop wallpaper defaults";
-
     directory = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
       default = null;
@@ -86,19 +84,18 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.custom.desktop.enable {
+    {
       custom.desktop.defaults.wallpaper = {
-        enable = true;
         directory = ../../../../assets/wallpapers;
         initialStrategy = "random";
       };
-    })
+    }
 
-    (lib.mkIf (config.custom.desktop.enable && cfg.enable) {
+    {
       assertions = [
         {
           assertion = cfg.directory != null;
-          message = "custom.desktop.defaults.wallpaper.directory must be set when wallpaper defaults are enabled.";
+          message = "custom.desktop.defaults.wallpaper.directory must be set.";
         }
         {
           assertion = wallpaperNames != [ ] || cfg.initialStrategy == "none";
@@ -186,6 +183,6 @@ in
           fi
         ''
       );
-    })
+    }
   ];
 }

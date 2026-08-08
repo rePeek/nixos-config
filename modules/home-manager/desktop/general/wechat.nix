@@ -1,6 +1,5 @@
 # WeChat AppImage configuration with Fcitx support.
 {
-  config,
   lib,
   pkgs,
   ...
@@ -41,7 +40,7 @@ let
   };
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = [ wechat ];
   };
 }

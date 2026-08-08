@@ -1,11 +1,6 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 
 {
-  options.custom.desktop.enable = lib.mkEnableOption "desktop profile";
-
   imports = [
     ../server
     ./avatar.nix
@@ -19,8 +14,6 @@
   config = {
     custom = {
       desktop = {
-        enable = lib.mkDefault true;
-        shell.enable = lib.mkDefault true;
         theme = {
           enable = lib.mkDefault true;
           image = lib.mkDefault ../../../assets/wallpapers/a_woman_with_long_hair_wearing_sunglasses.png;

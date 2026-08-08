@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     services.pipewire = {
       enable = true;
       alsa.enable = true;

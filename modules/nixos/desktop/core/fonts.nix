@@ -1,11 +1,10 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }:
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     # all fonts are linked to /nix/var/nix/profiles/system/sw/share/X11/fonts
     fonts = {
       # use fonts specified by user rather than default ones

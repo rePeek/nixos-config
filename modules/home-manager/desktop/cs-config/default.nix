@@ -71,7 +71,7 @@ in
     };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
+  config = lib.mkIf cfg.enable {
     home.packages = [ cs2-launcher ];
 
     xdg.dataFile."Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/autoexec.cfg" = {

@@ -5,10 +5,6 @@
 }:
 
 {
-  options.custom.desktop.enable = lib.mkEnableOption "desktop Home Manager role" // {
-    default = true;
-  };
-
   imports = [
     ../server
     ./general
@@ -16,7 +12,7 @@
     ./cs-config
   ];
 
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home = {
       pointerCursor.enable = lib.mkDefault true;
 

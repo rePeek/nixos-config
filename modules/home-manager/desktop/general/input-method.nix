@@ -1,6 +1,5 @@
 # General Fcitx5 user defaults for desktop sessions.
 {
-  config,
   lib,
   pkgs,
   ...
@@ -41,7 +40,7 @@ let
   ];
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = [ pkgs.qt6Packages.fcitx5-configtool ];
 
     home.sessionVariables = {

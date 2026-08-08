@@ -1,6 +1,5 @@
 # General browser defaults for the desktop profile.
 {
-  config,
   lib,
   ...
 }:
@@ -17,7 +16,7 @@ let
   mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "firefox.desktop" ]);
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     programs.firefox = {
       enable = lib.mkDefault true;
       configPath = lib.mkDefault ".mozilla/firefox";

@@ -1,11 +1,10 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }:
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     # Required by GTK/GNOME applications and Home Manager dconf settings.
     programs.dconf.enable = true;
 

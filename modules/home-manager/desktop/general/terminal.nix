@@ -11,7 +11,7 @@ let
   stylixEnabled = stylixColors != null;
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home = {
       packages = [ pkgs.kitty ];
       sessionVariables.TERMINAL = lib.mkDefault "kitty";

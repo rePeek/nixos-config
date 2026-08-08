@@ -19,7 +19,7 @@
     ./dms
   ];
 
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     xdg.userDirs = {
       enable = true;
       createDirectories = true;

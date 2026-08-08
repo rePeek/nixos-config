@@ -61,7 +61,7 @@ in
     };
   };
 
-  config = lib.mkIf (config.custom.desktop.enable && cfg.enable) {
+  config = lib.mkIf cfg.enable {
     stylix = {
       enable = true;
       base16Scheme = lib.mkDefault scheme;

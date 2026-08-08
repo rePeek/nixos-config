@@ -1,6 +1,6 @@
 # 桌面 profile
 
-`modules/nixos/desktop/` 只放图形会话相关配置，通过 `custom.desktop.enable` 统一启用。
+`modules/nixos/desktop/` 只放图形会话相关配置；导入该目录即启用桌面基础能力。
 
 `modules/nixos/desktop/default.nix` 负责桌面主机的默认能力选择。桌面基础能力放在 `core/` 中固定启用；没有对应硬件或不想启用时，主机使用 NixOS 原生选项配合 `lib.mkForce false` 覆盖，例如关闭蓝牙可设置 `hardware.bluetooth.enable = lib.mkForce false`。
 

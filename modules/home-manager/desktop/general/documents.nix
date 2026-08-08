@@ -24,7 +24,7 @@ let
   // lib.genAttrs archiveMimeTypes (_mimeType: [ "org.gnome.FileRoller.desktop" ]);
 in
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = with pkgs; [
       evince
       file-roller

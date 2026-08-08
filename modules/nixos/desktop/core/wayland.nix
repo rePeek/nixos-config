@@ -1,11 +1,10 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }:
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     programs.hyprland = {
       enable = true;
       withUWSM = true;

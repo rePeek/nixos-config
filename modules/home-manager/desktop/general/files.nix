@@ -1,13 +1,12 @@
 # General file manager defaults for the desktop profile.
 {
-  config,
   lib,
   pkgs,
   ...
 }:
 
 {
-  config = lib.mkIf config.custom.desktop.enable {
+  config = {
     home.packages = with pkgs; [
       nemo
     ];
