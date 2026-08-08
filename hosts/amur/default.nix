@@ -71,9 +71,9 @@
       nvidia.driver.enable = true;
       gaming.enable = true;
     };
-
-    home.users.asen.desktop.cs2.enable = true;
   };
+
+  home-manager.users.asen.custom.desktop.cs2.enable = true;
 
   services.leigod-plugin = {
     enable = true;
