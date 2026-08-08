@@ -20,12 +20,6 @@
   ];
 
   config = lib.mkIf config.custom.desktop.enable {
-    custom.desktop.defaults.wallpaper = {
-      enable = true;
-      directory = ../../../../assets/wallpapers;
-      initialStrategy = "random";
-    };
-
     xdg.userDirs = {
       enable = true;
       createDirectories = true;
