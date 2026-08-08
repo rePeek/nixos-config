@@ -42,6 +42,7 @@ in
 {
   imports = [
     ./browser.nix
+    ./bottles.nix
     ./documents.nix
     ./files.nix
     ./input-method.nix
