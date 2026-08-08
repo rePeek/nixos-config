@@ -12,7 +12,7 @@
         edit = [
           {
             block = true;
-            run = "hx \"$@\"";
+            run = "nvim \"$@\"";
           }
         ];
       };
