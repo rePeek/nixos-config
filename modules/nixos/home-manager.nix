@@ -58,6 +58,34 @@ let
       };
 
       desktop.extra.enable = lib.mkEnableOption "extra desktop applications for this user";
+
+      desktop.cs2 = {
+        enable = lib.mkEnableOption "CS2 launcher and configuration for this user";
+
+        mangohud.enable = lib.mkEnableOption "MangoHud overlay" // {
+          default = true;
+        };
+
+        gamescope = {
+          enable = lib.mkEnableOption "Gamescope compositor" // {
+            default = false;
+          };
+
+          args = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [
+              "-W"
+              "2560"
+              "-H"
+              "1440"
+              "-r"
+              "240"
+              "--"
+            ];
+            description = "Arguments passed to gamescope before '--'.";
+          };
+        };
+      };
     };
   };
 
@@ -78,6 +106,7 @@ let
       home.packages = userCfg.extraPackages;
     }
     // lib.optionalAttrs userDesktopRole {
+      custom.desktop.cs2 = userCfg.desktop.cs2;
       custom.desktop.hyprland.outputRules = userCfg.desktop.hyprland.outputRules;
       custom.desktop.extra.enable = userCfg.desktop.extra.enable;
     };

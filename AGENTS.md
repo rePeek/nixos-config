@@ -102,7 +102,8 @@ modules/home-manager/
 ├── server/                      # server 用户环境，基础 CLI、shell、Helix、Git、Zellij、LLM agents 等
 ├── desktop/                     # desktop 用户环境，继承 server
 │   ├── general/                 # 所有 desktop 用户固定启用的 GUI 软件、默认应用、DMS 和 Hyprland 配置
-│   └── extra/                   # 通过 custom.desktop.extra.enable 启用的额外 GUI 软件
+│   ├── extra/                   # 通过 custom.desktop.extra.enable 启用的额外 GUI 软件
+│   └── cs-config/               # 通过 custom.desktop.cs2.enable 启用的 CS2 launcher 和 autoexec
 ```
 
 可复用用户定义位于 `modules/user/`，按用户同时保存系统侧和 Home Manager 侧配置：
@@ -161,7 +162,7 @@ modules/user/
 - 所有 desktop 用户固定安装的 GUI 软件放入 `modules/home-manager/desktop/general/`，不再为每个通用应用增加 `enable`；可选 GUI 软件放入 `modules/home-manager/desktop/extra/`，由 `custom.desktop.extra.enable` 统一控制。
 - Home Manager 用户环境聚合入口直接放入 `modules/home-manager/server/` 和 `modules/home-manager/desktop/`；没有 `core` 用户环境，因为 NixOS `core` 是无个人用户的最小主机层。
 - 仅单台机器使用的配置放入对应 `hosts/<host>/`。
-- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；桌面基础图形、音频、蓝牙、输入法和工具放入 `modules/nixos/desktop/core/`，NVIDIA、gaming、CS2、shell、theme 和 avatar 等需要系统集成的能力放入 `modules/nixos/desktop/`。
+- 内核和电源策略放入 `modules/nixos/core/`；系统用户、通用服务入口和虚拟化放入 `modules/nixos/server/`；桌面基础图形、音频、蓝牙、输入法和工具放入 `modules/nixos/desktop/core/`，NVIDIA、gaming、shell、theme 和 avatar 等需要系统集成的能力放入 `modules/nixos/desktop/`；CS2 launcher 和配置放入 `modules/home-manager/desktop/cs-config/`。
 - 主机专属磁盘布局、UUID、initrd 驱动、固件开关和 `nixos-hardware` 导入保留在对应主机的 `hardware/`。
 
 ### 3.2 导入方式

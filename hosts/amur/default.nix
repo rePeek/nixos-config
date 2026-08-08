@@ -69,11 +69,10 @@
     desktop = {
       nvidia.compute.enable = true;
       nvidia.driver.enable = true;
-      gaming = {
-        enable = true;
-        cs2.enable = true;
-      };
+      gaming.enable = true;
     };
+
+    home.users.asen.desktop.cs2.enable = true;
   };
 
   services.leigod-plugin = {
