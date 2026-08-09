@@ -26,16 +26,16 @@
       agenix.enable = true;
       fhs.enable = true;
       mihomo.enable = true;
-      cpa.enable = true;
+      # cpa.enable = true;
 
       virtualization = {
         docker = true;
       };
     };
 
-    core.tailscale = {
-      advertiseExitNode = true;
-    };
+    # core.tailscale = {
+    #   advertiseExitNode = true;
+    # };
 
   };
 
