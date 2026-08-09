@@ -30,15 +30,14 @@
 | Flake 输出 | 主机目录 | Home Manager 用户 | 用途 |
 | --- | --- | --- | --- |
 | `amur` | `hosts/amur/` | `asen` | 额外桌面主机 |
-| `home-server` | `hosts/home-server/` | 无 | 家用服务器 |
+| `sumatran` | `hosts/sumatran/` | 无 | 家用服务器 |
 | `bengal` | `hosts/bengal/` | `asen` | 额外 NixOS 主机 |
-| `rainyun` | `hosts/rain-cloud/` | 无 | 远程云主机 |
+| `malayan` | `hosts/malayan/` | 无 | 远程云主机 |
 | `homeConfigurations.root` | `hosts/nixos-in-docker/root.nix` | `root` | 非 NixOS 环境中的独立 Home Manager 配置 |
 
 注意：
 
-- `rainyun` 的 Flake 输出名与目录名 `rain-cloud` 不同。
-- `rainyun` 的系统 hostname 为 `RainYun`。修改时区分 Flake 输出名、目录名和系统 hostname。
+- `malayan` 的 Flake 输出名、目录名和系统 hostname 保持一致。
 - NixOS 主机入口统一使用 `hosts/<dir>/default.nix`。
 
 ### 2.3 主机目录
@@ -55,9 +54,9 @@ hosts/<host>/
 └── network.nix                  # 或 network/ 目录
 ```
 
-`home-server` 的网络配置拆分在 `hosts/home-server/network/` 下，由 `default.nix` 聚合。
+`sumatran` 的网络配置拆分在 `hosts/sumatran/network/` 下，由 `default.nix` 聚合。
 
-`rain-cloud` 是轻量远程主机，在公共 core 提供的 Tailscale 基础上直接导入目录内的 `derper.nix` 和 `my-derper.nix`。
+`malayan` 是轻量远程主机，在公共 core 提供的 Tailscale 基础上直接导入目录内的 `derper.nix` 和 `my-derper.nix`。
 
 ### 2.4 可复用模块
 
@@ -272,7 +271,7 @@ just secret-rekey
 | 命令 | 目标 |
 | --- | --- |
 | `just deploy-local` | 根据当前 hostname 部署对应的本地 NixOS 主机 |
-| `just deploy-remote` | 远程部署 `rainyun` |
+| `just deploy-remote` | 远程部署 `malayan` |
 | `just deploy-docker` | 应用独立 `root` Home Manager 配置 |
 | `just up [input]` | 更新全部或指定 Flake 输入 |
 | `just history` | 查看系统 profile 历史 |
@@ -318,9 +317,9 @@ nix-instantiate --parse <file>
 
 ```bash
 nixos-rebuild dry-build --flake .#amur
-nixos-rebuild dry-build --flake .#home-server
+nixos-rebuild dry-build --flake .#sumatran
 nixos-rebuild dry-build --flake .#bengal
-nixos-rebuild dry-build --flake .#rainyun
+nixos-rebuild dry-build --flake .#malayan
 ```
 
 只运行与改动相关的主机；公共基础模块改动应扩大验证范围。独立 Home Manager 配置使用：
@@ -335,7 +334,7 @@ home-manager build --flake .#root
 - 提交信息使用英文 Conventional Commits，例如：
 
 ```text
-feat: add home-server backup service
+feat: add sumatran backup service
 fix: correct home-manager import path
 docs: refresh repository structure guide
 chore: update flake lock

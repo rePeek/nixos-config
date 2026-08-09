@@ -8,7 +8,7 @@
   ...
 }:
 {
-  networking.hostName = "home-server";
+  networking.hostName = "sumatran";
 
   imports = [
     ./hardware

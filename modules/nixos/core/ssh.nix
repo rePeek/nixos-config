@@ -20,8 +20,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGRn9IstM5aV2WO9aiT1XeGUKw/2aN+VR5GGYx0tny1 game@brain"
       # Workstation key
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8xxMOxMAUKz4QZ3h2VqjNeTjd2btVKXB6qN3aMWSyAbCvkOwrCB/1HCUvWDM+3ocsxlTQWfldX38PdypBllEU9ITi5aeh5pR/oicbIhN0ELg2+Q6yJ59+4clbXrZhjFHLak1OT7laBlvlynBCnbe2uSyAawgVdy6T3d7b1iRw1e1gwlQJB8ju0suPQeWgMxFNLzXRAgHUZ/q2Rfj6niTBd/4bkDkNdSNJ6WG0UHlHwzFkflLDGuJ3DIvY9Cr7CmijoX4Ntq+V4lc5Igpr+FxQYEPT9a6i+dmebrPcp88rYO55ZhbOzvr7XJIazfQudHheWMOQ6HnzV1ZBygAUi6n1RfwQRr2GJZLlNHnO3X1nMrBjJd2gJgK2zyl+7uS2tsRU0kLZfmfr4h4D+3bUspq4eR8v/3hnBg2LeRf/WnSgF7qE9I1Wms0Pvk3KsNc7YvUamyhF48J+xkCbv9JVi9sYiREPlMrZbGh7+X8T5kf1cGnyZFP8Z1pS7DMGxJ9D/Pk= root@work"
-      # home-server
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJQsi1O04P+PUqAdbKDcJHWuZgXDn4D7ssvzE9mCdby asen@home-server"
+      # sumatran
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJQsi1O04P+PUqAdbKDcJHWuZgXDn4D7ssvzE9mCdby asen@sumatran"
       # amur
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ43pkqashtye7OIr1TPJ2lJTwy2NCKotVspszQRY6tS asen@amur"
     ];

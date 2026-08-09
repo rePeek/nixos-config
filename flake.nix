@@ -107,13 +107,13 @@
           extraModules = [ inputs.leigod.nixosModules.default ];
         };
 
-        home-server = myLib.mkHost {
-          hostPath = ./hosts/home-server;
+        sumatran = myLib.mkHost {
+          hostPath = ./hosts/sumatran;
           enableHomeManager = false;
         };
 
-        rainyun = myLib.mkHost {
-          hostPath = ./hosts/rain-cloud;
+        malayan = myLib.mkHost {
+          hostPath = ./hosts/malayan;
           enableHomeManager = false;
         };
 

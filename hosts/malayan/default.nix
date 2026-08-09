@@ -6,7 +6,7 @@
 }:
 
 {
-  networking.hostName = "RainYun";
+  networking.hostName = "malayan";
 
   imports = [
     ./hardware

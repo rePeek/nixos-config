@@ -35,16 +35,16 @@ in
     networking.nftables.enable = true;
     networking.hosts = {
       "100.66.72.6" = [
-        "home-server"
-        "home-server.tailfd7184.ts.net"
+        "sumatran"
+        "sumatran.tailfd7184.ts.net"
       ];
       "100.71.185.73" = [
         "bengal"
         "bengal.tailfd7184.ts.net"
       ];
       "100.82.124.57" = [
-        "rainyun"
-        "rainyun.tailfd7184.ts.net"
+        "malayan"
+        "malayan.tailfd7184.ts.net"
       ];
       "100.71.17.17" = [
         "amur"

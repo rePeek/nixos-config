@@ -13,7 +13,7 @@ deploy-docker:
   home-manager switch --flake .#root
   
 deploy-remote:
-  nixos-rebuild switch --flake .#rainyun --target-host root@rainyun
+  nixos-rebuild switch --flake .#malayan --target-host root@100.82.124.57
 
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
