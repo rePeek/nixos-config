@@ -34,7 +34,7 @@ in
     };
     networking.nftables.enable = true;
     networking.hosts = {
-      "100.66.72.6" = [
+      "100.118.194.84" = [
         "sumatran"
         "sumatran.tailfd7184.ts.net"
       ];
