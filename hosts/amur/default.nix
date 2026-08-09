@@ -55,7 +55,6 @@
     server = {
       fhs.enable = true;
       agenix.enable = true;
-      mihomo.enable = true;
 
       virtualization = {
         docker = true;

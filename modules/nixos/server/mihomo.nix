@@ -9,11 +9,20 @@ with lib;
 let
   cfg = config.custom.server.mihomo;
   runtimeConfig = "/run/mihomo/config.yaml";
+  directUdpRules = concatMapStringsSep "\n  " (
+    cidr: "- AND,((SRC-IP-CIDR,${cidr}),(NETWORK,UDP)),DIRECT"
+  ) cfg.directUdpSourceCidrs;
 in
 {
 
   options.custom.server.mihomo = {
     enable = mkEnableOption "Mihomo client service.";
+
+    directUdpSourceCidrs = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = "Source CIDRs whose UDP traffic bypasses proxy nodes.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -318,6 +327,8 @@ in
         rules:
           - RULE-SET,reject,REJECT
 
+          ${directUdpRules}
+
           - DOMAIN-SUFFIX,jmssub.net,DIRECT
           - RULE-SET,private,DIRECT
           - RULE-SET,direct,DIRECT
@@ -384,6 +395,31 @@ in
       restartTriggers = [
         config.systemd.services.mihomo-config.script # 用当前配置生成服务作为触发器
       ];
+    };
+
+    # Route selected LAN UDP traffic before Mihomo's priority-9000 TUN rules.
+    systemd.services.mihomo-udp-bypass = mkIf (cfg.directUdpSourceCidrs != [ ]) {
+      description = "Bypass Mihomo TUN for selected UDP source networks";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "mihomo.service" ];
+      partOf = [ "mihomo.service" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+
+      script = ''
+        while ${pkgs.iproute2}/bin/ip -4 rule del priority 8999 2>/dev/null; do :; done
+        ${concatMapStringsSep "\n" (
+          cidr:
+          "${pkgs.iproute2}/bin/ip -4 rule add priority 8999 from ${escapeShellArg cidr} ipproto udp lookup main"
+        ) cfg.directUdpSourceCidrs}
+      '';
+
+      preStop = ''
+        while ${pkgs.iproute2}/bin/ip -4 rule del priority 8999 2>/dev/null; do :; done
+      '';
     };
 
     networking.firewall.allowedTCPPorts = [

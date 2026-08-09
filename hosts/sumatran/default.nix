@@ -25,7 +25,10 @@
     server = {
       agenix.enable = true;
       fhs.enable = true;
-      mihomo.enable = true;
+      mihomo = {
+        enable = true;
+        directUdpSourceCidrs = [ "192.168.50.134/32" ];
+      };
       # cpa.enable = true;
 
       virtualization = {

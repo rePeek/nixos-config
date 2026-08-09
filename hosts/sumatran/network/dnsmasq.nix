@@ -15,6 +15,11 @@ in
         "192.168.50.100,192.168.50.200,255.255.255.0,12h"
       ];
 
+      # Keep amur's source address stable for its Mihomo UDP direct rule.
+      dhcp-host = [
+        "34:5a:60:1e:ea:bc,amur,192.168.50.134,infinite"
+      ];
+
       dhcp-option = [
         "3,${lanIp}"
         "6,${lanIp}"
