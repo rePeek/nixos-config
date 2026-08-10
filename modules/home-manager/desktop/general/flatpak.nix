@@ -24,6 +24,7 @@
       "com.github.tchx84.Flatseal"
       "com.interversehq.qView"
       "com.tencent.WeChat"
+      "com.usebottles.bottles"
       "io.mpv.Mpv"
       "org.gnome.Evince"
       "org.gnome.FileRoller"
