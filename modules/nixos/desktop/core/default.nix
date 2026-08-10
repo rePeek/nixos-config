@@ -5,6 +5,7 @@
     ./base.nix
     ./bluetooth.nix
     ./fonts.nix
+    ./flatpak.nix
     ./graphics.nix
     ./input-method.nix
     ./network.nix

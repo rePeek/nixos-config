@@ -97,6 +97,9 @@ in
       # Install packages into the user environment.
       useUserPackages = true;
       backupFileExtension = "bkp";
+      sharedModules = [
+        inputs.nix-flatpak.homeManagerModules.nix-flatpak
+      ];
       extraSpecialArgs = {
         inherit inputs;
         nvimPkg = inputs.nvim.packages.${pkgs.stdenv.hostPlatform.system}.default;

@@ -10,12 +10,12 @@
     ./bottles.nix
     ./documents.nix
     ./files.nix
+    ./flatpak.nix
     ./input-method.nix
     ./media.nix
     ./office.nix
     ./terminal.nix
     ./wallpaper.nix
-    ./wechat.nix
     ./dms
   ];
 
