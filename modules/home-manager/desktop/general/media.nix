@@ -1,4 +1,5 @@
 # General media application defaults for the desktop profile.
+# mpv is installed via Flatpak; imv and webp-pixbuf-loader remain as nixpkgs.
 {
   lib,
   pkgs,
@@ -41,14 +42,13 @@ let
 
   mimeDefaults =
     lib.genAttrs imageMimeTypes (_mimeType: [ "imv-dir.desktop" ])
-    // lib.genAttrs audioMimeTypes (_mimeType: [ "mpv.desktop" ])
-    // lib.genAttrs videoMimeTypes (_mimeType: [ "mpv.desktop" ]);
+    // lib.genAttrs audioMimeTypes (_mimeType: [ "io.mpv.Mpv.desktop" ])
+    // lib.genAttrs videoMimeTypes (_mimeType: [ "io.mpv.Mpv.desktop" ]);
 in
 {
   config = {
     home.packages = with pkgs; [
       imv
-      mpv
       webp-pixbuf-loader
     ];
 

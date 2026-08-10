@@ -1,7 +1,7 @@
 # General office application defaults for the desktop profile.
+# LibreOffice is installed via Flatpak.
 {
   lib,
-  pkgs,
   ...
 }:
 
@@ -19,14 +19,10 @@ let
     "application/rtf"
   ];
 
-  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "libreoffice.desktop" ]);
+  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "org.libreoffice.LibreOffice.desktop" ]);
 in
 {
   config = {
-    home.packages = with pkgs; [
-      libreoffice
-    ];
-
     xdg.mimeApps = {
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;

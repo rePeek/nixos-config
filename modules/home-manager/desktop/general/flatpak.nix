@@ -23,6 +23,11 @@
     packages = [
       "com.github.tchx84.Flatseal"
       "com.tencent.WeChat"
+      "io.mpv.Mpv"
+      "org.gnome.Evince"
+      "org.gnome.FileRoller"
+      "org.gnome.TextEditor"
+      "org.libreoffice.LibreOffice"
     ];
   };
 
