@@ -1,8 +1,7 @@
 # General media application defaults for the desktop profile.
-# mpv and qView are installed via Flatpak; webp-pixbuf-loader remains as nixpkgs.
+# mpv and qView are installed via Flatpak.
 {
   lib,
-  pkgs,
   ...
 }:
 
@@ -47,10 +46,6 @@ let
 in
 {
   config = {
-    home.packages = with pkgs; [
-      webp-pixbuf-loader
-    ];
-
     xdg.mimeApps = {
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
