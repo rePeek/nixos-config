@@ -24,7 +24,13 @@
       enable = true;
       createDirectories = true;
       desktop = config.home.homeDirectory;
+      documents = null;
       download = config.home.homeDirectory + "/Downloads";
+      music = null;
+      pictures = config.home.homeDirectory + "/Pictures";
+      publicShare = null;
+      templates = null;
+      videos = null;
     };
 
     xdg.configFile."mimeapps.list".force = lib.mkDefault true;
