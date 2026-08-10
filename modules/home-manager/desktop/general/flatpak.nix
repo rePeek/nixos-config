@@ -23,6 +23,7 @@
     packages = [
       "com.github.tchx84.Flatseal"
       "com.tencent.WeChat"
+      "com.interversehq.qView"
       "io.mpv.Mpv"
       "org.gnome.Evince"
       "org.gnome.FileRoller"
