@@ -1,7 +1,8 @@
 # General media application defaults for the desktop profile.
-# mpv and qView are installed via Flatpak.
+# imv and mpv are installed via nixpkgs.
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -40,12 +41,18 @@ let
   ];
 
   mimeDefaults =
-    lib.genAttrs imageMimeTypes (_: [ "com.interversehq.qView.desktop" ])
-    // lib.genAttrs audioMimeTypes (_: [ "io.mpv.Mpv.desktop" ])
-    // lib.genAttrs videoMimeTypes (_: [ "io.mpv.Mpv.desktop" ]);
+    lib.genAttrs imageMimeTypes (_: [ "imv-dir.desktop" ])
+    // lib.genAttrs audioMimeTypes (_: [ "mpv.desktop" ])
+    // lib.genAttrs videoMimeTypes (_: [ "mpv.desktop" ]);
 in
 {
   config = {
+    home.packages = with pkgs; [
+      mpv
+      imv
+      webp-pixbuf-loader
+    ];
+
     xdg.mimeApps = {
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;

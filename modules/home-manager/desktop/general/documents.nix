@@ -1,8 +1,9 @@
 # General document utility defaults for the desktop profile.
-# Apps (Evince, File Roller, GNOME Text Editor) are installed via Flatpak.
+# Evince, File Roller, and GNOME Text Editor are installed via nixpkgs.
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -25,6 +26,12 @@ let
 in
 {
   config = {
+    home.packages = with pkgs; [
+      evince
+      file-roller
+      gnome-text-editor
+    ];
+
     dconf.settings."org/gnome/TextEditor" = {
       custom-font = lib.mkDefault "Maple Mono 15";
       highlight-current-line = true;

@@ -1,28 +1,42 @@
 # General office application defaults for the desktop profile.
-# LibreOffice is installed via Flatpak.
+# LibreOffice is installed via nixpkgs.
 {
   lib,
+  pkgs,
   ...
 }:
 
 let
-  mimeTypes = [
+  writerMimeTypes = [
     "application/vnd.oasis.opendocument.text"
-    "application/vnd.oasis.opendocument.spreadsheet"
-    "application/vnd.oasis.opendocument.presentation"
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation"
     "application/msword"
-    "application/vnd.ms-excel"
-    "application/vnd.ms-powerpoint"
     "application/rtf"
   ];
 
-  mimeDefaults = lib.genAttrs mimeTypes (_mimeType: [ "org.libreoffice.LibreOffice.desktop" ]);
+  calcMimeTypes = [
+    "application/vnd.oasis.opendocument.spreadsheet"
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    "application/vnd.ms-excel"
+  ];
+
+  impressMimeTypes = [
+    "application/vnd.oasis.opendocument.presentation"
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    "application/vnd.ms-powerpoint"
+  ];
+
+  mimeDefaults =
+    lib.genAttrs writerMimeTypes (_: [ "writer.desktop" ])
+    // lib.genAttrs calcMimeTypes (_: [ "calc.desktop" ])
+    // lib.genAttrs impressMimeTypes (_: [ "impress.desktop" ]);
 in
 {
   config = {
+    home.packages = with pkgs; [
+      libreoffice
+    ];
+
     xdg.mimeApps = {
       associations.added = mimeDefaults;
       defaultApplications = mimeDefaults;
