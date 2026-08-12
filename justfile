@@ -11,9 +11,13 @@ deploy-local:
 
 deploy-docker:
   home-manager switch --flake .#root
-  
-deploy-remote:
-  nixos-rebuild switch --flake .#malayan --target-host root@100.82.124.57
+
+# not used now
+deploy-remote-malayan:
+  nixos-rebuild switch --flake .#malayan --target-host root@malayan
+
+deploy-remote-sumatran:
+  nixos-rebuild switch --flake .#sumatran --target-host root@sumatran
 
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
