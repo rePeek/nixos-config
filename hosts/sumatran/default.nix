@@ -5,6 +5,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -43,6 +44,8 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
+
+  environment.systemPackages = [ pkgs.tdl ];
 
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
   users.users.root.openssh.authorizedKeys.keys = config.custom.ssh.sharedAuthorizedKeys;
