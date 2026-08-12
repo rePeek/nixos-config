@@ -1,4 +1,10 @@
 {
+  users.users.navidrome.extraGroups = [ "media" ];
+
+  systemd.tmpfiles.rules = [
+    "d /srv/media/music 0750 media media -"
+  ];
+
   services.navidrome = {
     enable = true;
     openFirewall = true;
@@ -6,13 +12,7 @@
     settings = {
       Address = "0.0.0.0";
       Port = 4533;
-      MusicFolder = "/mnt/rc115";
+      MusicFolder = "/srv/media/music";
     };
-  };
-
-  systemd.services.navidrome = {
-    after = [ "rclone115.service" ];
-    wants = [ "rclone115.service" ];
-    requires = [ "rclone115.service" ];
   };
 }

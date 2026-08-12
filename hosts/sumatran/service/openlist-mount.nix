@@ -20,9 +20,7 @@
   systemd = {
     tmpfiles.rules = [
       "d /mnt/rc115 0750 media media -"
-      "d /srv/media/local 0750 media media -"
-      "d /srv/media/local/comics 0750 media media -"
-      "d /srv/media/local/videos 0750 media media -"
+      "d /srv/media/openlist 0750 media media -"
     ];
 
     services = {
