@@ -1,7 +1,10 @@
 # OpenList WebDAV service and its local rclone mount.
 { config, pkgs, ... }:
 {
-  programs.fuse.userAllowOther = true;
+  programs.fuse = {
+    enable = true;
+    userAllowOther = true;
+  };
 
   networking.firewall.allowedTCPPorts = [ 5244 ];
 
