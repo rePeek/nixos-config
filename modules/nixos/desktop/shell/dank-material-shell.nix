@@ -30,7 +30,7 @@ in
 {
   imports = [
     inputs.dms.nixosModules.dank-material-shell
-    inputs.dms.nixosModules.greeter
+    inputs.dank-greeter.nixosModules.default
   ];
 
   config = {
@@ -46,28 +46,30 @@ in
       dgop.package = pkgs.dgop;
       systemd.enable = false;
       quickshell.package = quickshellPackage;
-      greeter = {
-        enable = true;
-        compositor = {
-          name = "hyprland";
-          customConfig = ''
-            env = DMS_RUN_GREETER,1
-            env = XCURSOR_THEME,${cursorName}
-            env = XCURSOR_SIZE,${cursorSize}
-            env = HYPRCURSOR_THEME,${cursorName}
-            env = HYPRCURSOR_SIZE,${cursorSize}
+    };
 
-            misc {
-                disable_hyprland_logo = true
-            }
+    programs.dms-greeter = {
+      enable = true;
+      quickshell.package = quickshellPackage;
+      compositor = {
+        name = "hyprland";
+        customConfig = ''
+          env = DMS_RUN_GREETER,1
+          env = XCURSOR_THEME,${cursorName}
+          env = XCURSOR_SIZE,${cursorSize}
+          env = HYPRCURSOR_THEME,${cursorName}
+          env = HYPRCURSOR_SIZE,${cursorSize}
 
-            exec-once = hyprctl setcursor ${cursorName} ${cursorSize}
-          '';
-        };
-      }
-      // lib.optionalAttrs (primaryDesktopUser != null) {
-        configHome = "/home/${primaryDesktopUser}";
+          misc {
+              disable_hyprland_logo = true
+          }
+
+          exec-once = hyprctl setcursor ${cursorName} ${cursorSize}
+        '';
       };
+    }
+    // lib.optionalAttrs (primaryDesktopUser != null) {
+      configHome = "/home/${primaryDesktopUser}";
     };
 
     # Gamepads do not necessarily reset the compositor's idle timer. Keep the

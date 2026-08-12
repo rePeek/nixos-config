@@ -29,8 +29,16 @@
     };
 
     dms = {
-      url = "github:AvengeMedia/DankMaterialShell";
+      # Keep the locale-independent Bluetooth codec fix while retaining the
+      # matching 1.6-beta configuration interface used by this repository.
+      url = "github:AvengeMedia/DankMaterialShell/cf4f48069f24a522f0bab88f3523685bfe8f13da";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dank-qml-common.follows = "dms/dank-qml-common";
     };
 
     quickshell = {
