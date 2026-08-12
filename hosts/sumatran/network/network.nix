@@ -37,12 +37,6 @@ in
 
       allowedTCPPorts = [
         22
-        # ragflow
-        49385
-        # openclaw
-        18789
-        18790
-
         53
         7890
       ];

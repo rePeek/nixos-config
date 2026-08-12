@@ -6,7 +6,6 @@
   };
 
   imports = [
-    ./jellyfin.nix
     ./komga.nix
     ./navidrome.nix
     ./openlist-mount.nix
