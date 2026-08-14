@@ -42,7 +42,7 @@
           output = "desc:Microstep MAG 271QPX E2";
           mode = "2560x1440@239.99";
           position = "auto";
-          scale = "1";
+          scale = "1.07";
         }
       ];
     };

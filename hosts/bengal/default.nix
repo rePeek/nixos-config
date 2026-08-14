@@ -32,7 +32,7 @@
         output = "DP-1";
         mode = "preferred";
         position = "auto";
-        scale = "1";
+        scale = "1.07";
         transform = 2;
       }
     ];
