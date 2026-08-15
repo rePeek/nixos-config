@@ -9,6 +9,7 @@
 
 let
   cfg = config.custom.users.asen;
+  gpgFingerprint = "F8D6A23D561E28EC2EB23E8FB8CF115BCA7F8C1A";
   hasDesktopAvatar = lib.hasAttrByPath [
     "custom"
     "desktop"
@@ -37,6 +38,50 @@ in
       };
 
       programs.fish.enable = true;
+
+      age.secrets.gpg-signing-key = {
+        file = ../../../secrets/gpg-signing-key.age;
+        owner = "asen";
+        mode = "0400";
+      };
+
+      programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+        settings = {
+          default-cache-ttl = 43200;
+          max-cache-ttl = 43200;
+        };
+      };
+
+      systemd.services.gpg-import-signing-key = {
+        description = "Import GPG signing key for asen";
+
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          User = "asen";
+
+          Environment = [
+            "HOME=/home/asen"
+            "GNUPGHOME=/home/asen/.gnupg"
+          ];
+        };
+
+        script = ''
+          mkdir -p "$GNUPGHOME"
+          chmod 700 "$GNUPGHOME"
+
+          if ! ${pkgs.gnupg}/bin/gpg \
+            --list-secret-keys "${gpgFingerprint}" >/dev/null 2>&1
+          then
+            ${pkgs.gnupg}/bin/gpg \
+              --batch \
+              --import ${config.age.secrets.gpg-signing-key.path}
+          fi
+        '';
+      };
 
       # Allow the user's flakes and command-line invocations to opt into extra substituters.
       nix.settings = {

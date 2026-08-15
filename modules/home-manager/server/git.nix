@@ -17,7 +17,7 @@
           # Improves performance
           # https://github.com/jesseduffield/lazygit/issues/2875#issuecomment-1665376437
           log.order = "default";
-
+          overrideGpg = true;
           fetchAll = false;
         };
       };
