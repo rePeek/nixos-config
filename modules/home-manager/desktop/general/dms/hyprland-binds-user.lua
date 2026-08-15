@@ -1,6 +1,6 @@
 -- General Hyprland keybind overrides loaded after DMS defaults.
 
-local terminal = os.getenv("TERMINAL") or "kitty"
+local terminal = os.getenv("TERMINAL") or "ghostty"
 local floating_terminal = { float = true, size = { 1111, 700 }, center = true }
 
 for _, key in ipairs({

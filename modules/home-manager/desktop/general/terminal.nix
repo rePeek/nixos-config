@@ -1,4 +1,4 @@
-# General Kitty terminal defaults for the desktop profile.
+# General Ghostty terminal defaults for the desktop profile.
 {
   config,
   lib,
@@ -6,31 +6,24 @@
   ...
 }:
 
-let
-  stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
-  stylixEnabled = stylixColors != null;
-in
 {
   config = {
     home = {
-      packages = [ pkgs.kitty ];
-      sessionVariables.TERMINAL = lib.mkDefault "kitty";
+      packages = [ pkgs.ghostty ];
+      sessionVariables.TERMINAL = lib.mkDefault "ghostty";
     };
 
-    programs.kitty = {
+    programs.ghostty = {
       enable = lib.mkDefault true;
-    }
-    // lib.optionalAttrs (!stylixEnabled) {
-      themeFile = lib.mkDefault "GitHub_Light";
     };
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
-      kitty.desktop
+      com.mitchellh.ghostty.desktop
     '';
 
     xdg.mimeApps = {
-      associations.added.terminal = [ "kitty.desktop" ];
-      defaultApplications.terminal = [ "kitty.desktop" ];
+      associations.added.terminal = [ "com.mitchellh.ghostty.desktop" ];
+      defaultApplications.terminal = [ "com.mitchellh.ghostty.desktop" ];
     };
   };
 }

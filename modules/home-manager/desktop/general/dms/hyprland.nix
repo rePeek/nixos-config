@@ -8,7 +8,7 @@
 }:
 let
   cfg = config.custom.desktop.hyprland;
-  terminalCommand = config.home.sessionVariables.TERMINAL or "kitty";
+  terminalCommand = config.home.sessionVariables.TERMINAL or "ghostty";
   screenshotDirectory = "/tmp";
   dmsLauncher = pkgs.writeShellScriptBin "dms-run-with-wayland-input" ''
     unset GTK_IM_MODULE
