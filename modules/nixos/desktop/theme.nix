@@ -95,7 +95,7 @@ in
           applications = 12;
           desktop = 11;
           popups = 11;
-          terminal = 13;
+          terminal = 14;
         };
       };
 
