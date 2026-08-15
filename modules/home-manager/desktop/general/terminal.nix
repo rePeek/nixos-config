@@ -1,29 +1,26 @@
 # General Ghostty terminal defaults for the desktop profile.
 {
-  config,
   lib,
-  pkgs,
   ...
 }:
 
 {
   config = {
-    home = {
-      packages = [ pkgs.ghostty ];
-      sessionVariables.TERMINAL = lib.mkDefault "ghostty";
-    };
+    home.sessionVariables.TERMINAL = lib.mkDefault "ghostty";
 
     programs.ghostty = {
       enable = lib.mkDefault true;
+
+      settings = {
+        window-padding-x = 0;
+        window-padding-y = 0;
+        window-padding-balance = false;
+        window-padding-color = "extend-always";
+      };
     };
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
       com.mitchellh.ghostty.desktop
     '';
-
-    xdg.mimeApps = {
-      associations.added.terminal = [ "com.mitchellh.ghostty.desktop" ];
-      defaultApplications.terminal = [ "com.mitchellh.ghostty.desktop" ];
-    };
   };
 }
