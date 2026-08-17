@@ -192,6 +192,7 @@ in
         barConfigs = [ bottomMainBar ];
 
         cursorSettings = dmsCursorSettings;
+        hyprlandLayoutRadiusOverride = 4;
 
         customPowerActionLogout = "uwsm stop";
         lockScreenPowerOffMonitorsOnLock = true;
