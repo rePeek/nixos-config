@@ -206,7 +206,7 @@ in
 
           useAutoLocation = true;
           popupTransparency = 0.92;
-          cornerRadius = 12;
+          cornerRadius = 4;
           systemTrayIconTintMode = "primary";
 
           clockDateFormat = "ddd d";
