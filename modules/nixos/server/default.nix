@@ -3,6 +3,7 @@
   imports = [
     ../core
     ./agenix.nix
+    ./bili-sync.nix
     ./cpa
     ./fhs.nix
     ./mihomo.nix

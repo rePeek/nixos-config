@@ -62,6 +62,11 @@
 
     leigod.url = "github:rePeek/leigod-plugin-linux";
 
+    bili-sync = {
+      url = "github:rePeek/bili-sync";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
 
     nvim = {

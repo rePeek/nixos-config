@@ -26,6 +26,11 @@
     server = {
       agenix.enable = true;
       fhs.enable = true;
+      bili-sync = {
+        enable = true;
+        downloadDirectory = "/srv/media/download-bilibili";
+        downloadGroup = "media";
+      };
       mihomo = {
         enable = true;
         directUdpSourceCidrs = [ "192.168.50.134/32" ];

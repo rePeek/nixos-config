@@ -89,6 +89,26 @@
         "type": "github"
       }
     },
+    "bili-sync": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786718389,
+        "narHash": "sha256-AeRzGuSXaMC6t/TRULdlog4us+8z/OS7cTFHxt+IPeU=",
+        "owner": "rePeek",
+        "repo": "bili-sync",
+        "rev": "09bc333a4adda83ecb0cf44b719b7de36136c416",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rePeek",
+        "repo": "bili-sync",
+        "type": "github"
+      }
+    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -930,6 +950,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "bili-sync": "bili-sync",
         "dank-greeter": "dank-greeter",
         "disko": "disko",
         "dms": "dms",
