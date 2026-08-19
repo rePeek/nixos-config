@@ -33,6 +33,12 @@ in
       description = "Working directory used as the base for relative download paths.";
     };
 
+    downloadOwner = lib.mkOption {
+      type = lib.types.str;
+      default = "bili-sync";
+      description = "User that owns the download directory.";
+    };
+
     downloadGroup = lib.mkOption {
       type = lib.types.str;
       default = "bili-sync";
@@ -65,7 +71,8 @@ in
 
     systemd.tmpfiles.rules = [
       "d ${cfg.configDirectory} 0700 bili-sync bili-sync -"
-      "d ${cfg.downloadDirectory} 2750 bili-sync ${cfg.downloadGroup} -"
+      "Z ${cfg.configDirectory} - bili-sync bili-sync -"
+      "d ${cfg.downloadDirectory} 2770 ${cfg.downloadOwner} ${cfg.downloadGroup} -"
     ];
 
     systemd.services.bili-sync = {
