@@ -33,12 +33,6 @@ in
       }
     ];
 
-    age.secrets.yuetong-subscription = {
-      file = inputs.self + /secrets/yuetong-subscription.age;
-      owner = "root";
-      group = "root";
-      mode = "0400";
-    };
     age.secrets.jms-subscription = {
       file = inputs.self + /secrets/jms-subscription.age;
       owner = "root";
@@ -56,7 +50,6 @@ in
       };
       script = ''
               install -d -m 0755 /run/mihomo
-              YDY_URL="$(cat ${config.age.secrets.yuetong-subscription.path})"
               JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
 
               cat > ${runtimeConfig} <<EOF
@@ -135,14 +128,6 @@ in
             - 192.168.0.0/16
 
         proxy-providers:
-          ydy_sub:
-            type: http
-            url: "$YDY_URL"
-            interval: 14400
-            health-check:
-              enable: true
-              url: "https://www.gstatic.com/generate_204"
-              interval: 300
 
           jms_sub:
             type: http
@@ -158,7 +143,6 @@ in
             type: url-test
             use:
               - jms_sub
-              - ydy_sub
             interval: 300
             timeout: 3000
             tolerance: 50
@@ -168,7 +152,6 @@ in
             type: url-test
             use:
               - jms_sub
-              - ydy_sub
             filter: "(?i)日本|Japan|JP|东京|Tokyo|大阪|Osaka|c2s4"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
@@ -179,7 +162,6 @@ in
             type: url-test
             use:
               - jms_sub
-              - ydy_sub
             filter: "(?i)美国|United States|USA|US|JMS"
             url: "https://www.gstatic.com/generate_204"
             interval: 300

@@ -24,7 +24,6 @@ let
 in
 {
   "jms-subscription.age" = mkSecret groups.all;
-  "yuetong-subscription.age" = mkSecret groups.all;
   "rc115-conf-pass.age" = mkSecret groups.all;
   "gpg-signing-key.age" = mkSecret groups.development;
 }
