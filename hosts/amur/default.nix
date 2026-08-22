@@ -60,6 +60,7 @@
         downloadDirectory = "/home/asen/Downloads/bili-sync";
         downloadOwner = "asen";
         downloadGroup = "users";
+        traverseDirectories = [ "/home/asen" ];
       };
 
       virtualization = {
@@ -79,12 +80,6 @@
   };
 
   home-manager.users.asen.custom.desktop.cs2.enable = true;
-
-  # Allow only the Bili-Sync service account to traverse the private home
-  # directory on its way to the declared download directory.
-  systemd.tmpfiles.rules = [
-    "a+ /home/asen - - - - u:bili-sync:--x,m::--x"
-  ];
 
   services.leigod-plugin = {
     enable = true;

@@ -45,6 +45,16 @@ in
       description = "Group that owns downloaded files, typically a shared media group.";
     };
 
+    traverseDirectories = lib.mkOption {
+      type = lib.types.listOf lib.types.path;
+      default = [ ];
+      example = [ "/home/example" ];
+      description = ''
+        Parent directories through which the Bili-Sync service account needs
+        execute-only access in order to reach the download directory.
+      '';
+    };
+
     port = lib.mkOption {
       type = lib.types.port;
       default = 12345;
@@ -79,7 +89,11 @@ in
       description = "Bili-Sync Bilibili synchronization service";
       wantedBy = [ "multi-user.target" ];
       wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      requires = lib.optional (cfg.traverseDirectories != [ ]) "bili-sync-directory-access.service";
+      after = [
+        "network-online.target"
+      ]
+      ++ lib.optional (cfg.traverseDirectories != [ ]) "bili-sync-directory-access.service";
 
       environment = {
         BILI_SYNC_CONFIG_DIR = cfg.configDirectory;
@@ -104,6 +118,20 @@ in
           cfg.downloadDirectory
         ];
       };
+    };
+
+    systemd.services.bili-sync-directory-access = lib.mkIf (cfg.traverseDirectories != [ ]) {
+      description = "Grant Bili-Sync access through parent directories";
+      before = [ "bili-sync.service" ];
+
+      # Reapply the ACL before every Bili-Sync start because chmod(2) on a
+      # parent directory can reset the ACL mask after tmpfiles has run.
+      script = lib.concatMapStringsSep "\n" (
+        directory:
+        "${lib.getExe' pkgs.acl "setfacl"} -m u:bili-sync:--x,m::--x ${lib.escapeShellArg directory}"
+      ) cfg.traverseDirectories;
+
+      serviceConfig.Type = "oneshot";
     };
   };
 }
