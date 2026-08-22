@@ -169,6 +169,14 @@ in
             tolerance: 50
             lazy: false
 
+          - name: Steam
+            type: select
+            proxies:
+              - PROXY
+              - US
+              - JP
+              - DIRECT
+
         rule-providers:
           reject:
             type: http
@@ -311,6 +319,13 @@ in
 
           ${directUdpRules}
 
+          # Steam international store and community
+          - DOMAIN,store.steampowered.com,Steam
+          - DOMAIN,login.steampowered.com,Steam
+          - DOMAIN-SUFFIX,steamstatic.com,Steam
+          - DOMAIN-SUFFIX,steamcommunity.com,Steam
+          - DOMAIN-SUFFIX,steamusercontent.com,Steam
+
           - DOMAIN-SUFFIX,jmssub.net,DIRECT
           - RULE-SET,private,DIRECT
           - RULE-SET,direct,DIRECT
@@ -327,12 +342,9 @@ in
           - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
           
           - DOMAIN-SUFFIX,steamcontent.com,DIRECT
-          - DOMAIN-SUFFIX,steamstatic.com,DIRECT
           - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
-          - DOMAIN-SUFFIX,steamcommunity.com,DIRECT
           - DOMAIN-SUFFIX,steampowered.com,DIRECT
           - DOMAIN-SUFFIX,steamgames.com,DIRECT
-          - DOMAIN-SUFFIX,steamusercontent.com,DIRECT
           - DOMAIN-SUFFIX,steamserver.net,DIRECT
           - RULE-SET,steam,DIRECT
 
