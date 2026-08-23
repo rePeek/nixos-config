@@ -10,11 +10,6 @@
 
     programs.ghostty = {
       enable = lib.mkDefault true;
-
-      settings = {
-        window-padding-balance = true;
-        window-padding-color = "extend-always";
-      };
     };
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
