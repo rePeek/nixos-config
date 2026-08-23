@@ -10,6 +10,9 @@
 
     programs.ghostty = {
       enable = lib.mkDefault true;
+      settings = {
+        mouse-hide-while-typing = true;
+      };
     };
 
     xdg.configFile."xdg-terminals.list".text = lib.mkDefault ''
