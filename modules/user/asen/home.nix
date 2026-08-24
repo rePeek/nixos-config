@@ -14,5 +14,11 @@
 
     commit.gpgSign = true;
     gpg.format = "openpgp";
+
+    merge.tool = "codediff";
+    mergetool.codediff.cmd = "nvim \"$MERGED\" -c \"CodeDiff --exit-on-close merge $MERGED\"";
+
+    diff.tool = "codediff";
+    difftool.codediff.cmd = "nvim \"$LOCAL\" \"$REMOTE\" +\"CodeDiff --exit-on-close file $LOCAL $REMOTE\"";
   };
 }
