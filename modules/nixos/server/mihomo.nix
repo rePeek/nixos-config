@@ -152,7 +152,7 @@ in
             type: url-test
             use:
               - jms_sub
-            filter: "(?i)日本|Japan|JP|东京|Tokyo|大阪|Osaka|c2s4"
+            filter: "(?i)日本|Japan|JP|东京|Tokyo|大阪|Osaka|c2s4[.:]"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
             timeout: 3000
@@ -162,7 +162,7 @@ in
             type: url-test
             use:
               - jms_sub
-            filter: "(?i)美国|United States|USA|US|JMS"
+            filter: "(?i)美国|United States|USA|US|c2s(1|2|3|801)[.:]"
             url: "https://www.gstatic.com/generate_204"
             interval: 300
             timeout: 3000
