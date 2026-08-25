@@ -148,6 +148,7 @@
         ];
         extraSpecialArgs = {
           inherit inputs;
+          nvimPkg = inputs.nvim.packages.${system}.default;
         };
       };
     };
