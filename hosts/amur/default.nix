@@ -11,6 +11,7 @@
     ./hardware
 
     ./network.nix
+    ./service
 
     ../../modules/nixos/desktop
   ];
