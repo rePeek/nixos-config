@@ -1,7 +1,4 @@
 { inputs, pkgs, ... }:
-let
-  base16Schemes = import ../../theme/base16-schemes.nix;
-in
 {
   imports = [
     ../../modules/home-manager/server
@@ -18,7 +15,10 @@ in
   stylix = {
     enable = true;
     autoEnable = false;
-    base16Scheme = base16Schemes.wolf-alabaster-dark;
+    base16Scheme = {
+      yaml = "${inputs.tinted-schemes}/base16/dracula.yaml";
+      use-ifd = "always";
+    };
     polarity = "dark";
 
     targets = {

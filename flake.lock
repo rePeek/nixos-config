@@ -966,7 +966,8 @@
         "nixpkgs": "nixpkgs_5",
         "nvim": "nvim",
         "quickshell": "quickshell",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "tinted-schemes": "tinted-schemes"
       }
     },
     "stylix": {
@@ -984,7 +985,9 @@
         "nur": "nur",
         "systems": "systems_4",
         "tinted-kitty": "tinted-kitty",
-        "tinted-schemes": "tinted-schemes",
+        "tinted-schemes": [
+          "tinted-schemes"
+        ],
         "tinted-tmux": "tinted-tmux",
         "tinted-zed": "tinted-zed"
       },
@@ -1082,11 +1085,11 @@
     "tinted-schemes": {
       "flake": false,
       "locked": {
-        "lastModified": 1777806186,
-        "narHash": "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=",
+        "lastModified": 1786274241,
+        "narHash": "sha256-LMHxSQJIv6QJJkO9W7sAkJujlwusFf9/Ct0SYJ6GyHQ=",
         "owner": "tinted-theming",
         "repo": "schemes",
-        "rev": "0c94645546f4f3ddac77a1a5fce54eb95bf50795",
+        "rev": "fdca32a0d14ec80ad83a78a9ccb85592ca6cb9e1",
         "type": "github"
       },
       "original": {

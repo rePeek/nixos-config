@@ -22,6 +22,12 @@
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.tinted-schemes.follows = "tinted-schemes";
+    };
+
+    tinted-schemes = {
+      url = "github:tinted-theming/schemes";
+      flake = false;
     };
 
     nix-cachyos-kernel = {

@@ -9,9 +9,11 @@
 
 let
   cfg = config.custom.desktop.theme;
-  customSchemes = import ../../../theme/base16-schemes.nix;
 
-  scheme = customSchemes.${cfg.scheme} or "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
+  scheme = {
+    yaml = "${inputs.tinted-schemes}/base16/${cfg.scheme}.yaml";
+    use-ifd = "always";
+  };
 in
 {
   imports = [
@@ -23,10 +25,10 @@ in
 
     scheme = lib.mkOption {
       type = lib.types.str;
-      default = "wolf-alabaster-dark";
+      default = "dracula";
       description = ''
-        Base16 scheme name. Built-in repository schemes take precedence; other
-        names are resolved from pkgs.base16-schemes without the .yaml suffix.
+        Base16 scheme name resolved from the tinted-theming/schemes flake
+        input without the .yaml suffix.
       '';
       example = "gruvbox-material-light-soft";
     };
