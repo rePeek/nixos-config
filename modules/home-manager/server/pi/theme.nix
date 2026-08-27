@@ -1,107 +1,98 @@
-# Pi theme derived from Stylix base16 colors.
-# pi discovers themes in ~/.pi/agent/themes/*.json and matches by name.
-{
-  config,
-  lib,
-  ...
-}:
+# Official Dracula theme for pi.
+# Source: https://github.com/dracula/pi-coding-agent (MIT License)
+#
+# Pixel-perfect Dracula colors, replacing the previous Stylix-based mapping.
+{ ... }:
 let
-  stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
-  stylixEnabled = stylixColors != null;
-
-  # Map base16 colors from Stylix to pi theme tokens.
-  # Base16 spec:
-  #   base00-bg base01-bg-alt base02-bg-select base03-comment
-  #   base04-fg-dim base05-fg base06-fg-light base07-fg-lighter
-  #   base08-red base09-orange base0A-yellow base0B-green
-  #   base0C-cyan base0D-blue base0E-purple base0F-brown
-  piStylixTheme = {
-    name = "stylix";
+  draculaTheme = {
+    name = "dracula";
     vars = {
-      bg = stylixColors.base00;
-      bg-alt = stylixColors.base01;
-      bg-select = stylixColors.base02;
-      comment = stylixColors.base03;
-      fg-dim = stylixColors.base04;
-      fg = stylixColors.base05;
-      red = stylixColors.base08;
-      orange = stylixColors.base09;
-      yellow = stylixColors.base0A;
-      green = stylixColors.base0B;
-      cyan = stylixColors.base0C;
-      blue = stylixColors.base0D;
-      purple = stylixColors.base0E;
+      background = "#282a36";
+      currentLine = "#44475a";
+      foreground = "#f8f8f2";
+      comment = "#6272a4";
+      cyan = "#8be9fd";
+      green = "#50fa7b";
+      orange = "#ffb86c";
+      pink = "#ff79c6";
+      purple = "#bd93f9";
+      red = "#ff5555";
+      yellow = "#f1fa8c";
+      bgLight = "#343746";
+      bgLighter = "#3c3f58";
+      bgDark = "#21222c";
+      bgGreenTint = "#2a3a2e";
+      bgRedTint = "#3a2a2e";
+      bgPurpleTint = "#2e2a3a";
     };
     colors = {
       accent = "purple";
-      border = "blue";
-      borderAccent = "cyan";
-      borderMuted = "bg-alt";
+      border = "purple";
+      borderAccent = "pink";
+      borderMuted = "comment";
       success = "green";
       error = "red";
       warning = "yellow";
       muted = "comment";
-      dim = "fg-dim";
-      text = "";
+      dim = "#545978";
+      text = "foreground";
       thinkingText = "comment";
 
-      selectedBg = "bg-select";
-      userMessageBg = "bg-alt";
-      userMessageText = "";
-      customMessageBg = "bg-alt";
-      customMessageText = "";
+      selectedBg = "currentLine";
+      userMessageBg = "bgLight";
+      userMessageText = "foreground";
+      customMessageBg = "bgPurpleTint";
+      customMessageText = "foreground";
       customMessageLabel = "purple";
-      toolPendingBg = "bg-alt";
-      toolSuccessBg = "bg-alt";
-      toolErrorBg = "bg-alt";
-      toolTitle = "purple";
-      toolOutput = "";
+      toolPendingBg = "bgDark";
+      toolSuccessBg = "bgGreenTint";
+      toolErrorBg = "bgRedTint";
+      toolTitle = "foreground";
+      toolOutput = "comment";
 
-      mdHeading = "yellow";
-      mdLink = "blue";
+      mdHeading = "orange";
+      mdLink = "cyan";
       mdLinkUrl = "comment";
-      mdCode = "cyan";
-      mdCodeBlock = "";
+      mdCode = "green";
+      mdCodeBlock = "foreground";
       mdCodeBlockBorder = "comment";
       mdQuote = "comment";
       mdQuoteBorder = "comment";
       mdHr = "comment";
-      mdListBullet = "cyan";
+      mdListBullet = "pink";
 
       toolDiffAdded = "green";
       toolDiffRemoved = "red";
       toolDiffContext = "comment";
 
       syntaxComment = "comment";
-      syntaxKeyword = "purple";
-      syntaxFunction = "blue";
-      syntaxVariable = "yellow";
-      syntaxString = "green";
-      syntaxNumber = "orange";
+      syntaxKeyword = "pink";
+      syntaxFunction = "green";
+      syntaxVariable = "foreground";
+      syntaxString = "yellow";
+      syntaxNumber = "purple";
       syntaxType = "cyan";
-      syntaxOperator = "purple";
-      syntaxPunctuation = "comment";
+      syntaxOperator = "pink";
+      syntaxPunctuation = "foreground";
 
-      thinkingOff = "comment";
-      thinkingMinimal = "purple";
-      thinkingLow = "blue";
-      thinkingMedium = "cyan";
-      thinkingHigh = "purple";
+      thinkingOff = "#545978";
+      thinkingMinimal = "comment";
+      thinkingLow = "cyan";
+      thinkingMedium = "purple";
+      thinkingHigh = "pink";
       thinkingXhigh = "red";
-      thinkingMax = "orange";
 
-      bashMode = "yellow";
+      bashMode = "green";
+    };
+    export = {
+      pageBg = "#1e1f29";
+      cardBg = "bgDark";
+      infoBg = "#3a3728";
     };
   };
 in
 {
-  # Only apply the stylix theme when Stylix is active on the host.
-  programs.pi-coding-agent.settings = lib.optionalAttrs stylixEnabled {
-    theme = "stylix";
-  };
+  programs.pi-coding-agent.settings.theme = "dracula";
 
-  # Write a pi theme file derived from Stylix base16 colors.
-  home.file = lib.optionalAttrs stylixEnabled {
-    ".pi/agent/themes/stylix.json".text = builtins.toJSON piStylixTheme;
-  };
+  home.file.".pi/agent/themes/dracula.json".text = builtins.toJSON draculaTheme;
 }
