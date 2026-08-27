@@ -17,6 +17,8 @@
     settings = {
       support_kitty_keyboard_protocol = false;
       pane_frames = true;
+      pane_frame_style = "full";
+      stacked_pane_list = false;
       ui.pane_frames.rounded_corners = true;
       simplified_ui = true;
       default_layout = "compact";
