@@ -8,7 +8,7 @@
     zs = "zellij -s";
     za = "zellij a";
     zz = "zellij attach --create main";
-    zj = "zellij -l compact";
+    zj = "zellij attach --create $(basename $PWD)";
   };
 
   programs.zellij = {
