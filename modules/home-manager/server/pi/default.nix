@@ -7,7 +7,7 @@
 {
   imports = [
     ./theme.nix
-    ./hashline.nix
+    ./pi-hashline.nix
     ./pi-fff.nix
     ./pi-web-access.nix
     ./pi-codex-search.nix
