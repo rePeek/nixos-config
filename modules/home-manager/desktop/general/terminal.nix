@@ -12,6 +12,7 @@
       enable = lib.mkDefault true;
       settings = {
         mouse-hide-while-typing = true;
+        window-padding-balance = true;
       };
     };
 
