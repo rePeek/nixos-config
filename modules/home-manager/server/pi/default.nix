@@ -33,5 +33,6 @@
   home.sessionVariables = {
     PI_SKIP_VERSION_CHECK = "1";
     PI_CODING_AGENT_DIR = "${config.home.homeDirectory}/.pi/agent";
+    PI_OFFLINE = "1";
   };
 }
