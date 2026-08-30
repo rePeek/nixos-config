@@ -12,6 +12,10 @@
     ];
 
     dconf.settings = {
+      "org/cinnamon/desktop/applications/terminal" = {
+        exec = "ghostty";
+        exec-arg = "-e";
+      };
       "org/nemo/preferences" = {
         always-use-browser = true;
         close-device-view-on-device-eject = true;
