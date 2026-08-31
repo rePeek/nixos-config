@@ -41,6 +41,9 @@
     options = lib.mkDefault "--delete-older-than 7d";
   };
 
+  # nh: 更好的 nixos-rebuild 输出、package diff 和 generation 管理
+  programs.nh.enable = true;
+
   # remove nix-channel related tools & configs, we use flakes instead.
   nix.channel.enable = false;
 }

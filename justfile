@@ -7,7 +7,7 @@
 ############################################################################
 
 deploy-local:
-  nixos-rebuild switch --flake ".#$(hostname -s)" --sudo
+  nh os switch .
 
 deploy-docker:
   home-manager switch --flake .#root
@@ -26,14 +26,13 @@ up package="":
   nix flake update {{package}}
 
 history:
-  nix profile history --profile /nix/var/nix/profiles/system
+  nh os list
 
 repl:
   nix repl -f flake:nixpkgs
 
 clean:
-  # remove all generations older than 7 days
-  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 7d
+  nh clean all --keep 5
 
 gc:
   # garbage collect all unused nix store entries
