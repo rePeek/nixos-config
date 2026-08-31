@@ -1,8 +1,5 @@
 # Enable the generic graphics stack for desktop, gaming, and media workloads.
-{
-  lib,
-  ...
-}:
+_:
 
 {
   config = {

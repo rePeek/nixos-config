@@ -1,8 +1,5 @@
 # pi-codex-search plugin: explicit Codex subscription web search tool.
-{
-  ...
-}:
-{
+_: {
   programs.pi-coding-agent.settings.packages = [
     "npm:pi-codex-search@0.1.5"
   ];

@@ -84,7 +84,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       git-hooks,
@@ -96,7 +95,11 @@
 
       preCommitCheck = git-hooks.lib.${system}.run {
         src = ./.;
-        hooks.nixfmt.enable = true;
+        hooks = {
+          nixfmt.enable = true;
+          statix.enable = true;
+          deadnix.enable = true;
+        };
       };
 
       myLib = import ./lib.nix {
@@ -116,6 +119,8 @@
           git
           just
           nixfmt
+          statix
+          deadnix
         ];
 
         buildInputs = preCommitCheck.enabledPackages;

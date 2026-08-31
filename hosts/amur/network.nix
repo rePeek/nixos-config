@@ -1,6 +1,5 @@
 # Network configuration for amur.
-{ ... }:
-{
+_: {
   networking = {
     networkmanager.enable = true;
     nameservers = [

@@ -1,0 +1,4 @@
+# statix 配置：忽略 NixOS 配置中常见的重复顶层键警告。
+# NixOS 模块中 networking.xxx、boot.xxx 等按功能分组声明是标准做法，
+# 合并为单个 attribute set 反而降低可读性。
+disabled = ["repeated_keys"]

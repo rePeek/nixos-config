@@ -7,7 +7,6 @@
   ...
 }:
 let
-  terminalCommand = config.home.sessionVariables.TERMINAL or "ghostty";
   quickshellPackage = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
   stylixColors = lib.attrByPath [ "lib" "stylix" "colors" "withHashtag" ] null config;
   stylixCursor = lib.attrByPath [ "stylix" "cursor" ] null config;

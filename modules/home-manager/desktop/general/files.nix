@@ -1,6 +1,5 @@
 # General file manager defaults for the desktop profile.
 {
-  lib,
   pkgs,
   ...
 }:

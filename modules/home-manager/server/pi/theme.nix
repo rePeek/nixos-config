@@ -2,7 +2,7 @@
 # Source: https://github.com/dracula/pi-coding-agent (MIT License)
 #
 # Pixel-perfect Dracula colors, replacing the previous Stylix-based mapping.
-{ ... }:
+_:
 let
   draculaTheme = {
     name = "dracula";

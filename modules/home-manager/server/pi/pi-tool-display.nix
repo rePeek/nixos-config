@@ -1,8 +1,5 @@
 # pi-tool-display plugin: compact tool-call rendering and diff visualization.
-{
-  ...
-}:
-{
+_: {
   programs.pi-coding-agent.settings.packages = [
     "npm:pi-tool-display@0.5.0"
   ];

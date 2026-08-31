@@ -32,7 +32,7 @@ in
         isNormalUser = true;
         description = "asen";
         home = "/home/asen";
-        extraGroups = cfg.extraGroups;
+        inherit (cfg) extraGroups;
         shell = pkgs.fish;
         openssh.authorizedKeys.keys = config.custom.ssh.sharedAuthorizedKeys;
       };

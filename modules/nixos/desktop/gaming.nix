@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.custom.desktop.gaming;
-  nix-gaming = inputs.nix-gaming;
+  inherit (inputs) nix-gaming;
 in
 {
   imports = [
