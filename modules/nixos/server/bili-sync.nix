@@ -21,6 +21,12 @@ in
       description = "Bili-Sync package to run.";
     };
 
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "bili-sync";
+      description = "User account under which the Bili-Sync service runs.";
+    };
+
     configDirectory = lib.mkOption {
       type = lib.types.path;
       default = "/var/lib/bili-sync";
@@ -72,7 +78,7 @@ in
     networking.firewall.allowedTCPPorts = lib.optional cfg.openFirewall cfg.port;
 
     users.groups.bili-sync = { };
-    users.users.bili-sync = {
+    users.users.bili-sync = lib.mkIf (cfg.user == "bili-sync") {
       isSystemUser = true;
       group = "bili-sync";
       extraGroups = lib.optional (cfg.downloadGroup != "bili-sync") cfg.downloadGroup;
@@ -80,8 +86,8 @@ in
     };
 
     systemd.tmpfiles.rules = [
-      "d ${cfg.configDirectory} 0700 bili-sync bili-sync -"
-      "Z ${cfg.configDirectory} - bili-sync bili-sync -"
+      "d ${cfg.configDirectory} 0700 ${cfg.user} bili-sync -"
+      "Z ${cfg.configDirectory} - ${cfg.user} bili-sync -"
       "d ${cfg.downloadDirectory} 2770 ${cfg.downloadOwner} ${cfg.downloadGroup} -"
     ];
 
@@ -102,7 +108,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        User = "bili-sync";
+        User = cfg.user;
         Group = "bili-sync";
         ExecStart = lib.getExe cfg.package;
         Restart = "on-failure";
@@ -128,7 +134,7 @@ in
       # parent directory can reset the ACL mask after tmpfiles has run.
       script = lib.concatMapStringsSep "\n" (
         directory:
-        "${lib.getExe' pkgs.acl "setfacl"} -m u:bili-sync:--x,m::--x ${lib.escapeShellArg directory}"
+        "${lib.getExe' pkgs.acl "setfacl"} -m u:${cfg.user}:--x,m::--x ${lib.escapeShellArg directory}"
       ) cfg.traverseDirectories;
 
       serviceConfig.Type = "oneshot";

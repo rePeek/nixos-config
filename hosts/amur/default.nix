@@ -58,10 +58,10 @@
       agenix.enable = true;
       bili-sync = {
         enable = true;
+        user = "asen";
         downloadDirectory = "/home/asen/Downloads/bili-sync";
         downloadOwner = "asen";
         downloadGroup = "users";
-        traverseDirectories = [ "/home/asen" ];
       };
 
       virtualization = {
