@@ -10,5 +10,9 @@
     procps
     util-linux
     file
+    fd
+    ripgrep
+    jq
+    unzip
   ];
 }
