@@ -2,9 +2,13 @@
 {
   environment.systemPackages = with pkgs; [
     vim
-    wget
     curl
+    wget
     git
-    helix
+
+    # 基础系统工具（NixOS 默认已包含 procps、util-linux、iproute2 等）
+    procps
+    util-linux
+    file
   ];
 }

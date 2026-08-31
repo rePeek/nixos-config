@@ -8,6 +8,7 @@
     ./i18n.nix
     ./nix.nix
     ./packages.nix
+    ./diagnostics.nix
     ./power.nix
     ./security.nix
     ./ssh.nix
