@@ -1,8 +1,18 @@
 # Shared Home Manager profile for the asen user.
+{ pkgs, ... }:
 {
   home.file = {
     ".face".source = ../../../assets/avatars/asen.jpg;
     ".face.icon".source = ../../../assets/avatars/asen.jpg;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 604800;
+    maxCacheTtl = 604800;
+    defaultCacheTtlSsh = 604800;
+    maxCacheTtlSsh = 604800;
+    pinentry.package = pkgs.pinentry-curses;
   };
 
   programs.git.settings = {
