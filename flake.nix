@@ -76,7 +76,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
 
     nvim = {
-      url = "github:rePeek/nvim/feat/ext-info";
+      url = "github:rePeek/nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

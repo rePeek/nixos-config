@@ -882,16 +882,15 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1787559528,
-        "narHash": "sha256-FuMUrwMvYKn3IuJ+AChmEzu6V/pEnMlnJDqCO877oe0=",
+        "lastModified": 1788504051,
+        "narHash": "sha256-FhHgXe2rwOjhAXyxp08W447rljvs15spjPSC+p1SDcY=",
         "owner": "rePeek",
         "repo": "nvim",
-        "rev": "cdda0aa8409e3aed43c00b15e457826e26591007",
+        "rev": "0f18900f92f92f05ff899cb9b7ca461e70fa2f79",
         "type": "github"
       },
       "original": {
         "owner": "rePeek",
-        "ref": "feat/ext-info",
         "repo": "nvim",
         "type": "github"
       }
