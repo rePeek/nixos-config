@@ -14,6 +14,10 @@
     ./pi-tool-display.nix
   ];
 
+  # pi 运行时会把 settings.json 改写为紧凑 JSON，
+  # 与 HM 生成的 pretty-printed 版本字节不同，需要强制覆盖。
+  home.file."${config.programs.pi-coding-agent.configDir}/settings.json".force = true;
+
   programs.pi-coding-agent = {
     enable = true;
 
