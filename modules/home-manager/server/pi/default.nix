@@ -1,17 +1,23 @@
 # Pi coding agent Home Manager entry point.
-# Aggregates core settings, theme and per-plugin modules under ./pi/.
+#
+# This module ensures peer dependency consistency by linking pi's core packages
+# to the extension directory after activation.
 {
   config,
+  lib,
+  pkgs,
   ...
 }:
+let
+  piCoreDir = "${pkgs.pi-coding-agent}/lib/node_modules/pi-monorepo/node_modules/@earendil-works";
+in
 {
   imports = [
-    ./theme.nix
+    ./pi-cc-extensions.nix
     ./pi-hashline.nix
     ./pi-fff.nix
     ./pi-web-access.nix
-    ./pi-codex-search.nix
-    ./pi-tool-display.nix
+    ./pi-themes-bundle.nix
   ];
 
   # pi 运行时会把 settings.json 改写为紧凑 JSON，
@@ -25,11 +31,9 @@
       defaultProvider = "deepseek";
       defaultModel = "deepseek-v4-pro";
       defaultThinkingLevel = "high";
-
+      theme = "dracula";
       enableInstallTelemetry = false;
       hideThinkingBlock = true;
-
-      # 做缓存实验时保留
       showCacheMissNotices = true;
     };
   };
@@ -39,4 +43,16 @@
     PI_CODING_AGENT_DIR = "${config.home.homeDirectory}/.pi/agent";
     PI_OFFLINE = "1";
   };
+
+  # Ensure peer dependencies are available after npm install
+  home.activation.linkPiCorePackages = lib.mkAfter ''
+    PI_NPM_DIR="${config.home.homeDirectory}/.pi/agent/npm/node_modules/@earendil-works"
+    if [ -d "${piCoreDir}" ]; then
+      mkdir -p "$PI_NPM_DIR"
+      for pkg in pi-agent-core pi-ai pi-client pi-protocol pi-telemetry pi-tui; do
+        [ -d "${piCoreDir}/$pkg" ] && [ ! -e "$PI_NPM_DIR/$pkg" ] && \
+          ln -sf "${piCoreDir}/$pkg" "$PI_NPM_DIR/$pkg" 2>/dev/null || true
+      done
+    fi
+  '';
 }

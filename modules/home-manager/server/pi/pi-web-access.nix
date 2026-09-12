@@ -1,7 +1,7 @@
 # pi-web-access plugin: web search, GitHub cloning and media extraction.
 _: {
   programs.pi-coding-agent.settings.packages = [
-    "npm:pi-web-access@0.13.0"
+    "npm:pi-web-access"
   ];
 
   home.file.".pi/agent/web-search.json".text = builtins.toJSON {
