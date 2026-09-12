@@ -7,6 +7,7 @@
     ./cpa
     ./fhs.nix
     ./mihomo.nix
+    ./pi.nix
     ../../user
     ./virtualization.nix
   ];

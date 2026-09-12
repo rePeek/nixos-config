@@ -688,6 +688,23 @@
         "url": "https://github.com/NixOS/nixos-hardware"
       }
     },
+    "nixpi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "wrappers": "wrappers"
+      },
+      "locked": {
+        "path": "./components/nixpi",
+        "type": "path"
+      },
+      "original": {
+        "path": "./components/nixpi",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1754028485,
@@ -931,6 +948,7 @@
         "nix-flatpak": "nix-flatpak",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
+        "nixpi": "nixpi",
         "nixpkgs": "nixpkgs_5",
         "nvim": "nvim",
         "quickshell": "quickshell",
@@ -1117,6 +1135,27 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "wrappers": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpi",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788744583,
+        "narHash": "sha256-oNMrijfyaoRjjWhxHNFSBYyEB4u/zb/AxoKewC56LvE=",
+        "owner": "nix-community",
+        "repo": "nix-wrapper-modules",
+        "rev": "e88c449105c6aafa460196d3cbd16718655aee0f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     }

@@ -18,6 +18,8 @@
 ├── flake.lock         # Flake 输入锁文件
 ├── lib.nix            # mkHost：统一组装 NixOS 主机、disko 和 Home Manager
 ├── justfile           # 常用部署、更新、清理和密钥管理命令
+├── components/        # Git submodule 组件
+│   └── nixpi/         # Pi coding agent Nix wrapper (submodule)
 ├── hosts/             # 主机级配置
 ├── modules/           # 可复用 NixOS 和 Home Manager 模块
 └── secrets/           # agenix 密钥声明与加密后的 .age 文件
@@ -82,8 +84,8 @@ modules/nixos/
 │   ├── cpa/                     # CLIProxyAPI 模块、配置生成和 systemd 服务
 │   ├── fhs.nix
 │   ├── mihomo.nix
+│   ├── pi.nix                   # nixpi overlay：提供 wrapped pi 包
 │   └── virtualization.nix
-├── desktop/                     # 桌面 NixOS profile 入口，通过 custom.desktop.* 开启桌面能力
 │   ├── avatar.nix
 │   ├── cs2.nix
 │   ├── gaming.nix

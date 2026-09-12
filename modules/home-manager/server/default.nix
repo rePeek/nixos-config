@@ -8,11 +8,11 @@
     ./helix
     ./btop.nix
     ./git.nix
-    ./pi
     ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
     nvimPkg
+    pi
 
     # 系统与存储状态
     bottom

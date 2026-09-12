@@ -1,0 +1,3 @@
+[submodule "components/nixpi"]
+	path = components/nixpi
+	url = https://github.com/rePeek/nixpi

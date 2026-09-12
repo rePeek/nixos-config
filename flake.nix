@@ -1,8 +1,14 @@
 {
   description = "Asen's NixOS flake";
-
   inputs = {
+    self.submodules = true;
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nixpi = {
+      url = "path:./components/nixpi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-hardware = {
       url = "git+https://github.com/NixOS/nixos-hardware";
@@ -91,8 +97,11 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-
+      # Apply nixpi overlay for standalone HM config (NixOS hosts apply it via modules).
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ inputs.nixpi.overlays.default ];
+      };
       preCommitCheck = git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
