@@ -4,6 +4,7 @@ _: {
     "npm:pi-web-access"
   ];
 
+  home.file.".pi/agent/web-search.json".force = true;
   home.file.".pi/agent/web-search.json".text = builtins.toJSON {
     provider = "openai";
     workflow = "none";

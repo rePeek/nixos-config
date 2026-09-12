@@ -4,6 +4,7 @@ _: {
     "npm:pi-hashline-edit"
   ];
 
+  home.file.".pi/agent/hashline.json".force = true;
   home.file.".pi/agent/hashline.json".text = builtins.toJSON {
     hashLength = 3;
     grep = false;
