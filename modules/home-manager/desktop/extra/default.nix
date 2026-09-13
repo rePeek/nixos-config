@@ -12,6 +12,8 @@
     ];
     services.flatpak.packages = [
       "org.telegram.desktop"
+      # Telegram's GNOME runtime uses this extension for proprietary codecs.
+      "org.freedesktop.Platform.codecs-extra//25.08-extra"
     ];
     services.flatpak.overrides."org.telegram.desktop".Context.filesystems = [
       "xdg-download/Telegram Desktop:create"
