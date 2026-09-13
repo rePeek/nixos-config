@@ -900,18 +900,14 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1788943680,
-        "narHash": "sha256-Sy6YcbAvLTl7Ycx7cD2AfzR8WoCupSsGkIg93jHEkJ0=",
-        "owner": "rePeek",
-        "repo": "nvim",
-        "rev": "75f9011a5d7b822ffc8a38f730f89904c16cb68c",
-        "type": "github"
+        "path": "./components/nvim",
+        "type": "path"
       },
       "original": {
-        "owner": "rePeek",
-        "repo": "nvim",
-        "type": "github"
-      }
+        "path": "./components/nvim",
+        "type": "path"
+      },
+      "parent": []
     },
     "quickshell": {
       "inputs": {

@@ -1,3 +1,6 @@
 [submodule "components/nixpi"]
 	path = components/nixpi
 	url = https://github.com/rePeek/nixpi
+[submodule "components/nvim"]
+	path = components/nvim
+	url = git@github.com:rePeek/nvim.git
