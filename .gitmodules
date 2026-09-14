@@ -1,8 +1,8 @@
 [submodule "components/nixpi"]
 	path = components/nixpi
-	url = https://github.com/rePeek/nixpi
+	url = git@github.com:rePeek/nixpi.git
 	branch = main
 [submodule "components/nvim"]
 	path = components/nvim
-	url = https://github.com/rePeek/nvim
+	url = git@github.com:rePeek/nvim.git
 	branch = main
