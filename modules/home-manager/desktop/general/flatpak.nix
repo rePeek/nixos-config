@@ -20,6 +20,14 @@
       };
     };
 
+    # Force X11 backend for apps that crash on Wayland
+    overrides = {
+      "com.tencent.WeChat".Environment = {
+        GDK_BACKEND = "x11";
+        QT_QPA_PLATFORM = "xcb";
+      };
+    };
+
     packages = [
       "com.tencent.WeChat"
       "com.usebottles.bottles"
