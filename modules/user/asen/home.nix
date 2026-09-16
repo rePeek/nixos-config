@@ -22,7 +22,7 @@
       signingKey = "F8D6A23D561E28EC2EB23E8FB8CF115BCA7F8C1A";
     };
 
-    commit.gpgSign = true;
+    commit.gpgSign = false;
     gpg.format = "openpgp";
 
     merge.tool = "codediff";
