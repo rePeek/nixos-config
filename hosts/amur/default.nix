@@ -34,6 +34,7 @@
         libva-utils
         mesa-demos
         vulkan-tools
+        tdl
       ];
 
       desktop.extra.enable = true;
