@@ -9,7 +9,11 @@ _: {
       "114.114.114.114"
     ];
     firewall = {
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [
+        22
+        # iw3-player
+        1304
+      ];
       allowedUDPPorts = [ ];
     };
   };
