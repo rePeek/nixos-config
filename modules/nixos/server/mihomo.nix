@@ -40,6 +40,13 @@ in
       mode = "0400";
     };
 
+    age.secrets.mihomo-controller-secret = {
+      file = inputs.self + /secrets/mihomo-controller-secret.age;
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+
     systemd.services.mihomo-config = {
       description = "Generate Mihomo runtime config";
       wantedBy = [ "multi-user.target" ];
@@ -51,6 +58,8 @@ in
       script = ''
               install -d -m 0755 /run/mihomo
               JMS_URL="$(cat ${config.age.secrets.jms-subscription.path})"
+              # 仅取字母数字，避免 $ ` \ 等字符在无引号 heredoc 中被二次展开
+              MIHOMO_CONTROLLER_SECRET="$(cat ${config.age.secrets.mihomo-controller-secret.path})"
 
               cat > ${runtimeConfig} <<EOF
         mixed-port: 7890
@@ -60,7 +69,7 @@ in
         log-level: info
 
         external-controller: 0.0.0.0:9090
-        secret: "112358"
+        secret: "$MIHOMO_CONTROLLER_SECRET"
 
         profile:
           store-selected: true

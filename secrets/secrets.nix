@@ -15,6 +15,12 @@ let
       keys.amur
       keys.bengal
     ];
+    # 显式列出可解密 mihomo 控制密钥的主机，避免 all 组新增成员时被动扩散。
+    mihomo = [
+      keys.bengal
+      keys.amur
+      keys.sumatran
+    ];
   };
 
   mkSecret = publicKeys: {
@@ -26,4 +32,5 @@ in
   "jms-subscription.age" = mkSecret groups.all;
   "rc115-conf-pass.age" = mkSecret groups.all;
   "gpg-signing-key.age" = mkSecret groups.development;
+  "mihomo-controller-secret.age" = mkSecret groups.mihomo;
 }
