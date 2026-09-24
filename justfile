@@ -42,5 +42,8 @@ gc:
 secret-edit name:
     cd secrets && agenix -e "{{name}}.age"
 
+secret-show name:
+    cd secrets && sudo agenix -d "{{name}}.age" -i /etc/ssh/ssh_host_ed25519_key
+
 secret-rekey:
     cd secrets && sudo agenix --rekey -i /etc/ssh/ssh_host_ed25519_key
