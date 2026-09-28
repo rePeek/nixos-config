@@ -34,6 +34,17 @@ in
   ];
 
   config = {
+    # Aquamarine 0.15.x dereferences a connector that its DRM teardown has
+    # already reset, which crashes Hyprland greeters on multi-output systems.
+    # Remove once nixpkgs contains the upstream fix for
+    # https://github.com/hyprwm/aquamarine/issues/383.
+    nixpkgs.overlays = [
+      (_: prev: {
+        aquamarine = prev.aquamarine.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [ ./aquamarine-null-connector.patch ];
+        });
+      })
+    ];
     assertions = [
       {
         assertion = primaryDesktopUser != null;
@@ -59,6 +70,12 @@ in
           env = XCURSOR_SIZE,${cursorSize}
           env = HYPRCURSOR_THEME,${cursorName}
           env = HYPRCURSOR_SIZE,${cursorSize}
+
+          debug {
+              # Keep compositor logs in the journal so a greeter failure can
+              # be inspected after a reboot.
+              disable_logs = false
+          }
 
           misc {
               disable_hyprland_logo = true

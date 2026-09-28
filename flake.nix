@@ -47,14 +47,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Pin the greeter stack to the revisions used before the 2026-09-23 input
+    # update. The updated pair never brought up a login screen on amur, so
+    # keep the versions that are known to work until the upstream cause is
+    # identified. Run `nix flake update dank-greeter quickshell` to unpin.
     dank-greeter = {
-      url = "github:AvengeMedia/dank-greeter";
+      url = "github:AvengeMedia/dank-greeter/0175be5c2084e2c5027324403a329e04040cd0bc";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.dank-qml-common.follows = "dms/dank-qml-common";
     };
 
     quickshell = {
-      url = "github:quickshell-mirror/quickshell";
+      url = "github:quickshell-mirror/quickshell/2d3b3e9c70ef380dff751b61d334dc88df016c29";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

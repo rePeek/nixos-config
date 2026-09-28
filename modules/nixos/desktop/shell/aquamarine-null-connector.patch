@@ -1,0 +1,13 @@
+diff --git a/src/backend/drm/DRM.cpp b/src/backend/drm/DRM.cpp
+index 431247b5..75007bf6 100644
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -497,7 +497,7 @@ void Aquamarine::CDRMBackend::emitAsyncCommitEvent(SP<CDRMOutput> output) {
+ 
+ void Aquamarine::CDRMBackend::flushAsyncCommitEvents() {
+     for (const auto& connector : connectors) {
+-        if (connector->output && connector->output->asyncCommitEventPending)
++        if (connector && connector->output && connector->output->asyncCommitEventPending)
+             emitAsyncCommitEvent(connector->output);
+     }
+ }
