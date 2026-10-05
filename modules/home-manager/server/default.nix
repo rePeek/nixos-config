@@ -8,7 +8,6 @@
     ./helix
     ./btop.nix
     ./git.nix
-    ./llm-agents-package.nix
   ];
   home.packages = with pkgs; [
     nvimPkg
