@@ -1,20 +1,13 @@
-_: {
-  networking.useDHCP = false;
-
-  networking.interfaces.ens18.ipv4.addresses = [
-    {
-      address = "172.16.125.116";
-      prefixLength = 16;
-    }
-  ];
-
-  networking.defaultGateway = {
-    address = "172.16.0.1";
-    interface = "ens18";
+# Use the cloud DHCP lease; match the NIC by MAC rather than its kernel name.
+{
+  networking = {
+    useDHCP = false;
+    useNetworkd = true;
   };
 
-  networking.nameservers = [
-    "223.5.5.5"
-    "8.8.8.8"
-  ];
+  systemd.network.networks."10-uplink" = {
+    matchConfig.MACAddress = "00:16:3e:72:8f:76";
+    networkConfig.DHCP = "ipv4";
+    linkConfig.RequiredForOnline = "routable";
+  };
 }

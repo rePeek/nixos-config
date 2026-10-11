@@ -1,21 +1,26 @@
+# UEFI layout for the verified 40 GiB virtio system disk.
 {
   disko.devices = {
     disk.main = {
       type = "disk";
-      device = "/dev/sda";
+      device = "/dev/disk/by-id/virtio-bp14bibhpmsf0okdhj9c";
       content = {
         type = "gpt";
         partitions = {
-          bios = {
-            size = "1M";
-            type = "EF02";
+          ESP = {
+            size = "512M";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
+            };
           };
 
           swap = {
             size = "4G";
-            content = {
-              type = "swap";
-            };
+            content.type = "swap";
           };
 
           root = {

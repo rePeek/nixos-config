@@ -42,7 +42,7 @@ in
         "bengal"
         "bengal.tailfd7184.ts.net"
       ];
-      "100.82.124.57" = [
+      "100.127.113.96" = [
         "malayan"
         "malayan.tailfd7184.ts.net"
       ];
