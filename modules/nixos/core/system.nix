@@ -1,7 +1,9 @@
+# Shared terminfo support and system shutdown defaults.
+{ pkgs, ... }:
 {
-  # Add terminfo database of all known terminals to the system profile.
-  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/terminfo.nix
-  environment.enableAllTerminfo = true;
+  # Support Ghostty SSH sessions without building every terminal emulator.
+  environment.enableAllTerminfo = false;
+  environment.systemPackages = [ pkgs.ghostty.terminfo ];
 
   # To prevent getting stuck at shutdown.
   systemd.settings.Manager.DefaultTimeoutStopSec = "10s";

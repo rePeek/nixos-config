@@ -84,7 +84,7 @@
   home-manager.users.asen.custom.desktop.cs2.enable = true;
 
   services.leigod-plugin = {
-    enable = true;
+    enable = false;
     physicalInterface = "wlp14s0";
   };
 
