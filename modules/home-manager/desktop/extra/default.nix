@@ -12,7 +12,9 @@
     ];
     services.flatpak.packages = [
       "org.telegram.desktop"
-      # Telegram's GNOME runtime uses this extension for proprietary codecs.
+      # GNOME 50 needs the 25.08 codecs. Explicitly retain their parent runtime
+      # so --unused cleanup cannot remove it and autodelete the shared codecs.
+      "org.freedesktop.Platform//25.08"
       "org.freedesktop.Platform.codecs-extra//25.08-extra"
     ];
     services.flatpak.overrides."org.telegram.desktop".Context.filesystems = [
