@@ -25,6 +25,11 @@ debug:
 up package="":
   nix flake update {{package}}
 
+push:
+  git -C components/nixpi push
+  git -C components/nvim push
+  git push
+
 history:
   nh os list
 
