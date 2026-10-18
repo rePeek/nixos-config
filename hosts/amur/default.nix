@@ -31,6 +31,7 @@
 
     home.users.asen = {
       extraPackages = with pkgs; [
+        blender
         libva-utils
         mesa-demos
         vulkan-tools
