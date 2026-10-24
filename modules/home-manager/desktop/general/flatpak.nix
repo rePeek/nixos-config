@@ -20,11 +20,17 @@
       };
     };
 
-    # Force X11 backend for apps that crash on Wayland
+    # Force X11 and expose its socket even in a Wayland session.
     overrides = {
-      "com.tencent.WeChat".Environment = {
-        GDK_BACKEND = "x11";
-        QT_QPA_PLATFORM = "xcb";
+      "com.tencent.WeChat" = {
+        Context.sockets = [
+          "x11"
+          "!wayland"
+        ];
+        Environment = {
+          GDK_BACKEND = "x11";
+          QT_QPA_PLATFORM = "xcb";
+        };
       };
     };
 
