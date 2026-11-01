@@ -6,7 +6,9 @@ local floating_terminal = { float = true, size = { 1111, 700 }, center = true }
 for _, key in ipairs({
 	"SUPER + space",
 	"SUPER + Space",
+	"SUPER + D",
 	"SUPER + SHIFT + E",
+	"SUPER + SHIFT + S",
 	"SUPER + P",
 	"SUPER + W",
 	"SUPER + SHIFT + W",
@@ -15,7 +17,6 @@ for _, key in ipairs({
 	hl.unbind(key)
 end
 
-hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal))
 hl.bind("ALT + Return", hl.dsp.exec_cmd(terminal, floating_terminal))
 hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd(terminal, { fullscreen = true }))
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd(terminal .. " -e yazi", floating_terminal))
