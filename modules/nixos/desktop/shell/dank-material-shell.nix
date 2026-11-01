@@ -34,17 +34,16 @@ in
   ];
 
   config = {
-    # Aquamarine 0.15.x dereferences a connector that its DRM teardown has
-    # already reset, which crashes Hyprland greeters on multi-output systems.
-    # Remove once nixpkgs contains the upstream fix for
-    # https://github.com/hyprwm/aquamarine/issues/383.
+    # Use upstream DRM teardown fixes until they reach a nixpkgs release.
     nixpkgs.overlays = [
       (_: prev: {
-        aquamarine = prev.aquamarine.overrideAttrs (old: {
-          patches = (old.patches or [ ]) ++ [ ./aquamarine-null-connector.patch ];
-        });
+        aquamarine = prev.aquamarine.overrideAttrs {
+          version = "0.15.1-unstable-${inputs.aquamarine.shortRev}";
+          src = inputs.aquamarine;
+        };
       })
     ];
+
     assertions = [
       {
         assertion = primaryDesktopUser != null;
@@ -54,7 +53,6 @@ in
 
     programs.dank-material-shell = {
       enable = true;
-      dgop.package = pkgs.dgop;
       systemd.enable = false;
       quickshell.package = quickshellPackage;
     };

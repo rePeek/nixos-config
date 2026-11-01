@@ -18,17 +18,19 @@ let
   '';
   dmsCommand = "${dmsLauncher}/bin/dms-run-with-wayland-input";
   dmsHyprlandConfig = "${inputs.dms}/core/internal/config/embedded";
+  upstreamHyprlandLua = builtins.readFile "${dmsHyprlandConfig}/hyprland.lua";
+  # Replace the marked block, not its contents, which change between DMS versions.
+  startupParts = lib.splitString "-- DMS_STARTUP_BEGIN" upstreamHyprlandLua;
+  startupEndParts = lib.splitString "-- DMS_STARTUP_END" (builtins.elemAt startupParts 1);
+  upstreamStartupBlock =
+    assert lib.assertMsg (
+      builtins.length startupParts == 2 && builtins.length startupEndParts == 2
+    ) "DMS Hyprland startup markers changed; update the UWSM integration.";
+    "-- DMS_STARTUP_BEGIN" + builtins.head startupEndParts + "-- DMS_STARTUP_END";
   hyprlandLua =
     (builtins.replaceStrings
       [
-        ''
-          -- DMS_STARTUP_BEGIN
-          hl.on("hyprland.start", function()
-          	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
-          	hl.exec_cmd("systemctl --user start hyprland-session.target")
-          end)
-          -- DMS_STARTUP_END
-        ''
+        upstreamStartupBlock
         ''require("dms.binds-user")''
       ]
       [
@@ -53,7 +55,7 @@ let
         ''
         "-- User keybind overrides are appended to dms.binds."
       ]
-      (builtins.readFile "${dmsHyprlandConfig}/hyprland.lua")
+      upstreamHyprlandLua
     )
     + ''
 
@@ -119,6 +121,7 @@ let
     );
     "colors.lua" = "${dmsHyprlandConfig}/hypr-colors.lua";
     "cursor.lua" = "${dmsHyprlandConfig}/hypr-cursor.lua";
+    "input.lua" = "${dmsHyprlandConfig}/hypr-input.lua";
     "layout.lua" = "${dmsHyprlandConfig}/hypr-layout.lua";
     "outputs.lua" = outputsLuaFile;
     "windowrules.lua" = "${dmsHyprlandConfig}/hypr-windowrules.lua";
