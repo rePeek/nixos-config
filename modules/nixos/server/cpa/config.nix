@@ -17,9 +17,8 @@ let
   yaml = pkgs.formats.yaml { };
 
   cpaConfig = yaml.generate "cli-proxy-api.yaml" {
-    # 只允许本机访问。
-    # 需要局域网访问时改成 "0.0.0.0"。
-    host = "127.0.0.1";
+    # 监听所有 IPv4 地址，访问范围由主机防火墙控制。
+    host = "0.0.0.0";
     port = 8317;
 
     # OAuth 登录文件必须存放在可写目录。
