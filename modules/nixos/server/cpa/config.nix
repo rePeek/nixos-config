@@ -37,8 +37,8 @@ let
     usage-statistics-enabled = false;
 
     remote-management = {
-      # 即便 API 绑定到 0.0.0.0，管理接口也只允许本机。
-      allow-remote = false;
+      # 允许通过 Tailscale/LAN 访问管理面板。仅需本机访问时改回 false。
+      allow-remote = true;
 
       # 空值表示关闭 Management API。
       secret-key = "112358";
