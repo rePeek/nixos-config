@@ -22,6 +22,10 @@
       ui.pane_frames.rounded_corners = true;
       simplified_ui = true;
       default_layout = "compact";
+      # New sessions would otherwise open the "About Zellij" welcome plugin on top of
+      # the first pane, which hides whatever starts there (e.g. pi) until dismissed.
+      show_startup_tips = false;
+      show_release_notes = false;
       # misc
       default_shell = "fish";
       # keybind
